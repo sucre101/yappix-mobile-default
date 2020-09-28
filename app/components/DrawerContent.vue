@@ -85,11 +85,11 @@
       <StackLayout backgroundColor="#239ddd" style="color: white">
 
         <GridLayout columns="auto, *"
-                    :class="'nt-drawer__list-item' + (selectedPage === 'Home' ? ' -selected': '')"
+                    :class="'nt-drawer__list-item' + (selectedPage === 'News' ? ' -selected': '')"
                     style="margin-left: 50px"
-                    @tap="onNavigationItemTap(Home)">
+                    @tap="onNavigationItemTap(NewsFeedsModule)">
           <Label col="0" text.decode="&#xf015;" class="nt-icon fas"/>
-          <Label col="1" text="Home"/>
+          <Label col="1" text="News Feeds"/>
         </GridLayout>
 
         <GridLayout columns="auto, *"
@@ -141,6 +141,7 @@ import Settings from "~/components/Settings";
 import RegisterPage from "~/components/base/RegisterPage";
 import SelfProfile from "~/components/SelfProfile";
 import Profile from "~/components/Profile";
+import NewsFeedsModule from "~/components/NewsFeedsModule";
 
 import * as utils from "~/shared/utils";
 import SelectedPageService from "~/shared/selected-page-service";
@@ -155,7 +156,8 @@ export default {
     Settings,
     RegisterPage,
     SelfProfile,
-    Profile
+    Profile,
+    NewsFeedsModule
   },
 
   data() {
@@ -168,6 +170,7 @@ export default {
       Register: RegisterPage,
       SelfProfile: SelfProfile,
       Profile: Profile,
+      NewsFeedsModule: NewsFeedsModule,
       selectedPage: "",
       auth: true,
     };

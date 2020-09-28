@@ -14,6 +14,7 @@
             horizontalAlignment="left"
             verticalAlignment="center"
             tintColor="#067dbc"
+            @tap="onDrawerButtonTap"
             col="0"
             width="15"
             marginLeft="10"
@@ -36,7 +37,7 @@
 
     <StackLayout horizontalAlignment="center">
 
-      <GridLayout rows="auto, auto, auto, auto">
+      <GridLayout rows="auto, auto, auto, auto, auto">
 
         <FlexboxLayout
             width="70" height="70"
@@ -70,7 +71,34 @@
             marginTop="25"
         />
 
+        <GridLayout columns="auto, auto" row="4" marginTop="30" horizontalAlignment="center">
+
+          <Button
+              text="Folow"
+              style="text-transform: uppercase; color: white"
+              backgroundColor="#067dbc"
+              borderRadius="4"
+              width="100"
+              height="40"
+              col="0"
+          />
+
+          <Button
+              text="Message"
+              style="text-transform: uppercase; color: #067dbc"
+              borderRadius="4"
+              borderWidth="1"
+              borderColor="#b8e5fd"
+              width="100"
+              height="40"
+              col="1"
+          />
+
+        </GridLayout>
+
       </GridLayout>
+
+
 
     </StackLayout>
 
@@ -78,6 +106,7 @@
 </template>
 
 <script>
+import * as utils from "~/shared/utils";
 
 export default  {
 
@@ -89,6 +118,14 @@ export default  {
       email: 'exanple@mail.ru',
       about: 'Hi! My name is John, I’m a creative geek from San Francisco, CA. Contact me at john@mail.com'
     }
+  },
+
+  methods: {
+
+    onDrawerButtonTap() {
+      utils.showDrawer();
+    },
+
   }
 
 }
