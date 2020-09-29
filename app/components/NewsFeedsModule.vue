@@ -11,17 +11,17 @@
           width="100%">
 
         <Image
-            width="20"
-            src="~/images/sb-menu.png"
+            src="res://menu"
             horizontalAlignment="left"
             verticalAlignment="center"
             tintColor="white"
             col="0"
             @tap="onDrawerButtonTap"
+            width="15"
         />
 
         <Label
-            :text="pageList[currentIndex].name"
+            :text="setTitlePage"
             style="text-transform: uppercase"
             fontSize="18"
             color="white"
@@ -118,13 +118,27 @@ export default {
     return {
       currentIndex: 0,
       pageList: [
-        { name: 'Sample 1' },
-        { name: 'Sample 2' },
-        { name: 'Sample 3' },
-        { name: 'Sample 4' },
-        { name: 'Sample 5' },
+        { name: 'News feeds posts' },
+        { name: 'Push Notifications' },
+        { name: 'News posts near' },
+        { name: 'My account' },
+        { name: 'New post' },
       ]
     }
+  },
+
+  computed: {
+
+    setTitlePage() {
+      return this.pageList[this.currentIndex].name.toUpperCase()
+    }
+
+  },
+
+  created() {
+    this.$root.$on('post::back', () => {
+      this.currentIndex = 0;
+    });
   },
 
   methods: {
