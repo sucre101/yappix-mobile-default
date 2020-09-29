@@ -1,12 +1,19 @@
 <template>
+
   <Page actionBarHidden="true">
+
     <ListView for="item in items">
+
       <v-template>
+
         <StackLayout orientation="horizontal">
           <Label :text="item.name" textWrap="true"></Label>
         </StackLayout>
+
       </v-template>
+
     </ListView>
+
   </Page>
 
 </template>
@@ -88,11 +95,6 @@ export default  {
 
   methods: {
 
-    pageLoaded(arg) {
-
-      console.log(arg)
-
-    }
 
   }
 

@@ -38,19 +38,28 @@
     <BottomNavigation @selectedIndexChanged="changeView">
 
       <!-- The bottom tab UI is created via TabStrip (the containier) and TabStripItem (for each tab)-->
-      <TabStrip style="background-color: #0989cc;">
+      <TabStrip style="background-color: #0989cc" isIconSizeFixed="false">
+
         <TabStripItem>
-          <Label text="Home"></Label>
-          <Image src="font://&#xf015;" class="fas t-36"></Image>
+          <Image src.decode="font://&#xf03b;" class="fas t-14" android:style="font-size: 4"/>
         </TabStripItem>
-        <TabStripItem class="special">
-          <Label text="Account"></Label>
-          <Image src="font://&#xf007;" class="fas t-36"></Image>
+
+        <TabStripItem>
+          <Image src.decode="font://&#xf0f3;" class="fas t-14" android:style="font-size: 4"/>
         </TabStripItem>
-        <TabStripItem class="special">
-          <Label text="Search"></Label>
-          <Image src="font://&#xf00e;" class="fas t-36"></Image>
+
+        <TabStripItem>
+          <Image src.decode="font://&#xf14e;" class="fas t-14" android:style="font-size: 4"/>
         </TabStripItem>
+
+        <TabStripItem>
+          <Image src.decode="font://&#xf406;" class="fas t-14" android:style="font-size: 4"/>
+        </TabStripItem>
+
+        <TabStripItem>
+          <Image src.decode="font://&#xf067;" class="fas t-14" android:style="font-size: 4"/>
+        </TabStripItem>
+
       </TabStrip>
 
       <!-- The number of TabContentItem components should corespond to the number of TabStripItem components -->
@@ -59,11 +68,25 @@
           <NewsList />
         </Frame>
       </TabContentItem>
+
       <TabContentItem>
         <GridLayout>
           <Label text="Account Page" class="h2 text-center"></Label>
         </GridLayout>
       </TabContentItem>
+
+      <TabContentItem>
+        <GridLayout>
+          <Label text="Search Page" class="h2 text-center"></Label>
+        </GridLayout>
+      </TabContentItem>
+
+      <TabContentItem>
+        <GridLayout>
+          <Label text="Search Page" class="h2 text-center"></Label>
+        </GridLayout>
+      </TabContentItem>
+
       <TabContentItem>
         <GridLayout>
           <Label text="Search Page" class="h2 text-center"></Label>
@@ -98,6 +121,8 @@ export default {
         { name: 'Sample 1' },
         { name: 'Sample 2' },
         { name: 'Sample 3' },
+        { name: 'Sample 4' },
+        { name: 'Sample 5' },
       ]
     }
   },
@@ -122,10 +147,13 @@ export default {
 
 @import "~@nativescript/theme/scss/variables/blue";
 
-TabStrip {
-  selected-item-color: blueviolet;
-  un-selected-item-color: brown;
-  highlight-color: gold;
+
+TabStripItem {
+  color: white;
+}
+
+TabStripItem:active {
+  color: #38a7dc;
 }
 
 </style>
