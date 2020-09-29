@@ -10,6 +10,8 @@ Vue.config.silent = (TNS_ENV === 'production');
 
 Vue.registerElement("DropDown", () => require("nativescript-drop-down/drop-down").DropDown)
 
+// comment for commit: intro -> create develop branch
+
 
 new Vue({
     store,
