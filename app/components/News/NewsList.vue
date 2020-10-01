@@ -2,7 +2,7 @@
 
   <Page actionBarHidden="true">
 
-    <ActivityIndicator :busy="isBusy" class="activity-indicator"/>
+    <ActivityIndicator :busy="isBusy"  @loaded="someMethod" class="activity-indicator" />
 
     <ListView for="item in items" v-if="!isBusy">
 
@@ -10,8 +10,8 @@
 
         <StackLayout orientation="vertical">
 
-          <AbsoluteLayout class="post-list-image">
-            <Image :src="item.image" stretch="fill" width="100%"/>
+          <AbsoluteLayout class="post-list-image" clipToBounds="true" >
+            <Image :src="item.image" stretch="fill" width="100%" loadMode="async"/>
           </AbsoluteLayout>
 
           <GridLayout rows="auto, auto, auto" backgroundColor="white">
@@ -19,6 +19,50 @@
             <Label :text="item.title" row="0" class="post-list-title" textWrap="true" @tap="readPost(item)"/>
 
             <Label :text="item.shortText" row="1" class="post-list-shot-text" textWrap="true"/>
+
+            <FlexboxLayout justifyContent="flex-start" flexDirection="row" row="2" marginTop="15">
+
+              <StackLayout orientation="horizontal">
+
+                // TODO: fix android and ios like heart with and height
+                <Image
+                    class="far like-bg"
+                    :class="{ likeActive : item.selfLike }"
+                    @tap="tapLike($event, item)"
+                    width="30"
+                    height="30"
+                    ios:style="background-size: 35px 25px"
+                    android:style="background-size: 85px 90px"
+                />
+                <Label :text="item.likes" />
+
+              </StackLayout>
+
+              <StackLayout orientation="horizontal">
+
+                <Image src="~/images/like.png" />
+                <Label :text="item.likes" />
+
+              </StackLayout>
+
+              <StackLayout orientation="horizontal">
+
+                <Image src="~/images/like.png" />
+                <Label :text="item.likes" />
+
+              </StackLayout>
+
+              <StackLayout orientation="horizontal">
+
+                <Image src="~/images/like.png" />
+                <Label :text="item.likes" />
+
+              </StackLayout>
+
+
+            </FlexboxLayout>
+
+
 
           </GridLayout>
 
@@ -33,7 +77,6 @@
 </template>
 
 <script>
-// import NewsItem from "~/components/News/NewsItem";
 
 const NewsItem = {
   template: `
@@ -84,7 +127,6 @@ const NewsItem = {
 
   created() {
     this.currentPostTitle = this.post.title;
-    console.log(this.post);
   },
 
   methods: {
@@ -108,11 +150,6 @@ export default {
       this.getData();
     })
     this.getData();
-
-    setTimeout(() => {
-      this.isBusy = false;
-    }, 1000);
-
   },
 
   destroyed() {
@@ -120,6 +157,10 @@ export default {
   },
 
   methods: {
+
+    someMethod(arg) {
+      this.isBusy = false;
+    },
 
     readPost(post) {
 
@@ -135,6 +176,21 @@ export default {
 
     },
 
+    tapLike(event, post) {
+
+      console.log(event.object, post)
+
+      if (post.selfLike) {
+        post.likes--;
+      } else {
+        post.likes++;
+      }
+
+      post.selfLike = !post.selfLike
+
+    },
+
+
     getData() {
       this.items = [];
 
@@ -142,10 +198,11 @@ export default {
         {
           id: 1,
           category: 'Sample category',
-          image: 'https://lh3.googleusercontent.com/_ZCt-DLEryHiu_En6Akfoknes_eMaXyAgvx0eHeF8ON5iRjCS2_2o2kJWn9J9nQIvcaG',
+          image: 'https://imag.malavida.com/mvimgbig/download-fs/fondo-de-pantalla-hello-kitty-12641-2.jpg',
           title: "Investors From Silicon Valley",
           shortText: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.",
           likes: 609,
+          selfLike: true,
           commentCount: 50,
           dontKnow: 341,
           repostsCount: 12
@@ -153,10 +210,11 @@ export default {
         {
           id: 2,
           category: 'Sample category',
-          image: 'https://i.imgur.com/l7oHbhx.jpg',
-          title: "Item 1",
+          image: 'https://wall2mob.com/m/wp-DishonoredVideoGameWide_37616-cprw.jpg?i=37616&w=640&h=480&fdl=0',
+          title: "Item 2",
           shortText: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.",
           likes: 609,
+          selfLike: false,
           commentCount: 50,
           dontKnow: 341,
           repostsCount: 12
@@ -164,10 +222,11 @@ export default {
         {
           id: 3,
           category: 'Sample category',
-          image: 'https://www.gettyimages.com/gi-resources/images/500px/983794168.jpg',
-          title: "Item 1",
+          image: '~/images/fondo.jpg',
+          title: "Item 3",
           shortText: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.",
           likes: 609,
+          selfLike: true,
           commentCount: 50,
           dontKnow: 341,
           repostsCount: 12
@@ -175,10 +234,11 @@ export default {
         {
           id: 4,
           category: 'Sample category',
-          image: 'https://lh3.googleusercontent.com/_ZCt-DLEryHiu_En6Akfoknes_eMaXyAgvx0eHeF8ON5iRjCS2_2o2kJWn9J9nQIvcaG',
-          title: "Item 1",
+          image: 'https://imag.malavida.com/mvimgbig/download-fs/fondo-de-pantalla-hello-kitty-12641-2.jpg',
+          title: "Item 4",
           shortText: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.",
           likes: 609,
+          selfLike: false,
           commentCount: 50,
           dontKnow: 341,
           repostsCount: 12
@@ -187,9 +247,10 @@ export default {
           id: 5,
           category: 'Sample category',
           image: 'https://lh3.googleusercontent.com/_ZCt-DLEryHiu_En6Akfoknes_eMaXyAgvx0eHeF8ON5iRjCS2_2o2kJWn9J9nQIvcaG',
-          title: "Item 1",
+          title: "Item 5",
           shortText: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.",
           likes: 609,
+          selfLike: false,
           commentCount: 50,
           dontKnow: 341,
           repostsCount: 12
@@ -198,79 +259,15 @@ export default {
           id: 6,
           category: 'Sample category',
           image: 'https://lh3.googleusercontent.com/_ZCt-DLEryHiu_En6Akfoknes_eMaXyAgvx0eHeF8ON5iRjCS2_2o2kJWn9J9nQIvcaG',
-          title: "Item 1",
+          title: "Item 6",
           shortText: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.",
           likes: 609,
+          selfLike: false,
           commentCount: 50,
           dontKnow: 341,
           repostsCount: 12
         },
-        {
-          id: 7,
-          category: 'Sample category',
-          image: 'https://lh3.googleusercontent.com/_ZCt-DLEryHiu_En6Akfoknes_eMaXyAgvx0eHeF8ON5iRjCS2_2o2kJWn9J9nQIvcaG',
-          title: "Item 1",
-          shortText: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.",
-          likes: 609,
-          commentCount: 50,
-          dontKnow: 341,
-          repostsCount: 12
-        },
-        {
-          id: 8,
-          category: 'Sample category',
-          image: 'https://lh3.googleusercontent.com/_ZCt-DLEryHiu_En6Akfoknes_eMaXyAgvx0eHeF8ON5iRjCS2_2o2kJWn9J9nQIvcaG',
-          title: "Item 1",
-          shortText: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.",
-          likes: 609,
-          commentCount: 50,
-          dontKnow: 341,
-          repostsCount: 12
-        },
-        {
-          id: 9,
-          category: 'Sample category',
-          image: 'https://lh3.googleusercontent.com/_ZCt-DLEryHiu_En6Akfoknes_eMaXyAgvx0eHeF8ON5iRjCS2_2o2kJWn9J9nQIvcaG',
-          title: "Item 1",
-          shortText: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.",
-          likes: 609,
-          commentCount: 50,
-          dontKnow: 341,
-          repostsCount: 12
-        },
-        {
-          id: 10,
-          category: 'Sample category',
-          image: 'https://lh3.googleusercontent.com/_ZCt-DLEryHiu_En6Akfoknes_eMaXyAgvx0eHeF8ON5iRjCS2_2o2kJWn9J9nQIvcaG',
-          title: "Item 1",
-          shortText: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.",
-          likes: 609,
-          commentCount: 50,
-          dontKnow: 341,
-          repostsCount: 12
-        },
-        {
-          id: 11,
-          category: 'Sample category',
-          image: 'https://lh3.googleusercontent.com/_ZCt-DLEryHiu_En6Akfoknes_eMaXyAgvx0eHeF8ON5iRjCS2_2o2kJWn9J9nQIvcaG',
-          title: "Item 1",
-          shortText: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.",
-          likes: 609,
-          commentCount: 50,
-          dontKnow: 341,
-          repostsCount: 12
-        },
-        {
-          id: 12,
-          category: 'Sample category',
-          image: 'https://lh3.googleusercontent.com/_ZCt-DLEryHiu_En6Akfoknes_eMaXyAgvx0eHeF8ON5iRjCS2_2o2kJWn9J9nQIvcaG',
-          title: "Item 1",
-          shortText: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.",
-          likes: 609,
-          commentCount: 50,
-          dontKnow: 341,
-          repostsCount: 12
-        },
+
 
       ];
 
@@ -294,13 +291,31 @@ ListView {
   }
 
   GridLayout {
-    height: 250;
+    height: 180;
     margin: 0;
     padding: 20;
 
     Label {
       margin: 0;
       padding: 0;
+    }
+
+    FlexboxLayout {
+
+      StackLayout {
+        margin-right: 30;
+
+        Image {
+          width: 25;
+          tint-color: #007ECD;
+        }
+
+        Label {
+          font-size: 14;
+          margin-left: 10;
+        }
+      }
+
     }
   }
 }
@@ -319,6 +334,17 @@ ListView {
   font-size: 16;
   color: #747474;
   margin-top: 20;
+}
+
+.like-bg.likeActive {
+  tint-color: #f4309c !important;
+  background-image: url('~/images/like-active.png') !important;
+}
+
+.like-bg {
+  background-image: url('~/images/like.png');
+  background-repeat: no-repeat;
+  background-position: 0 5;
 }
 
 </style>
