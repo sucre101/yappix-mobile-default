@@ -1,5 +1,5 @@
 <template>
-  <Page>
+  <Page id="selfProfileModal">
 
     <StackLayout>
 
@@ -69,6 +69,7 @@ export default {
     this.$root.$on('profile::modal', (data) => {
       this.locItems = data.items;
       this.title = data.modalTitle;
+      this.selectedId = data.selected;
     })
   },
 
@@ -76,6 +77,7 @@ export default {
     this.$root.$off('profile::modal', () => {
       this.locItems = [];
       this.title = '';
+      this.selectedId = 0;
     });
   },
 
@@ -93,3 +95,7 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+@import "self-profile-modal";
+</style>

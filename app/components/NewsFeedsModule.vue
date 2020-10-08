@@ -100,18 +100,13 @@
 </template>
 
 <script>
-import NewsList from "~/components/News/NewsList"
-import Search from "~/components/Search";
-import Browse from "~/components/Browse";
-
+import NewsList from "~/components/templates/modules/news/NewsList";
 import * as utils from "~/shared/utils";
 
 export default {
 
   components: {
-
-    NewsList, Search, Browse
-
+    NewsList
   },
 
   data() {
@@ -139,6 +134,10 @@ export default {
     this.$root.$on('post::back', () => {
       this.currentIndex = 0;
     });
+  },
+
+  destroyed() {
+    this.$root.$off('post::back');
   },
 
   methods: {

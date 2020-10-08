@@ -158,3 +158,7 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+@import "self-profile";
+</style>
