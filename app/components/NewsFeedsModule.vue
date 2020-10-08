@@ -163,11 +163,11 @@ export default {
 
 
 TabStripItem {
-  color: white;
+  color: #38a7dc;
 }
 
 TabStripItem:active {
-  color: #38a7dc;
+  color: white;
 }
 
 </style>

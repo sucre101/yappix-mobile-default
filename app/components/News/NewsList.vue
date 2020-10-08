@@ -18,19 +18,18 @@
 
             <Label :text="item.title" row="0" class="post-list-title" textWrap="true" @tap="readPost(item)"/>
 
-            <Label :text="item.shortText" row="1" class="post-list-shot-text" textWrap="true"/>
+            <Label :text="item.shortText" row="1" class="post-list-short-text" textWrap="true"/>
 
             <FlexboxLayout justifyContent="flex-start" flexDirection="row" row="2" marginTop="15">
 
               <StackLayout orientation="horizontal">
 
-                // TODO: fix android and ios like heart with and height
                 <Image
-                    class="far like-bg"
+                    class="post-list-post-like"
                     :class="{ likeActive : item.selfLike }"
                     @tap="tapLike($event, item)"
-                    width="30"
-                    height="30"
+                    width="25"
+                    height="25"
                     ios:style="background-size: 35px 25px"
                     android:style="background-size: 85px 90px"
                 />
@@ -40,29 +39,41 @@
 
               <StackLayout orientation="horizontal">
 
-                <Image src="~/images/like.png" />
-                <Label :text="item.likes" />
+                <Image
+                  src="~/images/Chat.png"
+                  width="25"
+                  height="25"
+                />
+
+                <Label :text="item.commentCount" />
 
               </StackLayout>
 
               <StackLayout orientation="horizontal">
 
-                <Image src="~/images/like.png" />
-                <Label :text="item.likes" />
+                <Image
+                    src="~/images/Chart.png"
+                    width="25"
+                    height="25"
+                />
+
+                <Label :text="item.dontKnow" />
 
               </StackLayout>
 
               <StackLayout orientation="horizontal">
 
-                <Image src="~/images/like.png" />
-                <Label :text="item.likes" />
+                <Image
+                    src="~/images/repost.png"
+                    width="25"
+                    height="25"
+                />
+
+                <Label :text="item.repostsCount" />
 
               </StackLayout>
-
 
             </FlexboxLayout>
-
-
 
           </GridLayout>
 
@@ -77,66 +88,71 @@
 </template>
 
 <script>
+import NewsItem from "~/components/News/NewsItem";
 
-const NewsItem = {
-  template: `
-    <Frame>
-      <Page>
-        <ActionBar>
-          <GridLayout
-              columns="auto,*"
-              orientation="horizontal"
-              ios:padding="0"
-              height="100%"
-              width="100%">
-
-            <Image
-                src="~/images/b-arrow.png"
-                horizontalAlignment="left"
-                verticalAlignment="center"
-                col="0"
-                @tap="closeCurrentPost"
-                width="15"
-            />
-
-            <Label
-                :text="currentPostTitle"
-                fontSize="20"
-                horizontalAlignment="center"
-                verticalAlignment="center"
-                marginRight="15"
-                col="1"
-            />
-
-          </GridLayout>
-        </ActionBar>
-        <StackLayout>
-          <Label text="ashdkhaskdhkj has askdjhaksdkjasak"/>
-        </StackLayout>
-      </Page>
-    </Frame>
-  `,
-
-  props: ['post'],
-
-  data() {
-    return {
-      currentPostTitle: ''
-    }
-  },
-
-  created() {
-    this.currentPostTitle = this.post.title;
-  },
-
-  methods: {
-    closeCurrentPost() {
-      this.$modal.close();
-    }
-  }
-}
+// const NewsItem = {
+//   template: `
+//     <Frame>
+//       <Page>
+//         <ActionBar>
+//           <GridLayout
+//               columns="auto,*"
+//               orientation="horizontal"
+//               ios:padding="0"
+//               height="100%"
+//               width="100%">
+//
+//             <Image
+//                 src="~/images/b-arrow.png"
+//                 horizontalAlignment="left"
+//                 verticalAlignment="center"
+//                 col="0"
+//                 @tap="closeCurrentPost"
+//                 width="15"
+//             />
+//
+//             <Label
+//                 :text="currentPostTitle"
+//                 fontSize="20"
+//                 horizontalAlignment="center"
+//                 verticalAlignment="center"
+//                 marginRight="15"
+//                 col="1"
+//             />
+//
+//           </GridLayout>
+//         </ActionBar>
+//         <StackLayout>
+//           <Label text="ashdkhaskdhkj has askdjhaksdkjasak"/>
+//         </StackLayout>
+//       </Page>
+//     </Frame>
+//   `,
+//
+//   props: ['post'],
+//
+//   data() {
+//     return {
+//       currentPostTitle: ''
+//     }
+//   },
+//
+//   created() {
+//     this.currentPostTitle = this.post.title;
+//   },
+//
+//   methods: {
+//     closeCurrentPost() {
+//       this.$modal.close();
+//     }
+//   }
+// }
 
 export default {
+
+  components: {
+    NewsItem
+  },
 
   data() {
     return {
@@ -152,9 +168,6 @@ export default {
     this.getData();
   },
 
-  destroyed() {
-    this.isBusy = true;
-  },
 
   methods: {
 
@@ -165,20 +178,17 @@ export default {
     readPost(post) {
 
       this.$showModal(NewsItem, {
-        props: {
-          post: post
-        },
         fullscreen: true,
         animated: true,
         stretched: true,
         dimAmount: 0.5
       });
 
+      this.$root.$emit('post::read', post);
+
     },
 
     tapLike(event, post) {
-
-      console.log(event.object, post)
 
       if (post.selfLike) {
         post.likes--;
@@ -290,6 +300,10 @@ ListView {
     padding: 0;
   }
 
+  .post-list-image {
+    height: 200;
+  }
+
   GridLayout {
     height: 180;
     margin: 0;
@@ -300,19 +314,43 @@ ListView {
       padding: 0;
     }
 
+    .post-list-title {
+      font-size: 22;
+      font-weight: bold;
+      color: black;
+    }
+
+    .post-list-short-text {
+      font-size: 16;
+      color: #747474;
+      margin-top: 20;
+    }
+
     FlexboxLayout {
 
       StackLayout {
-        margin-right: 30;
+        margin-right: 35;
 
         Image {
           width: 25;
           tint-color: #007ECD;
         }
 
+        .post-list-post-like {
+          background-image: url('~/images/like.png');
+          background-repeat: no-repeat;
+          background-position: 0 0;
+        }
+        .post-list-post-like.likeActive {
+          tint-color: #f4309c !important;
+          background-image: url('~/images/like-active.png') !important;
+        }
+
         Label {
-          font-size: 14;
-          margin-left: 10;
+          font-size: 17;
+          font-weight: bold;
+          margin-left: 5;
+          color: #a3a3a3;
         }
       }
 
@@ -320,31 +358,5 @@ ListView {
   }
 }
 
-.post-list-image {
-  height: 200;
-}
-
-.post-list-title {
-  font-size: 22;
-  font-weight: bold;
-  color: black;
-}
-
-.post-list-shot-text {
-  font-size: 16;
-  color: #747474;
-  margin-top: 20;
-}
-
-.like-bg.likeActive {
-  tint-color: #f4309c !important;
-  background-image: url('~/images/like-active.png') !important;
-}
-
-.like-bg {
-  background-image: url('~/images/like.png');
-  background-repeat: no-repeat;
-  background-position: 0 5;
-}
-
 </style>
+

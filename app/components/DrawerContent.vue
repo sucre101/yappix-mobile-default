@@ -9,6 +9,7 @@
             width="50" height="50"
             alignItems="center"
             borderRadius="40"
+            @tap="onNavigationItemTap(SelfProfile)"
         >
           <Image
               class="nt-drawer__header-image fas t-36"
@@ -139,8 +140,8 @@ import Featured from "~/components/Featured";
 import Search from "~/components/Search";
 import Settings from "~/components/Settings";
 import RegisterPage from "~/components/base/RegisterPage";
-import SelfProfile from "~/components/SelfProfile";
-import Profile from "~/components/Profile";
+import SelfProfile from "~/components/templates/profile/SelfProfile";
+import Profile from "~/components/templates/profile/Profile";
 import NewsFeedsModule from "~/components/NewsFeedsModule";
 
 import * as utils from "~/shared/utils";
@@ -186,7 +187,6 @@ export default {
   mounted() {
     SelectedPageService.getInstance().selectedPage$
         .subscribe((selectedPage) => {
-          console.log(selectedPage)
           this.selectedPage = selectedPage
         });
   },
@@ -197,7 +197,7 @@ export default {
     },
     onNavigationItemTap(component) {
       this.$navigateTo(component, {
-        clearHistory: true
+        clearHistory: false
       });
       utils.closeDrawer();
     }

@@ -1,7 +1,7 @@
 <template>
-  <Page class="page">
+  <Page id="profile" class="page">
 
-    <ActionBar backgroundColor="white" flat="true">
+    <ActionBar flat="true">
 
       <GridLayout
           columns="auto, *"
@@ -35,7 +35,7 @@
 
     </ActionBar>
 
-    <StackLayout horizontalAlignment="center">
+    <StackLayout>
 
       <GridLayout rows="auto, auto, auto, auto, auto">
 
@@ -132,8 +132,3 @@ export default  {
 
 </script>
 
-<style lang="scss" scoped>
-StackLayout {
- background-color: #f1f9ff;
-}
-</style>
