@@ -1,5 +1,6 @@
 @import "~@nativescript/theme/core";
 @import "~@nativescript/theme/blue";
+@import "./components/styles/app.project";
 
 // Place any CSS rules you want to apply on both iOS and Android here.
 // This is where the vast majority of your CSS code goes.
@@ -54,7 +55,4 @@ Page {
   .p-r-10 {
     padding-right: 50;
   }
-}
-.activeChoose {
-  color: red;
 }

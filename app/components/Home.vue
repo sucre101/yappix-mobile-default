@@ -8,14 +8,25 @@
               height="100%"
               width="100%">
 
+<!--            <Image-->
+<!--                width="20"-->
+<!--                src="~/images/sb-menu.png"-->
+<!--                horizontalAlignment="left"-->
+<!--                verticalAlignment="center"-->
+<!--                tintColor="white"-->
+<!--                col="0"-->
+<!--                @tap="onDrawerButtonTap"-->
+<!--            />-->
+
             <Image
-                width="20"
-                src="~/images/sb-menu.png"
+                src="res://menu"
                 horizontalAlignment="left"
                 verticalAlignment="center"
                 tintColor="white"
                 col="0"
                 @tap="onDrawerButtonTap"
+                width="15"
+                marginLeft="10"
             />
 
             <Label
