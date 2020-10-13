@@ -94,6 +94,14 @@
         </GridLayout>
 
         <GridLayout columns="auto, *"
+                    :class="'nt-drawer__list-item' + (selectedPage === 'PageBuilder' ? ' -selected': '')"
+                    style="margin-left: 50px"
+                    @tap="onNavigationItemTap(PageBuilderModule)">
+          <Label col="0" text.decode="&#xf0ad;" class="nt-icon fas"/>
+          <Label col="1" text="Page Builder"/>
+        </GridLayout>
+
+        <GridLayout columns="auto, *"
                     :class="'nt-drawer__list-item' + (selectedPage === 'Browse' ? ' -selected': '')"
                     @tap="onNavigationItemTap(Browse)">
           <Label col="0" text.decode="&#xf1ea;" class="nt-icon far"/>
@@ -143,6 +151,7 @@ import RegisterPage from "~/components/base/RegisterPage";
 import SelfProfile from "~/components/templates/profile/SelfProfile";
 import Profile from "~/components/templates/profile/Profile";
 import NewsFeedsModule from "~/components/NewsFeedsModule";
+import PageBuilderModule from "~/components/PageBuilderModule";
 
 import * as utils from "~/shared/utils";
 import SelectedPageService from "~/shared/selected-page-service";
@@ -158,7 +167,8 @@ export default {
     RegisterPage,
     SelfProfile,
     Profile,
-    NewsFeedsModule
+    NewsFeedsModule,
+    PageBuilderModule
   },
 
   data() {
@@ -172,6 +182,7 @@ export default {
       SelfProfile: SelfProfile,
       Profile: Profile,
       NewsFeedsModule: NewsFeedsModule,
+      PageBuilderModule: PageBuilderModule,
       selectedPage: "",
       auth: true,
     };
