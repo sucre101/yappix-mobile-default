@@ -32,6 +32,33 @@
     }
   }
 
+  StackLayout.profile-form {
+    width: 100%;
+    orientation: vertical;
+    StackLayout.profile-photo {
+      background-color: #b8e5fd;
+      Label {
+        color: white;
+        font-size: 110;
+        horizontal-align: center;
+        padding: 80 0;
+      }
+    }
+    StackLayout.form {
+      width: 100%;
+      background-color: #f1f9ff;
+      ScrollView {
+        height: 100%;
+        StackLayout {
+          orientation: vertical;
+          GridLayout {
+            horizontal-align: center;
+          }
+        }
+      }
+    }
+  }
+
   .input-group {
     align-items: center;
     margin: 0;

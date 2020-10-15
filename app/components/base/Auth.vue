@@ -1,5 +1,5 @@
 <template>
-  <Page id="registration">
+  <Page id="authorization">
 
     <ActionBar class="action-bar">
       <GridLayout
@@ -20,7 +20,7 @@
         />
 
         <Label
-            text="Registration"
+            text="Authorization"
             style="text-transform: uppercase"
             fontSize="18"
             color="white"
@@ -55,14 +55,28 @@
 <script>
 import * as utils from "~/shared/utils";
 import SelectedPageService from "../../shared/selected-page-service";
+import { mapActions, mapGetters } from 'vuex';
+
+import Browse from "~/components/Browse";
 
 export default {
+
+  components: {
+    Browse
+  },
 
   data() {
     return {
       email: '',
       password: '',
+      Browse: Browse,
     }
+  },
+
+  computed: {
+    ...mapGetters({
+      getApiToken: 'User/getApiToken'
+    })
   },
 
   mounted() {
@@ -70,14 +84,24 @@ export default {
   },
 
   methods: {
+
+    ...mapActions({
+      saveToken: 'User/saveToken',
+      saveUserData: 'User/saveUserData'
+    }),
+
     onDrawerButtonTap() {
       utils.showDrawer();
     },
 
     sendForm() {
 
-      this.$app.api.post('auth/registration', { email: this.email, password: this.password })
-        .then(res => console.log(res))
+      this.$app.api.post('auth/login', { email: this.email, password: this.password })
+          .then((res) => {
+            this.saveToken(res.access_token);
+            this.saveUserData(res.user);
+            this.$navigateTo(this.Browse);
+          });
     }
   }
 };
@@ -86,7 +110,7 @@ export default {
 <style scoped lang="scss">
 // Start custom common variables
 @import '~@nativescript/theme/scss/variables/blue';
-@import "registration";
+@import "auth";
 // End custom common variables
 
 // Custom styles

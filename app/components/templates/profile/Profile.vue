@@ -51,8 +51,13 @@ export default  {
       lastname: 'Doe',
       avatar: '',
       email: 'exanple@mail.ru',
-      about: 'Hi! My name is John, I’m a creative geek from San Francisco, CA. Contact me at john@mail.com'
+      about: 'Hi! My name is John, I’m a creative geek from San Francisco, CA. Contact me at john@mail.com',
+      sample: []
     }
+  },
+
+  mounted() {
+    this.getData();
   },
 
   methods: {

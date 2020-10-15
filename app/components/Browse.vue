@@ -29,12 +29,20 @@
 <script>
   import * as utils from "~/shared/utils";
   import SelectedPageService from "../shared/selected-page-service";
+  import { mapGetters } from 'vuex';
 
   export default {
+
     mounted() {
       SelectedPageService.getInstance().updateSelectedPage("Browse");
+      console.log(this.getUserData);
     },
+
     computed: {
+      ...mapGetters({
+        getUserData: 'User/getUserData'
+      }),
+
       message() {
         return "<!-- Page content goes here -->";
       }

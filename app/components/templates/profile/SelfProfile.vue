@@ -11,64 +11,57 @@
       </GridLayout>
     </ActionBar>
 
-    <StackLayout width="100%" orientation="vertical">
+    <StackLayout class="profile-form">
 
-      <StackLayout backgroundColor="#b8e5fd">
-        <Label
-            class="fas"
-            text.decode="&#xf007;"
-            color="white"
-            fontSize="110"
-            horizontalAlignment="center"
-            style="padding-top: 80px; padding-bottom: 80px"
-        />
+      <StackLayout class="profile-photo">
+        <Label class="fas" text.decode="&#xf007;"/>
       </StackLayout>
 
-      <StackLayout width="100%" backgroundColor="#f1f9ff">
+      <StackLayout class="form">
 
-        <ScrollView orientation="vertical" height="100%">
-          <StackLayout orientation="vertical" >
+        <ScrollView>
+          <StackLayout>
 
-            <GridLayout rows="auto, auto" class="input-group" horizontalAlignment="center">
+            <GridLayout rows="auto, auto" class="input-group">
               <Label text="First Name" row="0"/>
               <TextField  hint="Required Field" row="1" class="input-field"/>
             </GridLayout>
 
-            <GridLayout rows="auto, auto" class="input-group" horizontalAlignment="center">
+            <GridLayout rows="auto, auto" class="input-group">
               <Label text="Last Name" row="0"/>
               <TextField  hint="Required Field" row="1" class="input-field"/>
             </GridLayout>
 
-            <GridLayout rows="auto, auto" class="input-group" horizontalAlignment="center">
+            <GridLayout rows="auto, auto" class="input-group">
               <Label text="E-Mail" row="0"/>
               <TextField  hint="email" row="1" class="input-field" keyboardType="email"/>
             </GridLayout>
 
-            <GridLayout rows="auto, auto" class="input-group" horizontalAlignment="center">
+            <GridLayout rows="auto, auto" class="input-group">
               <Label text="Password" row="0"/>
               <TextField  hint="Required Field" secure="true" row="1" class="input-field"/>
             </GridLayout>
 
-            <GridLayout rows="auto, auto" class="input-group" horizontalAlignment="center">
+            <GridLayout rows="auto, auto" class="input-group">
               <Label text="Password repeat" row="0"/>
               <TextField  hint="Required Field" secure="true" row="1" class="input-field"/>
             </GridLayout>
 
-            <GridLayout rows="auto, auto" class="input-group" horizontalAlignment="center">
+            <GridLayout rows="auto, auto" class="input-group">
               <Label text="Gender" row="0"/>
               <StackLayout class="input-field" verticalAlignment="center" row="1">
                 <Label :text="gendersList[profileGenderId].name" @tap="selectGender" marginTop="10"/>
               </StackLayout>
             </GridLayout>
 
-            <GridLayout rows="auto, auto" class="input-group" horizontalAlignment="center">
+            <GridLayout rows="auto, auto" class="input-group">
               <Label text="Country" row="0"/>
               <StackLayout class="input-field" verticalAlignment="center" row="1">
                 <Label :text="countriesList[profileCountryId - 1].name" @tap="selectCountry" marginTop="10"/>
               </StackLayout>
             </GridLayout>
 
-            <GridLayout rows="auto, auto" class="input-group" horizontalAlignment="center">
+            <GridLayout rows="auto, auto" class="input-group">
               <Label text="About me" row="0"/>
               <TextView text="dadhaskhdjka" hint="Required Field" row="1" class="text-field" />
             </GridLayout>

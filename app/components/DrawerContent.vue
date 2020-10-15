@@ -63,7 +63,7 @@
 
         <Button
             text="SIGN UP"
-            @tap="onNavigationItemTap(Register)"
+            @tap="onNavigationItemTap(Auth)"
             top="90"
             left="120"
             width="100"
@@ -140,6 +140,7 @@ import Featured from "~/components/Featured";
 import Search from "~/components/Search";
 import Settings from "~/components/Settings";
 import RegisterPage from "~/components/base/RegisterPage";
+import Auth from "~/components/base/Auth";
 import SelfProfile from "~/components/templates/profile/SelfProfile";
 import Profile from "~/components/templates/profile/Profile";
 import NewsFeedsModule from "~/components/NewsFeedsModule";
@@ -158,7 +159,8 @@ export default {
     RegisterPage,
     SelfProfile,
     Profile,
-    NewsFeedsModule
+    NewsFeedsModule,
+    Auth
   },
 
   data() {
@@ -169,11 +171,12 @@ export default {
       Search: Search,
       Settings: Settings,
       Register: RegisterPage,
+      Auth: Auth,
       SelfProfile: SelfProfile,
       Profile: Profile,
       NewsFeedsModule: NewsFeedsModule,
       selectedPage: "",
-      auth: true,
+      auth: false,
     };
   },
 

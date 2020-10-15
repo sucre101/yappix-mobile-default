@@ -43,30 +43,83 @@
           </GridLayout>
         </ActionBar>
 
-        <GridLayout class="page__content">
-            <Label class="page__content-icon fas" text.decode="&#xf015;"/>
-            <Label class="page__content-placeholder" :text="message"/>
-        </GridLayout>
+        <StackLayout orientation="vertical" width="100%" backgroundColor="yellow">
+
+
+          <StackLayout v-for="block in page" @loaded="someMethod($event, block)">
+            <ExampleBlock :key="block.blockId" :children="block.children" />
+          </StackLayout>
+
+        </StackLayout>
     </Page>
 </template>
 
 <script>
   import * as utils from "~/shared/utils";
   import SelectedPageService from "../shared/selected-page-service";
+  import ExampleBlock from "~/components/ExampleBlock";
 
   export default {
+
+    components: {
+      ExampleBlock
+    },
+
+    data() {
+      return {
+        sample: false,
+
+        page: [
+          {
+            blockId: 1,
+            style: 'background-color: #e4e4e4; width: 50%; margin-top: 20; margin-bottom: 10; padding: 40',
+            text: '1',
+            children: [
+              {
+                blockId: 12,
+                style: {
+                  color: '#000000'
+                }
+              }
+            ]
+          },
+          {
+            blockId: 2,
+            style: 'background-color: #000000',
+            text: 2,
+            children: [
+              {
+                blockId: 33,
+                style: {
+                  color: '#FFFFFF'
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
     mounted() {
       SelectedPageService.getInstance().updateSelectedPage("Home");
+
+
     },
     computed: {
       message() {
         return "<!-- Page content goes here -->";
       }
     },
+
     methods: {
       onDrawerButtonTap() {
         utils.showDrawer();
+      },
+
+      someMethod(event, param) {
+        // console.log(event, param)
+        // event.object.style = param.style;
       }
+
     }
   };
 </script>
