@@ -3,7 +3,7 @@ import * as http from 'tns-core-modules/http';
 export default class ApiService {
 
     constructor(network, appId) {
-        this.baseUrl = 'http://048e1d86292a.ngrok.io/api/' + appId + '/'
+        this.baseUrl = 'http://b67d275319ff.ngrok.io/api/' + appId + '/'
         this.network = network;
         this.headers = {
             "Content-Type": "application/json",
