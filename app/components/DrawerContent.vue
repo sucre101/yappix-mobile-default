@@ -1,84 +1,79 @@
 <template lang="html">
   <GridLayout rows="auto, *" class="nt-drawer__content">
-    <AbsoluteLayout row="0" class="nt-drawer__header" backgroundColor="#4dbbf5" :height="height">
-      <template v-if="auth">
-        <FlexboxLayout
-            top="40"
-            left="20"
-            backgroundColor="#2699fb"
-            width="50" height="50"
-            alignItems="center"
-            borderRadius="40"
-            @tap="onNavigationItemTap(SelfProfile)"
-        >
-          <Image
-              class="nt-drawer__header-image fas t-36"
-              src.decode="font://&#xf007;"
-              style="color: white"
-          />
-        </FlexboxLayout>
+
+    <AbsoluteLayout v-if="isLoggedIn" row="0" class="nt-drawer__header" backgroundColor="#4dbbf5" height="120">
+      <FlexboxLayout
+          top="40"
+          left="20"
+          backgroundColor="#2699fb"
+          width="50" height="50"
+          alignItems="center"
+          borderRadius="40"
+          @tap="onNavigationItemTap(SelfProfile)"
+      >
         <Image
-            src="~/images/Compose.png"
-            width="15"
-            top="50"
-            left="220"
-            @tap="onNavigationItemTap(SelfProfile)"
+            class="nt-drawer__header-image fas t-36"
+            src="~/images/yappix-background.png"
         />
-        <Label class="menu_header-name" text="John Doe" top="45" left="70"/>
-        <Label class="menu_header-country" text="San Francisco, CA" top="70" left="70"/>
-      </template>
+      </FlexboxLayout>
+      <Image
+          src="~/images/Compose.png"
+          width="15"
+          top="50"
+          left="220"
+          @tap="onNavigationItemTap(SelfProfile)"
+      />
+      <Label class="menu_header-name" :text="user.name" top="45" left="70"/>
+      <Label class="menu_header-country" text="San Francisco, CA" top="70" left="70"/>
+    </AbsoluteLayout>
 
-      <template v-else>
-        <FlexboxLayout
-            top="40"
-            left="20"
-            borderColor="#b8e5fd"
-            borderWidth="1"
-            width="50" height="50"
-            alignItems="center"
-            borderRadius="40"
-        >
-          <Image
-              src="~/images/yappix-background.png"
-              width="40"
-              height="40"
-          />
-        </FlexboxLayout>
-        <Label text="You are not logged in." fontSize="13" top="47" left="70"/>
-        <Label text="Please log in or register" fontSize="13" top="67" left="70"/>
+    <AbsoluteLayout v-show="!isLoggedIn" row="0" backgroundColor="#4dbbf5" >
 
-        <Button
-            text="SIGN IN"
-            @tap="onNavigationItemTap(Register)"
-            top="90"
-            left="10"
-            width="100"
-            height="30"
-            marginTop="20"
-            marginBottom="10"
-            backgroundColor="#747474"
-            borderRadius="3"
-            color="white"
+      <FlexboxLayout
+          top="40"
+          left="20"
+          borderColor="#b8e5fd"
+          borderWidth="1"
+          width="50" height="50"
+          alignItems="center"
+          borderRadius="40"
+      >
+        <Image
+            src="~/images/yappix-background.png"
+            width="40"
+            height="40"
         />
+      </FlexboxLayout>
+      <Label text="You are not logged in." fontSize="13" top="47" left="70"/>
+      <Label text="Please log in or register" fontSize="13" top="67" left="70"/>
 
-        <Button
-            text="SIGN UP"
-            @tap="onNavigationItemTap(Auth)"
-            top="90"
-            left="120"
-            width="100"
-            height="30"
-            marginTop="20"
-            marginBottom="10"
-            backgroundColor="#067dbc"
-            borderRadius="3"
-            color="white"
-        />
+      <Button
+          text="SIGN IN"
+          @tap="onNavigationItemTap(Register)"
+          top="90"
+          left="10"
+          width="100"
+          height="30"
+          marginTop="20"
+          marginBottom="10"
+          backgroundColor="#747474"
+          borderRadius="3"
+          color="white"
+      />
 
-        <!--        <FlexboxLayout>-->
-<!--          <Button text="Button" @tap="onNavigationItemTap(Register)"/>-->
-<!--        </FlexboxLayout>-->
-      </template>
+      <Button
+          text="SIGN UP"
+          @tap="onNavigationItemTap(Auth)"
+          top="90"
+          left="120"
+          width="100"
+          height="30"
+          marginTop="20"
+          marginBottom="10"
+          backgroundColor="#067dbc"
+          borderRadius="3"
+          color="white"
+      />
 
     </AbsoluteLayout>
 
@@ -144,6 +139,7 @@ import Auth from "~/components/base/Auth";
 import SelfProfile from "~/components/templates/profile/SelfProfile";
 import Profile from "~/components/templates/profile/Profile";
 import NewsFeedsModule from "~/components/NewsFeedsModule";
+import { mapGetters } from 'vuex';
 
 import * as utils from "~/shared/utils";
 import SelectedPageService from "~/shared/selected-page-service";
@@ -176,16 +172,21 @@ export default {
       Profile: Profile,
       NewsFeedsModule: NewsFeedsModule,
       selectedPage: "",
-      auth: false,
+      authUser: false,
     };
   },
 
   computed: {
-    height() {
-      return this.auth ? 120 : 160
+
+    ...mapGetters({
+      isLoggedIn: 'User/isLoggedIn',
+      getUserData: 'User/getUserData'
+    }),
+
+    user() {
+      return this.authUser ? this.getUserData : {}
     }
   },
-
 
   mounted() {
     SelectedPageService.getInstance().selectedPage$
@@ -194,16 +195,27 @@ export default {
         });
   },
 
+  created() {
+    this.authUser = this.isLoggedIn;
+
+    this.$root.$on('auth', () => {
+      this.authUser = this.isLoggedIn;
+    })
+  },
+
   methods: {
+
     onButtonTap() {
       console.log("Button was pressed");
     },
+
     onNavigationItemTap(component) {
       this.$navigateTo(component, {
         clearHistory: false
       });
       utils.closeDrawer();
-    }
+    },
+
   }
 };
 </script>

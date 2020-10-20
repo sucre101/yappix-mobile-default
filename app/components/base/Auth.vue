@@ -1,5 +1,5 @@
 <template>
-  <Page id="authorization">
+  <Page id="authorization" actionBarHidder="true">
 
     <ActionBar class="action-bar">
       <GridLayout
@@ -54,33 +54,26 @@
 
 <script>
 import * as utils from "~/shared/utils";
-import SelectedPageService from "../../shared/selected-page-service";
 import { mapActions, mapGetters } from 'vuex';
-
-import Browse from "~/components/Browse";
+import Home from "~/components/Home";
 
 export default {
 
   components: {
-    Browse
+    Home
   },
 
   data() {
     return {
       email: '',
       password: '',
-      Browse: Browse,
     }
   },
 
   computed: {
     ...mapGetters({
-      getApiToken: 'User/getApiToken'
+      getApiHeaders: 'User/getApiHeaders'
     })
-  },
-
-  mounted() {
-    SelectedPageService.getInstance().updateSelectedPage("Browse");
   },
 
   methods: {
@@ -98,20 +91,20 @@ export default {
 
       this.$app.api.post('auth/login', { email: this.email, password: this.password })
           .then((res) => {
-            this.saveToken(res.access_token);
             this.saveUserData(res.user);
-            this.$navigateTo(this.Browse);
-          });
+            this.saveToken(res.access_token);
+            this.$app.api.setHeader(this.getApiHeaders)
+          }).then(() => {
+            this.$root.$emit('auth')
+            this.$navigateTo(Home);
+      });
     }
   }
 };
 </script>
 
 <style scoped lang="scss">
-// Start custom common variables
-@import '~@nativescript/theme/scss/variables/blue';
-@import "auth";
-// End custom common variables
 
-// Custom styles
+@import "auth";
+
 </style>

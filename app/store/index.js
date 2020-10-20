@@ -7,9 +7,9 @@ import User from "~/store/modules/User";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-    modules: {
-        AppConfig,
-        User
-    }
+  modules: {
+    AppConfig,
+    User
+  }
 })
 

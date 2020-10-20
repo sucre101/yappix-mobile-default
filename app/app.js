@@ -4,8 +4,8 @@ import App from "./components/App";
 import Home from "./components/Home";
 import DrawerContent from "./components/DrawerContent";
 import RadSideDrawer from "nativescript-ui-sidedrawer/vue";
-import { isIOS } from 'tns-core-modules/platform';
-import { init } from './services/Auth'
+import {isIOS} from 'tns-core-modules/platform';
+import {init} from './services/Auth'
 
 const appConfig = require('~/config.json');
 
@@ -23,24 +23,24 @@ import NetworkService from './services/NetworkService';
 const network = new NetworkService();
 
 Vue.prototype.$app = Object.freeze({
-    network,
-    appId: appConfig.appId,
-    api: new ApiService(network, appConfig.appId),
-    isIOS: (isIOS),
+  network,
+  appId: appConfig.appId,
+  api: new ApiService(network, appConfig.appId, store.getters['User/getApiHeaders']),
+  isIOS: (isIOS),
 });
 
 init(store);
 
 
 new Vue({
-    store,
-    render (h) {
-        return h(
-          App,
-          [
-            h(DrawerContent, { slot: 'drawerContent' }),
-            h(Home, { slot: 'mainContent' })
-          ]
-        )
-      }
-  }).$start();
+  store,
+  render(h) {
+    return h(
+      App,
+      [
+        h(DrawerContent, {slot: 'drawerContent'}),
+        h(Home, {slot: 'mainContent'})
+      ]
+    )
+  }
+}).$start();
