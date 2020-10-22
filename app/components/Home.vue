@@ -8,16 +8,6 @@
           height="100%"
           width="100%">
 
-        <!--            <Image-->
-        <!--                width="20"-->
-        <!--                src="~/images/sb-menu.png"-->
-        <!--                horizontalAlignment="left"-->
-        <!--                verticalAlignment="center"-->
-        <!--                tintColor="white"-->
-        <!--                col="0"-->
-        <!--                @tap="onDrawerButtonTap"-->
-        <!--            />-->
-
         <Image
             src="res://menu"
             horizontalAlignment="left"
@@ -43,10 +33,10 @@
       </GridLayout>
     </ActionBar>
 
-    <StackLayout orientation="vertical" width="100%" backgroundColor="yellow">
+    <StackLayout id="container" orientation="vertical" width="100%" backgroundColor="yellow">
 
 
-      <Label text="12312312"/>
+      <Label text="some text" />
 
     </StackLayout>
   </Page>

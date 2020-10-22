@@ -8,7 +8,8 @@
           orientation="horizontal"
           ios:padding="0 10"
           height="100%"
-          width="100%">
+          width="100%"
+      >
 
         <Image
             src="res://menu"
@@ -33,7 +34,6 @@
 
       </GridLayout>
     </ActionBar>
-
 
     <BottomNavigation @selectedIndexChanged="changeView">
 

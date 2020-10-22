@@ -2,7 +2,7 @@ import Vue from "nativescript-vue";
 import store from './store/index';
 import App from "./components/App";
 import Home from "./components/Home";
-import DrawerContent from "./components/DrawerContent";
+import DrawerContent from "./components/templates/sidebar/DrawerContent";
 import RadSideDrawer from "nativescript-ui-sidedrawer/vue";
 import {isIOS} from 'tns-core-modules/platform';
 import {init} from './services/Auth'

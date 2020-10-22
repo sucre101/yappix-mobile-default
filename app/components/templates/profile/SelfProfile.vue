@@ -87,7 +87,7 @@ import * as utils from "~/shared/utils";
 import {GendersList, CountriesList} from "~/store/ListGetters";
 import SelfProfileModal from "~/components/templates/profile/modals/SelfProfileModal";
 import {mapActions, mapGetters} from 'vuex';
-import Auth from "~/components/base/Auth";
+import Auth from "~/components/templates/auth/Auth";
 
 export default {
 
