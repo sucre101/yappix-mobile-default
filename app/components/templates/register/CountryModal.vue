@@ -59,7 +59,8 @@ export default {
   data() {
     return {
       countryList: [],
-      title: 'Choose your country code'
+      title: 'Choose your country code',
+      selected: false,
     }
   },
 
@@ -67,9 +68,9 @@ export default {
 
     list() {
       for (let item in countries) {
+        countries[item].base = item;
         this.countryList.push(countries[item])
       }
-      console.log(this.countryList[1]);
       return this.countryList;
     }
 
@@ -77,10 +78,11 @@ export default {
 
   methods: {
     completeModal() {
-      this.$modal.close(this.selectedId);
+      this.$modal.close(this.selected);
     },
 
     choose(sel) {
+      this.selected = sel.item.base;
       this.completeModal();
     }
   }

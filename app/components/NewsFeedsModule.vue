@@ -3,6 +3,7 @@
   <Page>
 
     <ActionBar class="action-bar">
+      <NavigationButton visibility="hidden" />
       <GridLayout
           columns="auto,*, auto"
           orientation="horizontal"

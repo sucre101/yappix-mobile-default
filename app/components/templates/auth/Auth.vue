@@ -27,7 +27,23 @@
         </StackLayout>
 
         <TextField hint="email" keyboardType="email" row="1" v-model="email" v-show="selectedVariant === 'email'"/>
-        <TextField hint="phone" keyboardType="phone" row="1" v-model="phone" v-show="selectedVariant === 'sms'"/>
+
+        <GridLayout columns="85, *" v-show="selectedVariant === 'sms'" row="1">
+
+          <GridLayout columns="auto, auto" col="0" @tap="showCountryModal" horizontalAlignment="center" verticalAlignment="top" marginTop="10">
+            <Label :text="defCountryCode.emoji" col="0" fontSize="20"/>
+            <Label :text="'+' + defCountryCode.phone" fontSize="18" col="1"/>
+          </GridLayout>
+
+          <TextField
+              keyboardType="phone"
+              maxLength="10"
+              col="1"
+              v-model="phone"
+              ref="passwordField"
+          />
+
+        </GridLayout>
 
         <TextField hint="password" secure="true" row="2" v-model="password"/>
 
@@ -74,11 +90,14 @@ import * as utils from "~/shared/utils";
 import {mapActions, mapGetters} from 'vuex';
 import Home from "~/components/Home";
 import Register from "~/components/templates/register/Register";
+import { countries } from 'countries-list';
+import CountryModal from "~/components/templates/register/CountryModal";
+import * as h from '~/services/helpers';
 
 export default {
 
   components: {
-    Home, Register
+    Home, Register, CountryModal
   },
 
   data() {
@@ -88,7 +107,9 @@ export default {
       password: '',
       selectedVariant: 'email',
       agree: false,
-      agreeText: 'I consent to the processing of personal data and accept the terms of the service'
+      agreeText: 'I consent to the processing of personal data and accept the terms of the service',
+      defCountryCode: countries['US'],
+      error: false,
     }
   },
 
@@ -121,10 +142,29 @@ export default {
       utils.showDrawer();
     },
 
+    showCountryModal() {
+      this.$showModal(CountryModal, {
+        fullscreen: true,
+        animated: true,
+        stretched: true,
+        dimAmount: 0.5
+      }).then( (result) => {
+        if (result) {
+          this.defCountryCode = countries[result]
+        }
+        this.$refs.passwordField.nativeView.focus();
+      });
+    },
+
     sendForm() {
 
       if (!this.agree) {
         alert('You need check politics');
+        return false;
+      }
+
+      if (this.selectedVariant === 'email' && !h.emailValidation(this.email)) {
+        alert('Email not valid');
         return false;
       }
 

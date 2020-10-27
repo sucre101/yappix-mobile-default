@@ -2,6 +2,9 @@
   <Page id="registration" class="registration">
 
     <ActionBar flat="true">
+
+      <NavigationButton visibility="hidden" />
+
       <GridLayout columns="auto,*" ios:padding="0" class="topBar">
 
         <Image src="res://menu" col="0" @tap="onDrawerButtonTap" />
@@ -27,20 +30,23 @@
         </StackLayout>
 
         <TextField hint="email" keyboardType="email" row="1" v-model="email" v-show="selectedVariant === 'email'"/>
-        <TextField keyboardType="phone" row="1" v-model="phone" v-show="selectedVariant === 'sms'"/>
 
-<!--        <GridLayout v-show="selectedVariant === 'sms'"-->
-<!--                    row="1"-->
-<!--                    columns="auto, auto"-->
-<!--                    width="100"-->
-<!--                    height="40"-->
-<!--                    horizontalAlignment="left"-->
-<!--                    verticalAlignment="center"-->
-<!--                    marginTop="-5"-->
-<!--                    marginLeft="15"-->
-<!--        >-->
-<!--          <Label :text="defCountryCode" fontSize="18" @tap="showCountryModal"/>-->
-<!--        </GridLayout>-->
+        <GridLayout columns="85, *" v-show="selectedVariant === 'sms'" row="1">
+
+          <GridLayout columns="auto, auto" col="0" @tap="showCountryModal" horizontalAlignment="center" verticalAlignment="top" marginTop="10">
+            <Label :text="defCountryCode.emoji" col="0" fontSize="20"/>
+            <Label :text="'+' + defCountryCode.phone" fontSize="18" col="1"/>
+          </GridLayout>
+
+          <TextField
+              keyboardType="phone"
+              maxLength="10"
+              col="1"
+              v-model="phone"
+              ref="passwordField"
+          />
+
+        </GridLayout>
 
         <TextField hint="name" row="2" v-model="name"/>
 
@@ -90,6 +96,8 @@ import * as utils from "~/shared/utils";
 import SelectedPageService from "../../../shared/selected-page-service";
 import Auth from "~/components/templates/auth/Auth";
 import CountryModal from "~/components/templates/register/CountryModal";
+import { countries } from 'countries-list';
+import * as h from '~/services/helpers';
 
 export default {
 
@@ -108,7 +116,7 @@ export default {
       agree: false,
       error: false,
       agreeText: 'I consent to the processing of personal data and accept the terms of the service',
-      defCountryCode: 38
+      defCountryCode: countries['US'],
     }
   },
 
@@ -125,8 +133,6 @@ export default {
         this.error = val.length < 6
       }, 1500)
     },
-
-
 
   },
 
@@ -146,6 +152,11 @@ export default {
         animated: true,
         stretched: true,
         dimAmount: 0.5
+      }).then( (result) => {
+        if (result) {
+          this.defCountryCode = countries[result]
+        }
+        this.$refs.passwordField.nativeView.focus();
       });
     },
 
@@ -173,7 +184,19 @@ export default {
         return false;
       }
 
-      this.$app.api.post('auth/registration', { email: this.email, password: this.password })
+      if (this.selectedVariant === 'email' && !h.emailValidation(this.email)) {
+        alert('Email not valid');
+        return false;
+      }
+
+      const register = {
+        name: this.name,
+        type: this.selectedVariant,
+        value: this.selectedVariant === 'email' ? this.email : h.formatPhone(this.defCountryCode.phone, this.phone),
+        password: this.password
+      }
+
+      this.$app.api.post('auth/registration', register)
         .then(res => console.log(res))
     }
   }
