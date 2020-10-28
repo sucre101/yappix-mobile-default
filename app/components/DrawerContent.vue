@@ -76,8 +76,8 @@
         />
 
         <!--        <FlexboxLayout>-->
-<!--          <Button text="Button" @tap="onNavigationItemTap(Register)"/>-->
-<!--        </FlexboxLayout>-->
+        <!--          <Button text="Button" @tap="onNavigationItemTap(Register)"/>-->
+        <!--        </FlexboxLayout>-->
       </template>
 
     </AbsoluteLayout>
@@ -91,14 +91,6 @@
                     @tap="onNavigationItemTap(NewsFeedsModule)">
           <Label col="0" text.decode="&#xf015;" class="nt-icon fas"/>
           <Label col="1" text="News Feeds"/>
-        </GridLayout>
-
-        <GridLayout columns="auto, *"
-                    :class="'nt-drawer__list-item' + (selectedPage === 'PageBuilder' ? ' -selected': '')"
-                    style="margin-left: 50px"
-                    @tap="onNavigationItemTap(PageBuilderModule)">
-          <Label col="0" text.decode="&#xf0ad;" class="nt-icon fas"/>
-          <Label col="1" text="Page Builder"/>
         </GridLayout>
 
         <GridLayout columns="auto, *"
@@ -142,113 +134,110 @@
 </template>
 
 <script>
-import Home from "~/components/Home";
-import Browse from "~/components/Browse";
-import Featured from "~/components/Featured";
-import Search from "~/components/Search";
-import Settings from "~/components/Settings";
-import RegisterPage from "~/components/base/RegisterPage";
-import SelfProfile from "~/components/templates/profile/SelfProfile";
-import Profile from "~/components/templates/profile/Profile";
-import NewsFeedsModule from "~/components/NewsFeedsModule";
-import PageBuilderModule from "~/components/PageBuilderModule";
+  import Home from "~/components/Home";
+  import Browse from "~/components/Browse";
+  import Featured from "~/components/Featured";
+  import Search from "~/components/Search";
+  import Settings from "~/components/Settings";
+  import RegisterPage from "~/components/base/RegisterPage";
+  import SelfProfile from "~/components/templates/profile/SelfProfile";
+  import Profile from "~/components/templates/profile/Profile";
+  import NewsFeedsModule from "~/components/NewsFeedsModule";
 
-import * as utils from "~/shared/utils";
-import SelectedPageService from "~/shared/selected-page-service";
+  import * as utils from "~/shared/utils";
+  import SelectedPageService from "~/shared/selected-page-service";
 
-export default {
+  export default {
 
-  components: {
-    Home,
-    Browse,
-    Featured,
-    Search,
-    Settings,
-    RegisterPage,
-    SelfProfile,
-    Profile,
-    NewsFeedsModule,
-    PageBuilderModule
-  },
-
-  data() {
-    return {
-      Home: Home,
-      Browse: Browse,
-      Featured: Featured,
-      Search: Search,
-      Settings: Settings,
-      Register: RegisterPage,
-      SelfProfile: SelfProfile,
-      Profile: Profile,
-      NewsFeedsModule: NewsFeedsModule,
-      PageBuilderModule: PageBuilderModule,
-      selectedPage: "",
-      auth: true,
-    };
-  },
-
-  computed: {
-    height() {
-      return this.auth ? 120 : 160
-    }
-  },
-
-
-  mounted() {
-    SelectedPageService.getInstance().selectedPage$
-        .subscribe((selectedPage) => {
-          this.selectedPage = selectedPage
-        });
-  },
-
-  methods: {
-    onButtonTap() {
-      console.log("Button was pressed");
+    components: {
+      Home,
+      Browse,
+      Featured,
+      Search,
+      Settings,
+      RegisterPage,
+      SelfProfile,
+      Profile,
+      NewsFeedsModule
     },
-    onNavigationItemTap(component) {
-      this.$navigateTo(component, {
-        clearHistory: false
+
+    data() {
+      return {
+        Home: Home,
+        Browse: Browse,
+        Featured: Featured,
+        Search: Search,
+        Settings: Settings,
+        Register: RegisterPage,
+        SelfProfile: SelfProfile,
+        Profile: Profile,
+        NewsFeedsModule: NewsFeedsModule,
+        selectedPage: "",
+        auth: true,
+      };
+    },
+
+    computed: {
+      height() {
+        return this.auth ? 120 : 160
+      }
+    },
+
+
+    mounted() {
+      SelectedPageService.getInstance().selectedPage$
+      .subscribe((selectedPage) => {
+        this.selectedPage = selectedPage
       });
-      utils.closeDrawer();
+    },
+
+    methods: {
+      onButtonTap() {
+        console.log("Button was pressed");
+      },
+      onNavigationItemTap(component) {
+        this.$navigateTo(component, {
+          clearHistory: false
+        });
+        utils.closeDrawer();
+      }
     }
-  }
-};
+  };
 </script>
 
 <style lang="scss" scoped>
 
-AbsoluteLayout {
-  padding: 0;
-  //height: 120;
+  AbsoluteLayout {
+    padding: 0;
+    //height: 120;
 
-  Image {
+    Image {
 
-  }
-
-  .menu_header-name {
-    font-size: 18;
-  }
-
-  .menu_header-country {
-    font-size: 14;
-  }
-}
-
-ScrollView {
-  GridLayout {
-
-    margin-left: 50px;
-
-    Label {
-      font-size: 16px;
-      text-transform: uppercase;
     }
 
-    Label.fas {
-      font-size: 18px;
+    .menu_header-name {
+      font-size: 18;
+    }
+
+    .menu_header-country {
+      font-size: 14;
     }
   }
-}
+
+  ScrollView {
+    GridLayout {
+
+      margin-left: 50px;
+
+      Label {
+        font-size: 16px;
+        text-transform: uppercase;
+      }
+
+      Label.fas {
+        font-size: 18px;
+      }
+    }
+  }
 
 </style>
