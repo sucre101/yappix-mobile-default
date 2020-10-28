@@ -3,25 +3,27 @@
   <Page>
 
     <ActionBar class="action-bar">
+      <NavigationButton visibility="hidden" />
       <GridLayout
           columns="auto,*, auto"
           orientation="horizontal"
           ios:padding="0 10"
           height="100%"
-          width="100%">
+          width="100%"
+      >
 
         <Image
-            width="20"
-            src="~/images/sb-menu.png"
+            src="res://menu"
             horizontalAlignment="left"
             verticalAlignment="center"
             tintColor="white"
             col="0"
             @tap="onDrawerButtonTap"
+            width="15"
         />
 
         <Label
-            :text="pageList[currentIndex].name"
+            :text="setTitlePage"
             style="text-transform: uppercase"
             fontSize="18"
             color="white"
@@ -33,7 +35,6 @@
 
       </GridLayout>
     </ActionBar>
-
 
     <BottomNavigation @selectedIndexChanged="changeView">
 
@@ -100,31 +101,44 @@
 </template>
 
 <script>
-import NewsList from "~/components/News/NewsList"
-import Search from "~/components/Search";
-import Browse from "~/components/Browse";
-
+import NewsList from "~/components/templates/modules/news/NewsList";
 import * as utils from "~/shared/utils";
 
 export default {
 
   components: {
-
-    NewsList, Search, Browse
-
+    NewsList
   },
 
   data() {
     return {
       currentIndex: 0,
       pageList: [
-        { name: 'Sample 1' },
-        { name: 'Sample 2' },
-        { name: 'Sample 3' },
-        { name: 'Sample 4' },
-        { name: 'Sample 5' },
+        { name: 'News feeds posts' },
+        { name: 'Push Notifications' },
+        { name: 'News posts near' },
+        { name: 'My account' },
+        { name: 'New post' },
       ]
     }
+  },
+
+  computed: {
+
+    setTitlePage() {
+      return this.pageList[this.currentIndex].name.toUpperCase()
+    }
+
+  },
+
+  created() {
+    this.$root.$on('post::back', () => {
+      this.currentIndex = 0;
+    });
+  },
+
+  destroyed() {
+    this.$root.$off('post::back');
   },
 
   methods: {
@@ -149,11 +163,11 @@ export default {
 
 
 TabStripItem {
-  color: white;
+  color: #38a7dc;
 }
 
 TabStripItem:active {
-  color: #38a7dc;
+  color: white;
 }
 
 </style>

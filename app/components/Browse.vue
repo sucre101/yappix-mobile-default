@@ -31,10 +31,13 @@
   import SelectedPageService from "../shared/selected-page-service";
 
   export default {
+
     mounted() {
       SelectedPageService.getInstance().updateSelectedPage("Browse");
     },
+
     computed: {
+
       message() {
         return "<!-- Page content goes here -->";
       }
