@@ -13,7 +13,6 @@ Vue.use(RadSideDrawer);
 
 Vue.config.silent = (TNS_ENV === 'production');
 
-Vue.registerElement("DropDown", () => require("nativescript-drop-down/drop-down").DropDown)
 Vue.registerElement('Carousel', () => require('nativescript-carousel').Carousel);
 Vue.registerElement('CarouselItem', () => require('nativescript-carousel').CarouselItem);
 
