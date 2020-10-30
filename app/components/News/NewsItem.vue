@@ -1,6 +1,8 @@
 <template>
   <Page class="single-post-page">
 
+    <ActivityIndicator :busy="isBusy"  class="activity-indicator" color="red" width="100" height="100"/>
+
     <StackLayout orientation="vertical" class="content">
 
       <GridLayout
@@ -37,63 +39,90 @@
 
       </GridLayout>
 
-      <AbsoluteLayout class="post-list-image" clipToBounds="true">
-        <Image :src="post.image" stretch="fill" width="100%" loadMode="async"/>
-      </AbsoluteLayout>
+      <StackLayout orientation="vertical" v-if="!isBusy && postImages.length">
 
-      <FlexboxLayout justifyContent="flex-start" flexDirection="row" backgroundColor="#747474">
+        <GridLayout height="250">
+          <Carousel
+              height="100%"
+              width="100%"
+              indicatorColor="#2699fb"
+              showIndicator="true"
+              verticalAlignment="middle"
+              color="#bce0fd"
+              indicatorColorUnselected="#bce0fd"
+              indicatorAnimation="drop"
+              indicatorRadius="4"
+              indicatorOffset="0, 15"
+              ref="myCarousel"
 
-        <StackLayout orientation="horizontal">
+          >
 
-          <Image
-              class="post-list-post-like"
-              width="25"
-              height="25"
-              ios:style="background-size: 35px 25px"
-              android:style="background-size: 85px 90px"
-          />
+            <CarouselItem v-for="(item, i) in example"
+                          :key="i" backgroundColor="white" verticalAlignment="middle">
+              <Image :src="item.src" stretch="fill" width="100%" loadMode="async"/>
+            </CarouselItem>
 
-          <Label :text="post.likes" />
+          </Carousel>
 
-        </StackLayout>
+        </GridLayout>
 
-        <StackLayout orientation="horizontal">
+        <FlexboxLayout justifyContent="flex-start" flexDirection="row" backgroundColor="#747474">
 
-          <Image
-              src="~/images/white/Comment@3x.png"
-              width="20"
-              height="20"
-          />
+          <StackLayout orientation="horizontal">
 
-          <Label :text="post.commentCount" />
+            <Image
+                class="post-list-post-like"
+                width="25"
+                height="25"
+                ios:style="background-size: 35px 25px"
+                android:style="background-size: 85px 90px"
+            />
 
-        </StackLayout>
+            <Label :text="post.likes" />
 
-        <StackLayout orientation="horizontal">
+          </StackLayout>
 
-          <Image
-              src="~/images/white/Comment@3x.png"
-              width="20"
-              height="20"
-          />
+          <StackLayout orientation="horizontal">
 
-          <Label :text="post.dontKnow" />
+            <Image
+                src="~/images/white/Comment@3x.png"
+                width="20"
+                height="20"
+            />
 
-        </StackLayout>
+            <Label :text="post.commentCount" />
 
-        <StackLayout orientation="horizontal">
+          </StackLayout>
 
-          <Image
-              src="~/images/white/Comment@3x.png"
-              width="20"
-              height="20"
-          />
+          <StackLayout orientation="horizontal">
 
-          <Label :text="post.repostsCount" />
+            <Image
+                src="~/images/white/Comment@3x.png"
+                width="20"
+                height="20"
+            />
 
-        </StackLayout>
+            <Label :text="post.dontKnow" />
 
-      </FlexboxLayout>
+          </StackLayout>
+
+          <StackLayout orientation="horizontal">
+
+            <Image
+                src="~/images/white/Comment@3x.png"
+                width="20"
+                height="20"
+            />
+
+            <Label :text="post.repostsCount" />
+
+          </StackLayout>
+
+        </FlexboxLayout>
+
+      </StackLayout>
+
+
 
     </StackLayout>
 
@@ -101,12 +130,30 @@
 </template>
 
 <script>
+const Carousel = require('nativescript-carousel');
 
 export default {
 
   data() {
     return {
-      post: {}
+      post: {},
+      postImages: [],
+      isBusy: true,
+      example: [
+        { src: 'https://wall2mob.com/m/wp-DishonoredVideoGameWide_37616-cprw.jpg?i=37616&w=640&h=480&fdl=0' },
+        { src: 'https://wall2mob.com/m/wp-DishonoredVideoGameWide_37616-cprw.jpg?i=37616&w=640&h=480&fdl=0' },
+        { src: 'https://wall2mob.com/m/wp-DishonoredVideoGameWide_37616-cprw.jpg?i=37616&w=640&h=480&fdl=0' },
+        { src: 'https://wall2mob.com/m/wp-DishonoredVideoGameWide_37616-cprw.jpg?i=37616&w=640&h=480&fdl=0' },
+        { src: 'https://wall2mob.com/m/wp-DishonoredVideoGameWide_37616-cprw.jpg?i=37616&w=640&h=480&fdl=0' },
+        { src: 'https://wall2mob.com/m/wp-DishonoredVideoGameWide_37616-cprw.jpg?i=37616&w=640&h=480&fdl=0' },
+      ]
+    }
+  },
+
+  watch: {
+    async postImages(to) {
+      await this.$nextTick();
+      this.$refs.myCarousel.nativeView.refresh();
     }
   },
 
@@ -118,10 +165,11 @@ export default {
 
   },
 
-  mounted() {
+  created() {
     this.$root.$on('post::read', (data) => {
       this.post = data;
     });
+    this.loadData();
   },
 
   methods: {
@@ -133,6 +181,25 @@ export default {
 
     clearPage() {
       this.post = {};
+    },
+
+    loadData() {
+
+      this.$app.api.get(`profile/${2}`)
+      .then((res) => {
+
+        this.post.title = res.title;
+
+        if (res.images.length) {
+          res.images.forEach((item) => {
+            this.postImages.push(item.src);
+          })
+        }
+
+        this.isBusy = false;
+      })
+      .catch(err => console.log(err));
+
     }
 
   }

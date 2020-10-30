@@ -7,13 +7,15 @@ import RadSideDrawer from "nativescript-ui-sidedrawer/vue";
 import {isIOS} from 'tns-core-modules/platform';
 import {init} from './services/Auth'
 
-const appConfig = require('~/config.json');
+const cfg = require('~/config.json');
 
 Vue.use(RadSideDrawer);
 
 Vue.config.silent = (TNS_ENV === 'production');
 
 Vue.registerElement("DropDown", () => require("nativescript-drop-down/drop-down").DropDown)
+Vue.registerElement('Carousel', () => require('nativescript-carousel').Carousel);
+Vue.registerElement('CarouselItem', () => require('nativescript-carousel').CarouselItem);
 
 // comment for commit: intro -> create develop branch
 
@@ -24,9 +26,10 @@ const network = new NetworkService();
 
 Vue.prototype.$app = Object.freeze({
   network,
-  appId: appConfig.appId,
-  api: new ApiService(network, appConfig.appId, store.getters['User/getApiHeaders']),
+  appId: cfg.appId,
+  api: new ApiService(network, cfg.appId, store.getters['User/getApiHeaders']),
   isIOS: (isIOS),
+  cfg: cfg
 });
 
 init(store);

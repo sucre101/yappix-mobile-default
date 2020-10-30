@@ -173,10 +173,12 @@ export default {
             this.saveUserData(res.user);
             this.saveToken(res.access_token);
             this.$app.api.setHeader(this.getApiHeaders)
-          }).then(() => {
-        this.$root.$emit('auth')
-        this.$navigateTo(Home);
-      });
+          })
+          .then(() => {
+            this.$root.$emit('auth')
+            this.$navigateTo(Home);
+          })
+          .catch(er => console.log(er));
     }
   }
 };

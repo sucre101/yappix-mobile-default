@@ -4,76 +4,79 @@
 
     <ActivityIndicator :busy="isBusy"  @loaded="someMethod" class="activity-indicator" />
 
-    <ListView for="item in items" v-if="!isBusy">
+    <ListView for="item in items" v-if="!isBusy" separatorColor="white">
 
       <v-template>
 
         <StackLayout orientation="vertical">
 
-          <AbsoluteLayout class="post-list-image" clipToBounds="true" >
-            <Image :src="item.image" stretch="fill" width="100%" loadMode="async"/>
-          </AbsoluteLayout>
+          <GridLayout rows="auto, auto" backgroundColor="white">
 
-          <GridLayout rows="auto, auto, auto" backgroundColor="white">
+            <WrapLayout row="0" height="250">
+              <Image :src="item.image" stretch="aspectFit" width="100%" loadMode="async" />
+            </WrapLayout>
 
-            <Label :text="item.title" row="0" class="post-list-title" textWrap="true" @tap="readPost(item)"/>
+            <StackLayout row="1" orientation="vertical">
 
-            <Label :text="item.shortText" row="1" class="post-list-short-text" textWrap="true"/>
+              <Label :text="item.title" class="post-list-title" textWrap="true" @tap="readPost(item)"/>
 
-            <FlexboxLayout justifyContent="flex-start" flexDirection="row" row="2" marginTop="15">
+              <Label :text="item.shortText" class="post-list-short-text" textWrap="true"/>
 
-              <StackLayout orientation="horizontal">
+              <FlexboxLayout justifyContent="space-between" flexDirection="row" >
 
-                <Image
-                    class="post-list-post-like"
-                    :class="{ likeActive : item.selfLike }"
-                    @tap="tapLike($event, item)"
-                    width="25"
-                    height="25"
-                    ios:style="background-size: 35px 25px"
-                    android:style="background-size: 85px 90px"
-                />
-                <Label :text="item.likes" />
+                <WrapLayout orientation="horizontal">
 
-              </StackLayout>
+                  <Image
+                      class="post-list-post-like"
+                      :class="{ likeActive : item.selfLike }"
+                      @tap="tapLike($event, item)"
+                      width="25"
+                      height="25"
+                      ios:style="background-size: 35px 25px"
+                      android:style="background-size: 85px 90px"
+                  />
+                  <Label :text="item.likes" />
 
-              <StackLayout orientation="horizontal">
+                </WrapLayout>
 
-                <Image
-                  src="~/images/Chat.png"
-                  width="25"
-                  height="25"
-                />
+                <WrapLayout orientation="horizontal">
 
-                <Label :text="item.commentCount" />
+                  <Image
+                      src="~/images/Chat.png"
+                      width="25"
+                      height="25"
+                  />
 
-              </StackLayout>
+                  <Label :text="item.commentCount" />
 
-              <StackLayout orientation="horizontal">
+                </WrapLayout>
 
-                <Image
-                    src="~/images/Chart.png"
-                    width="25"
-                    height="25"
-                />
+                <WrapLayout orientation="horizontal">
 
-                <Label :text="item.dontKnow" />
+                  <Image
+                      src="~/images/Chart.png"
+                      width="25"
+                      height="25"
+                  />
 
-              </StackLayout>
+                  <Label :text="item.dontKnow" />
 
-              <StackLayout orientation="horizontal">
+                </WrapLayout>
 
-                <Image
-                    src="~/images/repost.png"
-                    width="25"
-                    height="25"
-                />
+                <WrapLayout orientation="horizontal">
 
-                <Label :text="item.repostsCount" />
+                  <Image
+                      src="~/images/repost.png"
+                      width="25"
+                      height="25"
+                  />
 
-              </StackLayout>
+                  <Label :text="item.repostsCount" />
 
-            </FlexboxLayout>
+                </WrapLayout>
+
+              </FlexboxLayout>
+            </StackLayout>
 
           </GridLayout>
 
@@ -239,14 +242,8 @@ ListView {
     padding: 0;
   }
 
-  .post-list-image {
-    height: 200;
-  }
-
   GridLayout {
-    height: 180;
     margin: 0;
-    padding: 20;
 
     Label {
       margin: 0;
@@ -265,35 +262,40 @@ ListView {
       margin-top: 20;
     }
 
-    FlexboxLayout {
+    StackLayout {
+      padding: 20;
 
-      StackLayout {
-        margin-right: 35;
+      FlexboxLayout {
 
-        Image {
-          width: 25;
-          tint-color: #007ECD;
+        WrapLayout {
+
+          Image {
+            width: 25;
+            tint-color: #007ECD;
+          }
+
+          .post-list-post-like {
+            background-image: url('~/images/like.png');
+            background-repeat: no-repeat;
+            background-position: 0 0;
+          }
+          .post-list-post-like.likeActive {
+            tint-color: #f4309c !important;
+            background-image: url('~/images/like-active.png') !important;
+          }
+
+          Label {
+            font-size: 17;
+            font-weight: bold;
+            margin-left: 5;
+            color: #a3a3a3;
+          }
         }
 
-        .post-list-post-like {
-          background-image: url('~/images/like.png');
-          background-repeat: no-repeat;
-          background-position: 0 0;
-        }
-        .post-list-post-like.likeActive {
-          tint-color: #f4309c !important;
-          background-image: url('~/images/like-active.png') !important;
-        }
-
-        Label {
-          font-size: 17;
-          font-weight: bold;
-          margin-left: 5;
-          color: #a3a3a3;
-        }
       }
-
     }
+
+
   }
 }
 
