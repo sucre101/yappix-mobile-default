@@ -14,7 +14,6 @@
     "nativescript-ui-sidedrawer": "~9.0.0",
     "nativescript-vue": "~2.8.0",
     "rxjs": "^6.6.0",
-    "tns-core-modules": "^6.5.20",
     "vuex": "^3.5.1"
   },
   "devDependencies": {
@@ -22,10 +21,16 @@
     "@babel/preset-env": "~7.1.0",
     "@nativescript/android": "7.0.1",
     "@nativescript/webpack": "~3.0.0",
-    "babel-loader": "~8.0.0",
+    "@nativescript/ios": "7.0.0",
     "nativescript-vue-template-compiler": "~2.8.0",
-    "node-sass": "^4.7.1",
-    "vue-loader": "~15.9.3"
+    "vue-loader": "~15.9.3",
+    "babel-loader": "^8.0.6",
+    "babel-traverse": "6.26.0",
+    "babel-types": "6.26.0",
+    "babylon": "6.18.0",
+    "lazy": "1.0.11",
+    "node-sass": "^4.12.0",
+    "typescript": "3.9.7"
   },
   "gitHead": "20a65d338ae8f8911087ab6615b89363f864b07b",
   "readme": "NativeScript Application",
