@@ -47,6 +47,14 @@
         </GridLayout>
 
         <GridLayout columns="auto, *"
+                    :class="'nt-drawer__list-item' + (selectedPage === 'Pages' ? ' -selected': '')"
+                    style="margin-left: 50px"
+                    @tap="onNavigationItemTap(PageBuilderModule)">
+          <Label col="0" text.decode="&#xf0ad;" class="nt-icon fas"/>
+          <Label col="1" text="Page Builder"/>
+        </GridLayout>
+
+        <GridLayout columns="auto, *"
                     :class="'nt-drawer__list-item' + (selectedPage === 'Browse' ? ' -selected': '')"
                     @tap="onNavigationItemTap(Browse)">
           <Label col="0" text.decode="&#xf1ea;" class="nt-icon far"/>
@@ -97,6 +105,7 @@ import Auth from "~/components/templates/auth/Auth";
 import SelfProfile from "~/components/templates/profile/SelfProfile";
 import Profile from "~/components/templates/profile/Profile";
 import NewsFeedsModule from "~/components/NewsFeedsModule";
+import PageBuilderModule from "~/components/PageBuilderModule";
 import { mapGetters } from 'vuex';
 
 import * as utils from "~/shared/utils";
@@ -114,6 +123,7 @@ export default {
     SelfProfile,
     Profile,
     NewsFeedsModule,
+    PageBuilderModule,
     Auth
   },
 
@@ -129,6 +139,7 @@ export default {
       SelfProfile: SelfProfile,
       Profile: Profile,
       NewsFeedsModule: NewsFeedsModule,
+      PageBuilderModule: PageBuilderModule,
       selectedPage: "",
       authUser: false,
     };
