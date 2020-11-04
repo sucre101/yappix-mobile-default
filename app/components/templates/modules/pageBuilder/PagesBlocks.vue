@@ -36,21 +36,18 @@
         />
 
       </GridLayout>
-
-      <ScrollView orientation="horizontal">
-        <ListView for="block in blocks" backgroundColor="transparent" separatorColor="transparent">
-
-          <v-template>
-            <StackLayout orientation="horizontal">
-              <PagesElements />
-            </StackLayout>
-          </v-template>
-
-        </ListView>
-      </ScrollView>
+      <WrapLayout width="100%" backgroundColor="lightblue" >
+        <WrapLayout
+            :width="block.layout === '4'?'25%':
+                    block.layout === '3'?'33.333%':
+                    block.layout === '2'?'50%':'100%'"
+            :backgroundColor="block.template.bg_color"
+            v-for="block in blocks"
+        >
+          <PagesElements />
+        </WrapLayout>
+      </WrapLayout>
     </StackLayout>
-
-
   </Page>
 </template>
 
@@ -114,7 +111,7 @@
               "height": "auto",
               "width": "auto",
               "color": "black",
-              "bg_color": "white",
+              "bg_color": "red",
               "style": "\n            margin: 1; \n            padding: 1; \n            border: auto;  \n            width: auto;  \n            height: auto;\n            height: auto;\n            color: black;\n            background-color: white;\n            "
             },
             "elements": []
@@ -141,7 +138,7 @@
               "height": "auto",
               "width": "auto",
               "color": "black",
-              "bg_color": "white",
+              "bg_color": "pink",
               "style": "\n            margin: 1; \n            padding: 1; \n            border: auto;  \n            width: auto;  \n            height: auto;\n            height: auto;\n            color: black;\n            background-color: white;\n            "
             },
             "elements": []
@@ -168,7 +165,7 @@
               "height": "auto",
               "width": "auto",
               "color": "black",
-              "bg_color": "white",
+              "bg_color": "brown",
               "style": "\n            margin: 1; \n            padding: 1; \n            border: auto;  \n            width: auto;  \n            height: auto;\n            height: auto;\n            color: black;\n            background-color: white;\n            "
             },
             "elements": []
@@ -195,7 +192,7 @@
               "height": "150px",
               "width": "100%",
               "color": "black",
-              "bg_color": "white",
+              "bg_color": "yellow",
               "style": "\n            margin: 0px; \n            padding: 0px; \n            border: 3px dashed red;  \n            width: 100%;  \n            height: 150px;\n            height: 150px;\n            color: black;\n            background-color: white;\n            "
             },
             "elements": []
@@ -222,7 +219,7 @@
               "height": "auto",
               "width": "10%",
               "color": "black",
-              "bg_color": "white",
+              "bg_color": "blue",
               "style": "\n            margin: auto; \n            padding: 0px; \n            border: 1px solid lightgreen;  \n            width: 10%;  \n            height: auto;\n            height: auto;\n            color: black;\n            background-color: white;\n            "
             },
             "elements": []
@@ -249,7 +246,7 @@
               "height": "auto",
               "width": "10%",
               "color": "black",
-              "bg_color": "white",
+              "bg_color": "purple",
               "style": "\n            margin: auto; \n            padding: 0px; \n            border: 1px solid lightgreen;  \n            width: 10%;  \n            height: auto;\n            height: auto;\n            color: black;\n            background-color: white;\n            "
             },
             "elements": []
@@ -276,7 +273,7 @@
               "height": "auto",
               "width": "10%",
               "color": "black",
-              "bg_color": "white",
+              "bg_color": "gray",
               "style": "\n            margin: auto; \n            padding: 0px; \n            border: 1px solid lightgreen;  \n            width: 10%;  \n            height: auto;\n            height: auto;\n            color: black;\n            background-color: white;\n            "
             },
             "elements": []
@@ -303,7 +300,7 @@
               "height": "auto",
               "width": "10%",
               "color": "black",
-              "bg_color": "white",
+              "bg_color": "green",
               "style": "\n            margin: auto; \n            padding: 0px; \n            border: 1px solid lightgreen;  \n            width: 10%;  \n            height: auto;\n            height: auto;\n            color: black;\n            background-color: white;\n            "
             },
             "elements": [
@@ -357,7 +354,7 @@
                   "height": "50px",
                   "width": "50%",
                   "color": "#c11a1a",
-                  "bg_color": "#162ee9",
+                  "bg_color": "lightgreen",
                   "style": "\n            margin: 0px; \n            padding: 10px; \n            border: 1px dashed red;  \n            width: 50%;  \n            height: 50px;\n            height: 50px;\n            color: #c11a1a;\n            background-color: #162ee9;\n            "
                 }
               }
@@ -383,3 +380,6 @@
 
 </script>
 
+<style scoped>
+
+</style>

@@ -1,11 +1,12 @@
 <template>
-        <ListView  for="element in elements"  backgroundColor="transparent" separatorColor="transparent">
-            <v-template>
-                <StackLayout orientation="horizontal">
-                    <Label  width="100%" height="auto" :text="'content: '+element.content+' id:'+element.id"  />
-                </StackLayout>
-            </v-template>
-        </ListView>
+        <WrapLayout>
+            <HtmlView
+                :html="element.content"
+                width="100%"
+                :backgroundColor="element.template?element.template.bg_color:'transparent'"
+                v-for="element in elements"
+            />
+        </WrapLayout>
 </template>
 
 <script>
@@ -48,7 +49,7 @@
           "id": 33,
           "block_id": 100,
           "template_id": null,
-          "content": "<p>Hi</p>",
+          "content": "<ul><li>fadw</li><li>fawfaw</li><li>yxkcul</li><li>yulfyu</li></ul>",
           "created_at": "2020-10-30 16:05:05",
           "updated_at": "2020-10-30 16:05:05",
           "type": "html",
