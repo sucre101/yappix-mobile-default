@@ -64,8 +64,6 @@
 
           </Carousel>
 
-<!--          <Label text="123123" />-->
-
         </GridLayout>
 
         <FlexboxLayout justifyContent="flex-start" flexDirection="row" backgroundColor="#747474">
@@ -132,8 +130,6 @@
 </template>
 
 <script>
-const сarousel = require('nativescript-carousel');
-
 export default {
 
   data() {
@@ -155,7 +151,7 @@ export default {
   watch: {
     async postImages(to) {
       await this.$nextTick();
-      // this.$refs.myCarousel.nativeView.refresh();
+      this.$refs.myCarousel.nativeView.refresh();
     }
   },
 
