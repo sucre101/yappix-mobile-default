@@ -37,15 +37,15 @@
 
       </GridLayout>
       <WrapLayout width="100%" backgroundColor="lightblue" >
-        <WrapLayout
-            :width="block.layout === '4'?'25%':
-                    block.layout === '3'?'33.333%':
-                    block.layout === '2'?'50%':'100%'"
-            :backgroundColor="block.template.bg_color"
-            v-for="block in blocks"
-        >
+<!--        <WrapLayout-->
+<!--            :width="block.layout === '4'?'25%':-->
+<!--                    block.layout === '3'?'33.333%':-->
+<!--                    block.layout === '2'?'50%':'100%'"-->
+<!--            :backgroundColor="block.template.bg_color"-->
+<!--            v-for="block in blocks"-->
+<!--        >-->
           <PagesElements />
-        </WrapLayout>
+<!--        </WrapLayout>-->
       </WrapLayout>
     </StackLayout>
   </Page>
@@ -219,7 +219,7 @@
               "height": "auto",
               "width": "10%",
               "color": "black",
-              "bg_color": "blue",
+              "bg_color": "lightgreen",
               "style": "\n            margin: auto; \n            padding: 0px; \n            border: 1px solid lightgreen;  \n            width: 10%;  \n            height: auto;\n            height: auto;\n            color: black;\n            background-color: white;\n            "
             },
             "elements": []
