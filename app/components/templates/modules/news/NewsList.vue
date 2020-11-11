@@ -12,8 +12,8 @@
 
           <GridLayout rows="auto, auto" backgroundColor="white">
 
-            <WrapLayout row="0" height="250">
-              <Image :src="item.image" stretch="aspectFit" width="100%" loadMode="async" />
+            <WrapLayout row="0">
+              <Image :src="item.image" stretch="fill" width="100%" loadMode="async" />
             </WrapLayout>
 
             <StackLayout row="1" orientation="vertical">
@@ -114,7 +114,9 @@ export default {
   methods: {
 
     someMethod(arg) {
-      this.isBusy = false;
+      setTimeout(() => {
+        this.isBusy = false;
+      }, 2000)
     },
 
     readPost(post) {

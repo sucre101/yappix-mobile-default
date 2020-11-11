@@ -98,6 +98,7 @@ import Auth from "~/components/templates/auth/Auth";
 import CountryModal from "~/components/templates/register/CountryModal";
 import { countries } from 'countries-list';
 import * as h from '~/services/helpers';
+import { auth } from '~/route-list';
 
 export default {
 
@@ -196,7 +197,7 @@ export default {
         password: this.password
       }
 
-      this.$app.api.post('auth/registration', register)
+      this.$app.api.post(auth.registration, register)
         .then(res => console.log(res))
     }
   }

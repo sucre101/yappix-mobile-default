@@ -5,7 +5,7 @@ import Home from "./components/Home";
 import DrawerContent from "./components/templates/sidebar/DrawerContent";
 import RadSideDrawer from "nativescript-ui-sidedrawer/vue";
 import {isIOS} from '@nativescript/core/platform';
-import {init} from './services/Auth'
+import {init} from '~/services/Auth'
 
 const cfg = require('~/config.json');
 
