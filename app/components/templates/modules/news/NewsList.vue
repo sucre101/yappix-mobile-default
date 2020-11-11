@@ -32,7 +32,7 @@
                         @tap="tapLike($event, item)"
                         width="25"
                         height="25"
-                        ios:style="background-size: 25px 25px"
+                        ios:style="background-size: 20px 25px"
                         android:style="background-size: 85px 90px"
                     />
                     <Label :text="item.likes" />
