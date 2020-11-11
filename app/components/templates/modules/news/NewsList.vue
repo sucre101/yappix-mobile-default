@@ -2,89 +2,93 @@
 
   <Page actionBarHidden="true">
 
-    <ActivityIndicator :busy="isBusy"  @loaded="someMethod" class="activity-indicator" />
+    <StackLayout verticalAlignment="middle" height="100%">
 
-    <ListView for="item in items" v-if="!isBusy" separatorColor="white">
+      <ListView ref="myList" for="item in items" v-if="!isBusy" separatorColor="white" height="100%">
 
-      <v-template>
+        <v-template>
 
-        <StackLayout orientation="vertical">
+          <StackLayout orientation="vertical">
 
-          <GridLayout rows="auto, auto" backgroundColor="white">
+            <GridLayout rows="auto, auto" backgroundColor="white">
 
-            <WrapLayout row="0">
-              <Image :src="item.image" stretch="fill" width="100%" loadMode="async" />
-            </WrapLayout>
+              <WrapLayout row="0" height="250">
+                <Image :src="item.image" stretch="aspectFit" width="100%" loadMode="async" />
+              </WrapLayout>
 
-            <StackLayout row="1" orientation="vertical">
+              <StackLayout row="1" orientation="vertical">
 
-              <Label :text="item.title" class="post-list-title" textWrap="true" @tap="readPost(item)"/>
+                <Label :text="item.title" class="post-list-title" textWrap="true" @tap="readPost(item)"/>
 
-              <Label :text="item.shortText" class="post-list-short-text" textWrap="true"/>
+                <Label :text="item.shortText" class="post-list-short-text" textWrap="true"/>
 
-              <FlexboxLayout justifyContent="space-between" flexDirection="row" >
+                <FlexboxLayout justifyContent="space-between" flexDirection="row" >
 
-                <WrapLayout orientation="horizontal">
+                  <WrapLayout orientation="horizontal">
 
-                  <Image
-                      class="post-list-post-like"
-                      :class="{ likeActive : item.selfLike }"
-                      @tap="tapLike($event, item)"
-                      width="25"
-                      height="25"
-                      ios:style="background-size: 35px 25px"
-                      android:style="background-size: 85px 90px"
-                  />
-                  <Label :text="item.likes" />
+                    <Image
+                        class="post-list-post-like"
+                        :class="{ likeActive : item.selfLike }"
+                        @tap="tapLike($event, item)"
+                        width="25"
+                        height="25"
+                        ios:style="background-size: 35px 25px"
+                        android:style="background-size: 85px 90px"
+                    />
+                    <Label :text="item.likes" />
 
-                </WrapLayout>
+                  </WrapLayout>
 
-                <WrapLayout orientation="horizontal">
+                  <WrapLayout orientation="horizontal">
 
-                  <Image
-                      src="~/images/Chat.png"
-                      width="25"
-                      height="25"
-                  />
+                    <Image
+                        src="~/images/Chat.png"
+                        width="25"
+                        height="25"
+                    />
 
-                  <Label :text="item.commentCount" />
+                    <Label :text="item.commentCount" />
 
-                </WrapLayout>
+                  </WrapLayout>
 
-                <WrapLayout orientation="horizontal">
+                  <WrapLayout orientation="horizontal">
 
-                  <Image
-                      src="~/images/Chart.png"
-                      width="25"
-                      height="25"
-                  />
+                    <Image
+                        src="~/images/Chart.png"
+                        width="25"
+                        height="25"
+                    />
 
-                  <Label :text="item.dontKnow" />
+                    <Label :text="item.dontKnow" />
 
-                </WrapLayout>
+                  </WrapLayout>
 
-                <WrapLayout orientation="horizontal">
+                  <WrapLayout orientation="horizontal">
 
-                  <Image
-                      src="~/images/repost.png"
-                      width="25"
-                      height="25"
-                  />
+                    <Image
+                        src="~/images/repost.png"
+                        width="25"
+                        height="25"
+                    />
 
-                  <Label :text="item.repostsCount" />
+                    <Label :text="item.repostsCount" />
 
-                </WrapLayout>
+                  </WrapLayout>
 
-              </FlexboxLayout>
-            </StackLayout>
+                </FlexboxLayout>
+              </StackLayout>
 
-          </GridLayout>
+            </GridLayout>
 
-        </StackLayout>
+          </StackLayout>
 
-      </v-template>
+        </v-template>
 
-    </ListView>
+      </ListView>
+
+      <ActivityIndicator :busy="isBusy" row="0" @loaded="someMethod"  class="activity-indicator" verticalAlignment="middle"/>
+
+    </StackLayout>
 
   </Page>
 

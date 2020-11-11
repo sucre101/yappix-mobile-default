@@ -39,88 +39,84 @@
 
       </GridLayout>
 
-      <StackLayout orientation="vertical" v-if="!isBusy && postImages.length">
+      <GridLayout height="250">
+        <Carousel
+            height="100%"
+            width="100%"
+            indicatorColor="#2699fb"
+            showIndicator="true"
+            verticalAlignment="middle"
+            color="#bce0fd"
+            indicatorColorUnselected="#bce0fd"
+            indicatorAnimation="drop"
+            indicatorRadius="4"
+            indicatorOffset="0, 15"
+            ref="myCarousel"
 
-        <GridLayout height="250">
-          <Carousel
-              height="100%"
-              width="100%"
-              indicatorColor="#2699fb"
-              showIndicator="true"
-              verticalAlignment="middle"
-              color="#bce0fd"
-              indicatorColorUnselected="#bce0fd"
-              indicatorAnimation="drop"
-              indicatorRadius="4"
-              indicatorOffset="0, 15"
-              ref="myCarousel"
+        >
 
-          >
+          <CarouselItem v-for="(item, i) in example"
+                        :key="i" backgroundColor="white" verticalAlignment="middle">
+            <Image :src="item.src" stretch="fill" width="100%" loadMode="async"/>
+          </CarouselItem>
 
-            <CarouselItem v-for="(item, i) in example"
-                          :key="i" backgroundColor="white" verticalAlignment="middle">
-              <Image :src="item.src" stretch="fill" width="100%" loadMode="async"/>
-            </CarouselItem>
+        </Carousel>
 
-          </Carousel>
+      </GridLayout>
 
-        </GridLayout>
+      <FlexboxLayout justifyContent="flex-start" flexDirection="row" backgroundColor="#747474">
 
-        <FlexboxLayout justifyContent="flex-start" flexDirection="row" backgroundColor="#747474">
+        <StackLayout orientation="horizontal">
 
-          <StackLayout orientation="horizontal">
+          <Image
+              class="post-list-post-like"
+              width="25"
+              height="25"
+              ios:style="background-size: 35px 25px"
+              android:style="background-size: 85px 90px"
+          />
 
-            <Image
-                class="post-list-post-like"
-                width="25"
-                height="25"
-                ios:style="background-size: 35px 25px"
-                android:style="background-size: 85px 90px"
-            />
+          <Label :text="post.likes" />
 
-            <Label :text="post.likes" />
+        </StackLayout>
 
-          </StackLayout>
+        <StackLayout orientation="horizontal">
 
-          <StackLayout orientation="horizontal">
+          <Image
+              src="~/images/white/Comment@3x.png"
+              width="20"
+              height="20"
+          />
 
-            <Image
-                src="~/images/white/Comment@3x.png"
-                width="20"
-                height="20"
-            />
+          <Label :text="post.commentCount" />
 
-            <Label :text="post.commentCount" />
+        </StackLayout>
 
-          </StackLayout>
+        <StackLayout orientation="horizontal">
 
-          <StackLayout orientation="horizontal">
+          <Image
+              src="~/images/white/Comment@3x.png"
+              width="20"
+              height="20"
+          />
 
-            <Image
-                src="~/images/white/Comment@3x.png"
-                width="20"
-                height="20"
-            />
+          <Label :text="post.dontKnow" />
 
-            <Label :text="post.dontKnow" />
+        </StackLayout>
 
-          </StackLayout>
+        <StackLayout orientation="horizontal">
 
-          <StackLayout orientation="horizontal">
+          <Image
+              src="~/images/white/Comment@3x.png"
+              width="20"
+              height="20"
+          />
 
-            <Image
-                src="~/images/white/Comment@3x.png"
-                width="20"
-                height="20"
-            />
+          <Label :text="post.repostsCount" />
 
-            <Label :text="post.repostsCount" />
+        </StackLayout>
 
-          </StackLayout>
-
-        </FlexboxLayout>
-
-      </StackLayout>
+      </FlexboxLayout>
 
     </StackLayout>
 
