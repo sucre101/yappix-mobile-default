@@ -22,7 +22,7 @@
 
                 <Label :text="item.shortText" class="post-list-short-text" textWrap="true"/>
 
-                <FlexboxLayout justifyContent="space-between" flexDirection="row" >
+                <FlexboxLayout justifyContent="space-between" flexDirection="row" marginTop="20">
 
                   <WrapLayout orientation="horizontal">
 
@@ -32,7 +32,7 @@
                         @tap="tapLike($event, item)"
                         width="25"
                         height="25"
-                        ios:style="background-size: 35px 25px"
+                        ios:style="background-size: 25px 25px"
                         android:style="background-size: 85px 90px"
                     />
                     <Label :text="item.likes" />
