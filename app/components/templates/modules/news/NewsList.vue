@@ -35,7 +35,7 @@
                         ios:style="background-size: 35px 25px"
                         android:style="background-size: 85px 90px"
                     />
-                    <Label :text="item.likes" />
+                    <Label :text="convert(item.likes)" />
 
                   </WrapLayout>
 
@@ -47,7 +47,7 @@
                         height="25"
                     />
 
-                    <Label :text="item.commentCount" />
+                    <Label :text="convert(item.commentCount)" />
 
                   </WrapLayout>
 
@@ -59,7 +59,7 @@
                         height="25"
                     />
 
-                    <Label :text="item.dontKnow" />
+                    <Label :text="convert(item.dontKnow)" />
 
                   </WrapLayout>
 
@@ -71,7 +71,7 @@
                         height="25"
                     />
 
-                    <Label :text="item.repostsCount" />
+                    <Label :text="convert(item.repostsCount)" />
 
                   </WrapLayout>
 
@@ -95,7 +95,8 @@
 </template>
 
 <script>
-import NewsItem from "~/components/News/NewsItem";
+import NewsItem from "~/components/templates/modules/news/NewsItem";
+import { cNumToStr } from '~/services/helpers'
 
 export default {
 
@@ -121,6 +122,10 @@ export default {
       setTimeout(() => {
         this.isBusy = false;
       }, 2000)
+    },
+
+    convert(number) {
+      return cNumToStr(number);
     },
 
     readPost(post) {
@@ -159,11 +164,11 @@ export default {
           image: 'https://imag.malavida.com/mvimgbig/download-fs/fondo-de-pantalla-hello-kitty-12641-2.jpg',
           title: "Investors From Silicon Valley",
           shortText: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.",
-          likes: 609,
+          likes: 6000,
           selfLike: true,
-          commentCount: 50,
-          dontKnow: 341,
-          repostsCount: 12
+          commentCount: 50000,
+          dontKnow: 34100,
+          repostsCount: 121232
         },
         {
           id: 2,

@@ -3,7 +3,9 @@
   <Page>
 
     <ActionBar class="action-bar">
+
       <NavigationButton visibility="hidden" />
+
       <GridLayout
           columns="auto,*, auto"
           orientation="horizontal"
@@ -71,9 +73,9 @@
       </TabContentItem>
 
       <TabContentItem>
-        <GridLayout>
-          <Label text="Account Page" class="h2 text-center"></Label>
-        </GridLayout>
+        <Frame id="notification">
+          <Notification />
+        </Frame>
       </TabContentItem>
 
       <TabContentItem>
@@ -102,12 +104,13 @@
 
 <script>
 import NewsList from "~/components/templates/modules/news/NewsList";
+import Notification from "~/components/templates/modules/notifications/Notification";
 import * as utils from "~/shared/utils";
 
 export default {
 
   components: {
-    NewsList
+    NewsList, Notification
   },
 
   data() {

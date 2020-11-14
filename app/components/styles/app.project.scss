@@ -1,29 +1,28 @@
-
-.single-post-page {
-  .content {
-    FlexboxLayout {
-      padding: 0 20;
-      height: 50;
-      vertical-align: center;
-
-      StackLayout {
-        margin-right: 35;
-
-        Label {
-          vertical-align: center;
-          font-size: 14;
-          font-weight: bold;
-          margin-left: 5;
-          color: white;
-        }
-      }
-    }
-
-    .post-list-image {
-      //height: 200;
-    }
-  }
-}
+//
+//.single-post-page {
+//  .content {
+//    FlexboxLayout {
+//      padding: 0 20;
+//
+//
+//      StackLayout {
+//        margin-right: 35;
+//
+//        Label {
+//          vertical-align: center;
+//          font-size: 14;
+//          font-weight: bold;
+//          margin-left: 5;
+//          color: white;
+//        }
+//      }
+//    }
+//
+//    .post-list-image {
+//      //height: 200;
+//    }
+//  }
+//}
 
 #sidebar-drawer {
   .logged {

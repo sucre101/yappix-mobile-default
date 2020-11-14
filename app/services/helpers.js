@@ -29,9 +29,21 @@ let getCountryList = () => {
   return countryList;
 }
 
+let cNumToStr = (number) => {
+
+  if (number < 1000) {
+    return number;
+  }
+
+  let p = Math.floor(Math.log(number) / Math.LN10),
+      l = Math.floor(p / 3);
+  return (Math.pow(10, p - l * 3) * +(number / Math.pow(10, p)).toFixed(1)) + ' ' + ['', 'K', 'M'][l];
+
+}
 
 module.exports = {
   emailValidation,
   formatPhone,
-  getCountryList
+  getCountryList,
+  cNumToStr
 }
