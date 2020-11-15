@@ -31,9 +31,15 @@
             color="white"
             horizontalAlignment="center"
             verticalAlignment="center"
-            marginRight="25"
+            marginLeft="50"
             col="1"
         />
+
+        <FlexboxLayout col="2" verticalAlignment="center" flexDirection="row" width="80" justifyContent="space-between">
+          <Image src="~/images/white/Search@3x.png" width="20" height="20" />
+          <Image src="~/images/white/Bookmark-fill@3x.png" width="20" height="20" />
+          <Image src.decode="font://&#xf142;" class="fas" width="20" height="20" tintColor="#ffffff" />
+        </FlexboxLayout>
 
       </GridLayout>
     </ActionBar>

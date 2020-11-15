@@ -1,10 +1,9 @@
 <template>
   <Page class="page-notification" actionBarHidden="true">
-    <ActivityIndicator :busy="isBusy"  class="activity-indicator" color="red" width="100" height="100"/>
 
-    <StackLayout orientation="vertical" height="100%" class="content__list">
+    <StackLayout orientation="vertical" verticalAlignment="middle" height="100%" class="content__list">
 
-      <ListView for="notif in notifications" v-if="!isBusy" separatorColor="#f1f9ff" height="100%" width="100%">
+      <ListView for="notif in notifications" v-show="!isBusy" separatorColor="#f1f9ff" height="100%" width="100%">
         <v-template>
 
           <GridLayout rows="auto, auto" padding="15">
@@ -33,28 +32,44 @@
 
             </StackLayout>
 
-            <StackLayout row="1" backgroundColor="#7fffd4" padding="0">
+            <StackLayout row="1" backgroundColor="#ffffff" padding="15 0">
 
-              <GridLayout columns="150, *">
+              <GridLayout columns="150, *" padding="0" margin="0">
 
-                <StackLayout col="0" width="100" padding="20 0">
+                <StackLayout col="0" width="120">
 
                   <Image :src="notif.thumb" stretch="aspectFit" />
 
                 </StackLayout>
 
-                <Label text="123123123131" col="1"/>
+                <Label
+                    :text="cropText(someText)"
+                    col="1"
+                    color="#2699fb"
+                    verticalAlignment="top"
+                    fontSize="18"
+                    textWrap="true"
+                    style="line-height: 10; padding: 0"
+                />
 
               </GridLayout>
 
             </StackLayout>
 
-
-
           </GridLayout>
 
         </v-template>
       </ListView>
+
+      <ActivityIndicator
+          :busy="isBusy"
+          @loaded="loadPage"
+          class="activity-indicator"
+          color="#2699fbd"
+          width="50"
+          height="50"
+          verticalAlignment="middle"
+      />
 
     </StackLayout>
 
@@ -62,11 +77,13 @@
 </template>
 
 <script>
+import { cropLongText } from '~/services/helpers';
+
 export default {
 
   data() {
     return {
-      isBusy: false,
+      isBusy: true,
       notifications: [
         {
           action: 'new comment',
@@ -88,9 +105,25 @@ export default {
           created: '20.12.2020',
           thumb: 'https://imag.malavida.com/mvimgbig/download-fs/fondo-de-pantalla-hello-kitty-12641-2.jpg'
         },
-      ]
+      ],
+      someText: 'Name Surname Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.'
     }
+  },
+
+  methods: {
+
+    cropText(text) {
+      return cropLongText(text, 60);
+    },
+
+    loadPage() {
+      setTimeout(() => {
+        this.isBusy = false;
+      }, 1500);
+    }
+
   }
+
 
 }
 </script>

@@ -1,7 +1,7 @@
 const moduleCountry = require('countries-list')
 
 
-const emailValidation = (email) => {
+const emailValidation = email => {
   let format = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
   return !!email.match(format);
@@ -29,7 +29,7 @@ let getCountryList = () => {
   return countryList;
 }
 
-let cNumToStr = (number) => {
+let cNumToStr = number => {
 
   if (number < 1000) {
     return number;
@@ -41,9 +41,20 @@ let cNumToStr = (number) => {
 
 }
 
+let cropLongText = (text, countSymbols = 30) => {
+  let output = text;
+
+  if (text.length > countSymbols) {
+    output = output.slice(0, countSymbols) + '...';
+  }
+
+  return output;
+}
+
 module.exports = {
   emailValidation,
   formatPhone,
   getCountryList,
-  cNumToStr
+  cNumToStr,
+  cropLongText
 }
