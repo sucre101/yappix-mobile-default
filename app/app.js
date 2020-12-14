@@ -6,6 +6,7 @@ import DrawerContent from "./components/templates/sidebar/DrawerContent";
 import RadSideDrawer from "nativescript-ui-sidedrawer/vue";
 import {isIOS} from 'tns-core-modules/platform';
 import {init} from './services/Auth'
+import { MapViewBase } from 'nativescript-google-maps-sdk/map-view-common';
 
 const appConfig = require('~/config.json');
 
@@ -14,7 +15,12 @@ Vue.use(RadSideDrawer);
 Vue.config.silent = (TNS_ENV === 'production');
 
 Vue.registerElement("DropDown", () => require("nativescript-drop-down/drop-down").DropDown)
-
+Vue.registerElement('Carousel', () => require('nativescript-carousel').Carousel);
+Vue.registerElement('CarouselItem', () => require('nativescript-carousel').CarouselItem);
+Vue.registerElement('MapView', () => require('nativescript-google-maps-sdk').MapView);
+if (isIOS) {
+  GMSServices.provideAPIKey("AIzaSyDcvKeag7rmLnuWUSAiDADjutmasE_qw8w");
+}
 // comment for commit: intro -> create develop branch
 
 import ApiService from './services/ApiService';
@@ -24,8 +30,10 @@ const network = new NetworkService();
 
 Vue.prototype.$app = Object.freeze({
   network,
-  appId: appConfig.appId,
-  api: new ApiService(network, appConfig.appId, store.getters['User/getApiHeaders']),
+  // appId: appConfig.appId,
+  appId: 2,
+  // api: new ApiService(network, appConfig.appId, store.getters['User/getApiHeaders']),
+  api: new ApiService(network, 2, store.getters['User/getApiHeaders']),
   isIOS: (isIOS),
 });
 
