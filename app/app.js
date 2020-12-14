@@ -19,7 +19,7 @@ Vue.registerElement('Carousel', () => require('nativescript-carousel').Carousel)
 Vue.registerElement('CarouselItem', () => require('nativescript-carousel').CarouselItem);
 Vue.registerElement('MapView', () => require('nativescript-google-maps-sdk').MapView);
 if (isIOS) {
-  GMSServices.provideAPIKey("AIzaSyDcvKeag7rmLnuWUSAiDADjutmasE_qw8w");
+  GMSServices.provideAPIKey("API_KEY");
 }
 // comment for commit: intro -> create develop branch
 
