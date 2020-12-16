@@ -6,7 +6,6 @@ import DrawerContent from "./components/templates/sidebar/DrawerContent";
 import RadSideDrawer from "nativescript-ui-sidedrawer/vue";
 import {isIOS} from 'tns-core-modules/platform';
 import {init} from './services/Auth'
-import { MapViewBase } from 'nativescript-google-maps-sdk/map-view-common';
 
 const appConfig = require('~/config.json');
 

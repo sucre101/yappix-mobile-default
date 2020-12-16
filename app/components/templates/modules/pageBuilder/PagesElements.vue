@@ -112,6 +112,8 @@
                               width="100%"
                               verticalAlignment="middle" >
                     <GridLayout
+                        columns="auto,*"
+                        orientation="horizontal"
                         height="100%"
                         width="100%">
                         <Image
@@ -121,40 +123,37 @@
                     </GridLayout>
                 </CarouselItem>
             </Carousel>
-            <StackLayout
-                         height="100%"
-                         width="100%"
-                         :color="element.template?element.template.color:'transparent'"
-                         :backgroundColor="element.template?element.template.bg_color:'transparent'"
-                         :borderWidth="element.template?element.template.border_width:'0'"
-                         :borderStyle="element.template?element.template.border_type:'none'"
-                         :borderColor="element.template?element.template.border_color:'black'"
-                         :borderRadius="element.template?element.template.border_radius:'0'"
-                         :textAlign="element.template?element.template.text_align:'left'"
-                         :overflow="element.template?element.template.overflow:'auto'"
-                         :padding="element.template?element.template.padding:'0'"
-                         :margin="element.template?element.template.margin:'0'"
-                         v-else-if="element.type === 'map'" >
-                <MapView
-                    :latitude="JSON.parse(element.content).lat"
-                    :longitude="JSON.parse(element.content).lng"
-                    iosOverflowSafeArea="true" :zoom="18" :bearing="0" :tilt="0"
-                    @mapReady="onMapReady"
-                ></MapView>
-            </StackLayout>
+                <StackLayout
+                    v-if="element.type === 'map'"
+                    height="100%"
+                    width="100%"
+                    :color="element.template?element.template.color:'transparent'"
+                    :backgroundColor="element.template?element.template.bg_color:'transparent'"
+                    :borderWidth="'1'"
+                    :borderStyle="'solid'"
+                    :borderColor="'green'"
+                    :borderRadius="element.template?element.template.border_radius:'0'"
+                    :textAlign="element.template?element.template.text_align:'left'"
+                    :overflow="element.template?element.template.overflow:'auto'"
+                    :padding="element.template?element.template.padding:'0'"
+                    :margin="element.template?element.template.margin:'0'" >
+                        <ElementMap
+                            :latitude="JSON.parse(element.content).lat"
+                            :longitude="JSON.parse(element.content).lng"
+                        ></ElementMap>
+                </StackLayout>
         </WrapLayout >
     </WrapLayout >
 </template>
 
 <script>
-
-  const mapsModule = require("nativescript-google-maps-sdk")
+  import ElementMap from "./ElementMap";
 
   export default {
-
+    components: {ElementMap},
     data() {
       return {
-        ngrok: 'http://18178a0bc38d.ngrok.io/'
+        ngrok: 'http://fef811e0d43c.ngrok.io/'
       }
     },
     props:{
@@ -169,18 +168,7 @@
     },
 
     methods: {
-      onMapReady(args) {
-        let map = args.object
 
-        let marker = new mapsModule.Marker();
-        marker.position = mapsModule.Position.positionFromLatLng(
-            map.latitude,
-            map.longitude
-        );
-        marker.title = 'Hi';
-
-        map.addMarker(marker);
-      }
     }
 
   }
