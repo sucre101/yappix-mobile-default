@@ -1,8 +1,6 @@
 <template>
-        <MapView
-            :latitude="latitude"
-            :longitude="longitude"
-            iosOverflowSafeArea="true" :zoom="10" :bearing="0" :tilt="0"
+        <WebView
+            :src="content"
             height="100%"
             width="100%"
             :color="template?template.color:'transparent'"
@@ -15,23 +13,20 @@
             :overflow="template?template.overflow:'auto'"
             :padding="template?template.padding:'0'"
             :margin="template?template.margin:'0'"
-            @mapReady="onMapReady"
-        ></MapView>
+        />
 </template>
 
 <script>
-  import { Marker, Position } from "nativescript-google-maps-sdk";
 
   export default {
-    name: 'ElementMap',
+    name: 'ElementView',
     data() {
       return {
       }
     },
     props:{
-      template: Object,
-      latitude: Number,
-      longitude: Number
+            template: Object,
+            content: String,
     },
     computed: {
 
@@ -41,18 +36,6 @@
     },
 
     methods: {
-      onMapReady(args) {
-        let map = args.object
-
-        let marker = new Marker();
-        marker.position = Position.positionFromLatLng(
-            map.latitude,
-            map.longitude
-        );
-        marker.title = 'Hi';
-
-        map.addMarker(marker);
-      }
     }
 
   }
