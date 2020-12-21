@@ -1,12 +1,12 @@
 <template>
-    <WrapLayout
+    <StackLayout
         height="100%"
         width="100%"
     >
         <WrapLayout
             v-for="element in elements"
             :key="element.id"
-            :height="element.template?element.template.height:'auto'"
+            :height="element.template?element.template.height:'100%'"
             :width="element.template?element.template.width:'100%'"
         >
             <HtmlView
@@ -16,31 +16,20 @@
                 width="100%"
                 :color="element.template?element.template.color:'transparent'"
                 :backgroundColor="element.template?element.template.bg_color:'transparent'"
-                :borderWidth="element.template?element.template.border_width:'0'"
-                :borderStyle="element.template?element.template.border_type:'none'"
-                :borderColor="element.template?element.template.border_color:'black'"
                 :borderRadius="element.template?element.template.border_radius:'0'"
                 :textAlign="element.template?element.template.text_align:'left'"
-                :overflow="element.template?element.template.overflow:'auto'"
-                :padding="element.template?element.template.padding:'0'"
-                :margin="element.template?element.template.margin:'0'"
+                :overflow="element.template?element.template.overflow:'none'"
             />
             <Image
                 v-else-if="element.type === 'image'"
                 :src="element.images.length > 0?ngrok+element.images[0].url_original:
                 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/480px-No_image_available.svg.png'"
-                height="100%"
                 width="100%"
                 :color="element.template?element.template.color:'transparent'"
                 :backgroundColor="element.template?element.template.bg_color:'transparent'"
-                :borderWidth="element.template?element.template.border_width:'0'"
-                :borderStyle="element.template?element.template.border_type:'none'"
-                :borderColor="element.template?element.template.border_color:'black'"
                 :borderRadius="element.template?element.template.border_radius:'0'"
                 :textAlign="element.template?element.template.text_align:'left'"
-                :overflow="element.template?element.template.overflow:'auto'"
-                :padding="element.template?element.template.padding:'0'"
-                :margin="element.template?element.template.margin:'0'"
+                :overflow="element.template?element.template.overflow:'none'"
             />
             <Button
                 v-else-if="element.type === 'button'"
@@ -49,14 +38,9 @@
                 width="100%"
                 :color="element.template?element.template.color:'transparent'"
                 :backgroundColor="element.template?element.template.bg_color:'transparent'"
-                :borderWidth="element.template?element.template.border_width:'0'"
-                :borderStyle="element.template?element.template.border_type:'none'"
-                :borderColor="element.template?element.template.border_color:'black'"
                 :borderRadius="element.template?element.template.border_radius:'0'"
                 :textAlign="element.template?element.template.text_align:'left'"
-                :overflow="element.template?element.template.overflow:'auto'"
-                :padding="element.template?element.template.padding:'0'"
-                :margin="element.template?element.template.margin:'0'"
+                :overflow="element.template?element.template.overflow:'none'"
             />
             <ElementView
                 v-else-if="element.type === 'iframe' || element.type === 'video'"
@@ -67,16 +51,6 @@
                 v-else-if="element.type === 'slider'"
                 height="100%"
                 width="100%"
-                :color="element.template?element.template.color:'transparent'"
-                :backgroundColor="element.template?element.template.bg_color:'transparent'"
-                :borderWidth="element.template?element.template.border_width:'0'"
-                :borderStyle="element.template?element.template.border_type:'none'"
-                :borderColor="element.template?element.template.border_color:'black'"
-                :borderRadius="element.template?element.template.border_radius:'0'"
-                :textAlign="element.template?element.template.text_align:'left'"
-                :overflow="element.template?element.template.overflow:'auto'"
-                :padding="element.template?element.template.padding:'0'"
-                :margin="element.template?element.template.margin:'0'"
                 pageChanged="myChangeEvent" pageTapped="mySelectedEvent"
                 indicatorColor="#fff000" finite="true" bounce="false" showIndicator="true" verticalAlignment="top"
                 android:indicatorAnimation="swap" color="white">
@@ -100,10 +74,11 @@
                 v-if="element.type === 'map'"
                 :latitude="JSON.parse(element.content).lat"
                 :longitude="JSON.parse(element.content).lng"
+                :address="JSON.parse(element.content).address"
                 :template="element.template"
             ></ElementMap>
         </WrapLayout >
-    </WrapLayout >
+    </StackLayout >
 </template>
 
 <script>
@@ -114,7 +89,7 @@
     components: {ElementMap, ElementView},
     data() {
       return {
-        ngrok: 'http://20c5df98d675.ngrok.io/'
+        ngrok: 'http://f21e8b618993.ngrok.io/'
       }
     },
     props:{

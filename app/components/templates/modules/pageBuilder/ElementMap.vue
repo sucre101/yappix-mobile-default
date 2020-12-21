@@ -1,27 +1,17 @@
 <template>
-        <MapView
+        <Mapbox
+            accessToken="pk.eyJ1IjoibWFuc3Vya2FsZW4iLCJhIjoiY2tpcWQ0Y2dwMGNmcjMwbnkzOGh2b3R0MyJ9.aK6BjtpQlxYWjjLJ97mN5g"
+            mapStyle="traffic_day"
             :latitude="latitude"
             :longitude="longitude"
-            iosOverflowSafeArea="true" :zoom="10" :bearing="0" :tilt="0"
+            zoomLevel="10"
             height="100%"
             width="100%"
-            :color="template?template.color:'transparent'"
-            :backgroundColor="template?template.bg_color:'transparent'"
-            :borderWidth="template?template.border_width:'0'"
-            :borderStyle="template?template.border_type:'none'"
-            :borderColor="template?template.border_color:'black'"
-            :borderRadius="template?template.border_radius:'0'"
-            :textAlign="template?template.text_align:'left'"
-            :overflow="template?template.overflow:'auto'"
-            :padding="template?template.padding:'0'"
-            :margin="template?template.margin:'0'"
-            @mapReady="onMapReady"
-        ></MapView>
+            @mapReady="onMapReady">
+        </Mapbox>
 </template>
 
 <script>
-  import { Marker, Position } from "nativescript-google-maps-sdk";
-
   export default {
     name: 'ElementMap',
     data() {
@@ -31,7 +21,8 @@
     props:{
       template: Object,
       latitude: Number,
-      longitude: Number
+      longitude: Number,
+      address: String
     },
     computed: {
 
@@ -41,18 +32,16 @@
     },
 
     methods: {
-      onMapReady(args) {
-        let map = args.object
-
-        let marker = new Marker();
-        marker.position = Position.positionFromLatLng(
-            map.latitude,
-            map.longitude
-        );
-        marker.title = 'Hi';
-
-        map.addMarker(marker);
-      }
+            onMapReady(args) {
+                    args.map.addMarkers([
+                            {
+                                    lat: this.latitude,
+                                    lng: this.longitude,
+                                    title: this.address,
+                                    subtitle: this.address,
+                            }]
+                    );
+            }
     }
 
   }

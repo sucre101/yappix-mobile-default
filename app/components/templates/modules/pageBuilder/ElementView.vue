@@ -11,8 +11,6 @@
             :borderRadius="template?template.border_radius:'0'"
             :textAlign="template?template.text_align:'left'"
             :overflow="template?template.overflow:'auto'"
-            :padding="template?template.padding:'0'"
-            :margin="template?template.margin:'0'"
         />
 </template>
 

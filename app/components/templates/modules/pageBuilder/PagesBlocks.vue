@@ -46,11 +46,16 @@
                     block.layout === '1-3'?'33.333%':
                     block.layout === '2-3'?'66.666%':
                     block.layout === '2'?'50%':'100%'"
-              :backgroundColor="block.template?block.template.bg_color:'white'"
-              :height="block.template?block.template.height:'auto'"
-              borderWidth="1px"
-              borderStyle="solid"
-              borderColor="red"
+              :height="block.template?block.template.height:'100%'"
+              :color="block.template?block.template.color:'transparent'"
+              :backgroundColor="block.template?block.template.bg_color:'transparent'"
+              :borderWidth="block.template?block.template.border_width:'0'"
+              :borderStyle="block.template?block.template.border_type:'none'"
+              :borderColor="block.template?block.template.border_color:'none'"
+              :borderRadius="block.template?block.template.border_radius:'0'"
+              :textAlign="block.template?block.template.text_align:'left'"
+              :overflow="block.template?block.template.overflow:'none'"
+              :padding="block.template?block.template.padding:'0'"
               v-for="block in page.active_blocks"
               :key="block.id"
           >
