@@ -6,7 +6,7 @@
 
     <ListView for="item in items" v-if="!isBusy">
 
-      <v-template>
+        <v-template>
 
         <StackLayout orientation="vertical">
 
@@ -33,7 +33,7 @@
                     ios:style="background-size: 35px 25px"
                     android:style="background-size: 85px 90px"
                 />
-                <Label :text="item.likes" />
+                <Label :text="item.likes+'likes'" />
 
               </StackLayout>
 

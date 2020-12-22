@@ -1,137 +1,106 @@
 <template>
-        <WrapLayout>
-            <WrapLayout
-                v-for="element in elements"
-            >
-                <HtmlView
-                    v-if="element.type === 'html'"
-                    :html="element.content"
-                    :width="element.template?element.template.width:'100%'"
-                    :height="element.template?element.template.height:''"
-                    :color="element.template?element.template.color:'transparent'"
-                    :backgroundColor="element.template?element.template.bg_color:'transparent'"
-                    :border="element.template?element.template.border:'0'"
-                    :padding="element.template?element.template.padding:'0'"
-                    :margin="element.template?element.template.margin:'0'"
-                />
-                <Image
-                    v-else-if="element.type === 'image'"
-                    :src="element.content"
-                    :width="element.template?element.template.width:'100%'"
-                    :height="elemenёt.template?element.template.height:''"
-                    :color="element.template?element.template.color:'transparent'"
-                    :backgroundColor="element.template?element.template.bg_color:'transparent'"
-                />
-                <Button
-                    v-else-if="element.type === 'button'"
-                    :text="element.content"
-                    :width="element.template?element.template.width:'100%'"
-                    :height="element.template?element.template.height:''"
-                    :color="element.template?element.template.color:'transparent'"
-                    :backgroundColor="element.template?element.template.bg_color:'transparent'"
-                />
-                <WebView
-                    v-else-if="element.type === 'video'"
-                    :src="'https://www.youtube.com/embed/'+element.content"
-                    :width="element.template?element.template.width:'100%'"
-                    :height="element.template?element.template.height:''"
-                    :color="element.template?element.template.color:'transparent'"
-                    :backgroundColor="element.template?element.template.bg_color:'transparent'"
-                />
-
-            </WrapLayout>
-        </WrapLayout>
+    <StackLayout
+        height="100%"
+        width="100%"
+    >
+        <WrapLayout
+            v-for="element in elements"
+            :key="element.id"
+            :height="element.template?element.template.height:'100%'"
+            :width="element.template?element.template.width:'100%'"
+        >
+            <HtmlView
+                v-if="element.type === 'html'"
+                :html="element.content"
+                height="100%"
+                width="100%"
+                :color="element.template?element.template.color:'transparent'"
+                :backgroundColor="element.template?element.template.bg_color:'transparent'"
+                :borderRadius="element.template?element.template.border_radius:'0'"
+                :textAlign="element.template?element.template.text_align:'left'"
+                :overflow="element.template?element.template.overflow:'none'"
+            />
+            <Image
+                v-else-if="element.type === 'image'"
+                :src="element.images.length > 0?ngrok+element.images[0].url_original:
+                'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/480px-No_image_available.svg.png'"
+                width="100%"
+                :color="element.template?element.template.color:'transparent'"
+                :backgroundColor="element.template?element.template.bg_color:'transparent'"
+                :borderRadius="element.template?element.template.border_radius:'0'"
+                :textAlign="element.template?element.template.text_align:'left'"
+                :overflow="element.template?element.template.overflow:'none'"
+            />
+            <Button
+                v-else-if="element.type === 'button'"
+                :text="JSON.parse(element.content).button_title"
+                height="100%"
+                width="100%"
+                :color="element.template?element.template.color:'transparent'"
+                :backgroundColor="element.template?element.template.bg_color:'transparent'"
+                :borderRadius="element.template?element.template.border_radius:'0'"
+                :textAlign="element.template?element.template.text_align:'left'"
+                :overflow="element.template?element.template.overflow:'none'"
+            />
+            <ElementView
+                v-else-if="element.type === 'iframe' || element.type === 'video'"
+                :content="element.type === 'iframe'?element.content:'https://www.youtube.com/embed/'+element.content"
+                :template="element.template"
+            ></ElementView>
+            <Carousel
+                v-else-if="element.type === 'slider'"
+                height="100%"
+                width="100%"
+                pageChanged="myChangeEvent" pageTapped="mySelectedEvent"
+                indicatorColor="#fff000" finite="true" bounce="false" showIndicator="true" verticalAlignment="top"
+                android:indicatorAnimation="swap" color="white">
+                <CarouselItem v-for="item in element.images" :key="item.id" :backgroundColor="item.color"
+                              height="100%"
+                              width="100%"
+                              verticalAlignment="middle" >
+                    <GridLayout
+                        columns="auto,*"
+                        orientation="horizontal"
+                        height="100%"
+                        width="100%">
+                        <Image
+                            height="100%"
+                            width="100%"
+                            :src="ngrok+item.url_original" stretch="aspectFill" />
+                    </GridLayout>
+                </CarouselItem>
+            </Carousel>
+            <ElementMap
+                v-if="element.type === 'map'"
+                :latitude="JSON.parse(element.content).lat"
+                :longitude="JSON.parse(element.content).lng"
+                :address="JSON.parse(element.content).address"
+                :template="element.template"
+            ></ElementMap>
+        </WrapLayout >
+    </StackLayout >
 </template>
 
 <script>
+  import ElementMap from "./ElementMap";
+  import ElementView from "./ElementView";
 
   export default {
-
+    components: {ElementMap, ElementView},
     data() {
       return {
-        elements: {}
+        ngrok: 'http://f21e8b618993.ngrok.io/'
       }
     },
-
+    props:{
+      elements: Array
+    },
     computed: {
 
     },
 
     mounted() {
-      this.elements = [
-        {
-          "id": 30,
-          "block_id": 82,
-          "template_id": 22,
-          "content": "батырма",
-          "created_at": "2020-10-27 14:51:35",
-          "updated_at": "2020-10-27 16:16:03",
-          "type": "button",
-          "template": {
-            "id": 22,
-            "app_id": 2,
-            "name": "kkl1",
-            "margin": "0px",
-            "padding": "10px",
-            "created_at": "2020-10-08 16:05:52",
-            "updated_at": "2020-10-29 14:07:44",
-            "border": "1px dashed red",
-            "height": "70",
-            "width": "50%",
-            "color": "#c11a1a",
-            "bg_color": "lightgreen",
-            "style": "\n            margin: 0px; \n            padding: 10px; \n            border: 1px dashed red;  \n            width: 50%;  \n            height: 50px;\n            color: #c11a1a;\n            background-color: #162ee9;\n            "
-          }
-        },
-        {
-          "id": 29,
-          "block_id": 82,
-          "template_id": 22,
-          "content": "<ul><li>fadw</li><li>fawfaw</li><li>yxkcul</li><li>yulfyu</li><li>yxkcul</li><li>yulfyu</li></ul>",
-          "created_at": "2020-10-26 13:43:19",
-          "updated_at": "2020-10-26 14:00:11",
-          "type": "html",
-          "template": {
-            "id": 22,
-            "app_id": 2,
-            "name": "kkl1",
-            "margin": "0px",
-            "padding": "10px",
-            "created_at": "2020-10-08 16:05:52",
-            "updated_at": "2020-10-29 14:07:44",
-            "border": "1px dashed red",
-            "height": "200",
-            "width": "50%",
-            "color": "#c11a1a",
-            "bg_color": "lightblue",
-            "style": "\n            margin: 0px; \n            padding: 10px; \n            border: 1px dashed red;  \n            width: 50%;  \n            height: 50px;\n            color: #c11a1a;\n            background-color: #162ee9;\n            "
-          }
-        },
-        {
-          "id": 35,
-          "block_id": 82,
-          "template_id": 22,
-          "content": "EjWqTangPiM",
-          "created_at": "2020-11-05 12:09:54",
-          "updated_at": "2020-11-05 12:09:54",
-          "type": "video",
-          "template": {
-            "id": 22,
-            "app_id": 2,
-            "name": "kkl1",
-            "margin": "5",
-            "padding": "10",
-            "created_at": "2020-10-08 16:05:52",
-            "updated_at": "2020-10-29 14:07:44",
-            "border": "1px dashed red",
-            "height": "170",
-            "width": "100%",
-            "color": "#c11a1a",
-            "bg_color": "coral",
-            "style": "\n            margin: 0px; \n            padding: 10px; \n            border: 1px dashed red;  \n            width: 50%;  \n            height: 50px;\n            color: #c11a1a;\n            background-color: #162ee9;\n            "
-          }
-        }
-      ]
+
     },
 
     methods: {

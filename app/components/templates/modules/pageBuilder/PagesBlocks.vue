@@ -36,17 +36,33 @@
         />
 
       </GridLayout>
-      <WrapLayout width="100%" backgroundColor="lightblue" >
-<!--        <WrapLayout-->
-<!--            :width="block.layout === '4'?'25%':-->
-<!--                    block.layout === '3'?'33.333%':-->
-<!--                    block.layout === '2'?'50%':'100%'"-->
-<!--            :backgroundColor="block.template.bg_color"-->
-<!--            v-for="block in blocks"-->
-<!--        >-->
-          <PagesElements />
-<!--        </WrapLayout>-->
-      </WrapLayout>
+      <ScrollView orientation="vertical"  width="100%">
+        <WrapLayout  width="100%">
+          <WrapLayout
+              :width="block.layout === '4'?'25%':
+                    block.layout === '1-4'?'25%':
+                    block.layout === '3-4'?'75%':
+                    block.layout === '3'?'33.333%':
+                    block.layout === '1-3'?'33.333%':
+                    block.layout === '2-3'?'66.666%':
+                    block.layout === '2'?'50%':'100%'"
+              :height="block.template?block.template.height:'100%'"
+              :color="block.template?block.template.color:'transparent'"
+              :backgroundColor="block.template?block.template.bg_color:'transparent'"
+              :borderWidth="block.template?block.template.border_width:'0'"
+              :borderStyle="block.template?block.template.border_type:'none'"
+              :borderColor="block.template?block.template.border_color:'none'"
+              :borderRadius="block.template?block.template.border_radius:'0'"
+              :textAlign="block.template?block.template.text_align:'left'"
+              :overflow="block.template?block.template.overflow:'none'"
+              :padding="block.template?block.template.padding:'0'"
+              v-for="block in page.active_blocks"
+              :key="block.id"
+          >
+            <PagesElements :elements="block.elements" />
+          </WrapLayout>
+        </WrapLayout>
+      </ScrollView>
     </StackLayout>
   </Page>
 </template>
@@ -62,305 +78,19 @@
 
     data() {
       return {
-        page: {},
-        blocks: {}
+        page: {}
       }
     },
 
     computed: {
-
       currentPostTitle() {
         return this.page ? this.page.title : 'Page'
       }
-
     },
 
     mounted() {
       this.$root.$on('page::open', (data) => {
-        this.page = {
-          "id": 4,
-          "app_id": 2,
-          "template_id": null,
-          "title": "next",
-          "thumb": null,
-          "short_content": null,
-          "is_active": true,
-          "created_at": "2020-09-15 08:55:33",
-          "updated_at": "2020-09-15 08:55:33"
-        };
-        this.blocks = [
-          {
-            "id": 93,
-            "page_id": 4,
-            "template_id": 8,
-            "order": 1,
-            "is_active": true,
-            "created_at": "2020-10-30 15:50:25",
-            "updated_at": "2020-10-30 15:50:25",
-            "s_order": 1,
-            "layout": "3",
-            "template": {
-              "id": 8,
-              "app_id": 2,
-              "name": "1224e",
-              "margin": "1",
-              "padding": "1",
-              "created_at": "2020-09-29 15:48:10",
-              "updated_at": "2020-10-22 16:36:08",
-              "border": "auto",
-              "height": "auto",
-              "width": "auto",
-              "color": "black",
-              "bg_color": "red",
-              "style": "\n            margin: 1; \n            padding: 1; \n            border: auto;  \n            width: auto;  \n            height: auto;\n            height: auto;\n            color: black;\n            background-color: white;\n            "
-            },
-            "elements": []
-          },
-          {
-            "id": 95,
-            "page_id": 4,
-            "template_id": 8,
-            "order": 1,
-            "is_active": true,
-            "created_at": "2020-10-30 15:50:25",
-            "updated_at": "2020-10-30 15:53:55",
-            "s_order": 2,
-            "layout": "3",
-            "template": {
-              "id": 8,
-              "app_id": 2,
-              "name": "1224e",
-              "margin": "1",
-              "padding": "1",
-              "created_at": "2020-09-29 15:48:10",
-              "updated_at": "2020-10-22 16:36:08",
-              "border": "auto",
-              "height": "auto",
-              "width": "auto",
-              "color": "black",
-              "bg_color": "pink",
-              "style": "\n            margin: 1; \n            padding: 1; \n            border: auto;  \n            width: auto;  \n            height: auto;\n            height: auto;\n            color: black;\n            background-color: white;\n            "
-            },
-            "elements": []
-          },
-          {
-            "id": 94,
-            "page_id": 4,
-            "template_id": 8,
-            "order": 1,
-            "is_active": true,
-            "created_at": "2020-10-30 15:50:25",
-            "updated_at": "2020-10-30 15:53:55",
-            "s_order": 3,
-            "layout": "3",
-            "template": {
-              "id": 8,
-              "app_id": 2,
-              "name": "1224e",
-              "margin": "1",
-              "padding": "1",
-              "created_at": "2020-09-29 15:48:10",
-              "updated_at": "2020-10-22 16:36:08",
-              "border": "auto",
-              "height": "auto",
-              "width": "auto",
-              "color": "black",
-              "bg_color": "brown",
-              "style": "\n            margin: 1; \n            padding: 1; \n            border: auto;  \n            width: auto;  \n            height: auto;\n            height: auto;\n            color: black;\n            background-color: white;\n            "
-            },
-            "elements": []
-          },
-          {
-            "id": 96,
-            "page_id": 4,
-            "template_id": 21,
-            "order": 2,
-            "is_active": true,
-            "created_at": "2020-10-30 16:04:31",
-            "updated_at": "2020-10-30 16:04:31",
-            "s_order": 1,
-            "layout": "1",
-            "template": {
-              "id": 21,
-              "app_id": 2,
-              "name": "kkl",
-              "margin": "0px",
-              "padding": "0px",
-              "created_at": "2020-10-08 16:04:42",
-              "updated_at": "2020-10-08 16:04:42",
-              "border": "3px dashed red",
-              "height": "150px",
-              "width": "100%",
-              "color": "black",
-              "bg_color": "yellow",
-              "style": "\n            margin: 0px; \n            padding: 0px; \n            border: 3px dashed red;  \n            width: 100%;  \n            height: 150px;\n            height: 150px;\n            color: black;\n            background-color: white;\n            "
-            },
-            "elements": []
-          },
-          {
-            "id": 97,
-            "page_id": 4,
-            "template_id": 6,
-            "order": 3,
-            "is_active": true,
-            "created_at": "2020-10-30 16:04:43",
-            "updated_at": "2020-10-30 16:04:43",
-            "s_order": 1,
-            "layout": "4",
-            "template": {
-              "id": 6,
-              "app_id": 2,
-              "name": "newer",
-              "margin": "auto",
-              "padding": "0px",
-              "created_at": "2020-09-29 15:47:32",
-              "updated_at": "2020-09-29 15:47:32",
-              "border": "1px solid lightgreen",
-              "height": "auto",
-              "width": "10%",
-              "color": "black",
-              "bg_color": "lightgreen",
-              "style": "\n            margin: auto; \n            padding: 0px; \n            border: 1px solid lightgreen;  \n            width: 10%;  \n            height: auto;\n            height: auto;\n            color: black;\n            background-color: white;\n            "
-            },
-            "elements": []
-          },
-          {
-            "id": 98,
-            "page_id": 4,
-            "template_id": 6,
-            "order": 3,
-            "is_active": true,
-            "created_at": "2020-10-30 16:04:43",
-            "updated_at": "2020-10-30 16:04:43",
-            "s_order": 2,
-            "layout": "4",
-            "template": {
-              "id": 6,
-              "app_id": 2,
-              "name": "newer",
-              "margin": "auto",
-              "padding": "0px",
-              "created_at": "2020-09-29 15:47:32",
-              "updated_at": "2020-09-29 15:47:32",
-              "border": "1px solid lightgreen",
-              "height": "auto",
-              "width": "10%",
-              "color": "black",
-              "bg_color": "purple",
-              "style": "\n            margin: auto; \n            padding: 0px; \n            border: 1px solid lightgreen;  \n            width: 10%;  \n            height: auto;\n            height: auto;\n            color: black;\n            background-color: white;\n            "
-            },
-            "elements": []
-          },
-          {
-            "id": 99,
-            "page_id": 4,
-            "template_id": 6,
-            "order": 3,
-            "is_active": true,
-            "created_at": "2020-10-30 16:04:43",
-            "updated_at": "2020-10-30 16:04:43",
-            "s_order": 3,
-            "layout": "4",
-            "template": {
-              "id": 6,
-              "app_id": 2,
-              "name": "newer",
-              "margin": "auto",
-              "padding": "0px",
-              "created_at": "2020-09-29 15:47:32",
-              "updated_at": "2020-09-29 15:47:32",
-              "border": "1px solid lightgreen",
-              "height": "auto",
-              "width": "10%",
-              "color": "black",
-              "bg_color": "gray",
-              "style": "\n            margin: auto; \n            padding: 0px; \n            border: 1px solid lightgreen;  \n            width: 10%;  \n            height: auto;\n            height: auto;\n            color: black;\n            background-color: white;\n            "
-            },
-            "elements": []
-          },
-          {
-            "id": 100,
-            "page_id": 4,
-            "template_id": 6,
-            "order": 3,
-            "is_active": true,
-            "created_at": "2020-10-30 16:04:43",
-            "updated_at": "2020-10-30 16:04:43",
-            "s_order": 4,
-            "layout": "4",
-            "template": {
-              "id": 6,
-              "app_id": 2,
-              "name": "newer",
-              "margin": "auto",
-              "padding": "0px",
-              "created_at": "2020-09-29 15:47:32",
-              "updated_at": "2020-09-29 15:47:32",
-              "border": "1px solid lightgreen",
-              "height": "auto",
-              "width": "10%",
-              "color": "black",
-              "bg_color": "green",
-              "style": "\n            margin: auto; \n            padding: 0px; \n            border: 1px solid lightgreen;  \n            width: 10%;  \n            height: auto;\n            height: auto;\n            color: black;\n            background-color: white;\n            "
-            },
-            "elements": [
-              {
-                "id": 31,
-                "block_id": 100,
-                "template_id": null,
-                "content": "<p>Hi</p>",
-                "created_at": "2020-10-30 16:05:02",
-                "updated_at": "2020-10-30 16:05:02",
-                "type": "html",
-                "template": null
-              },
-              {
-                "id": 32,
-                "block_id": 100,
-                "template_id": null,
-                "content": "<p>Hi</p>",
-                "created_at": "2020-10-30 16:05:04",
-                "updated_at": "2020-10-30 16:05:04",
-                "type": "html",
-                "template": null
-              },
-              {
-                "id": 33,
-                "block_id": 100,
-                "template_id": null,
-                "content": "<p>Hi</p>",
-                "created_at": "2020-10-30 16:05:05",
-                "updated_at": "2020-10-30 16:05:05",
-                "type": "html",
-                "template": null
-              },
-              {
-                "id": 34,
-                "block_id": 100,
-                "template_id": 22,
-                "content": "<p>Hi</p>",
-                "created_at": "2020-10-30 16:05:10",
-                "updated_at": "2020-10-30 16:05:10",
-                "type": "html",
-                "template": {
-                  "id": 22,
-                  "app_id": 2,
-                  "name": "kkl1",
-                  "margin": "0px",
-                  "padding": "10px",
-                  "created_at": "2020-10-08 16:05:52",
-                  "updated_at": "2020-10-29 14:07:44",
-                  "border": "1px dashed red",
-                  "height": "50px",
-                  "width": "50%",
-                  "color": "#c11a1a",
-                  "bg_color": "lightgreen",
-                  "style": "\n            margin: 0px; \n            padding: 10px; \n            border: 1px dashed red;  \n            width: 50%;  \n            height: 50px;\n            height: 50px;\n            color: #c11a1a;\n            background-color: #162ee9;\n            "
-                }
-              }
-            ]
-          }
-        ]
+        this.page = data;
       });
     },
 
