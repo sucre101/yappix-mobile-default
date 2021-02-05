@@ -93,6 +93,7 @@ import Register from "~/components/templates/register/Register";
 import { countries } from 'countries-list';
 import CountryModal from "~/components/templates/register/CountryModal";
 import * as h from '~/services/helpers';
+import { auth } from '~/route-list';
 
 export default {
 
@@ -168,15 +169,17 @@ export default {
         return false;
       }
 
-      this.$app.api.post('auth/login', {email: this.email, password: this.password})
+      this.$app.api.post(auth.login, {email: this.email, password: this.password})
           .then((res) => {
             this.saveUserData(res.user);
             this.saveToken(res.access_token);
             this.$app.api.setHeader(this.getApiHeaders)
-          }).then(() => {
-        this.$root.$emit('auth')
-        this.$navigateTo(Home);
-      });
+          })
+          .then(() => {
+            this.$root.$emit('auth')
+            this.$navigateTo(Home);
+          })
+          .catch(er => console.log(er));
     }
   }
 };

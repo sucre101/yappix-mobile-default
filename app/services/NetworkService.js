@@ -1,5 +1,5 @@
-import * as connectivityModule from "tns-core-modules/connectivity";
-import { Observable } from "tns-core-modules/data/observable";
+import * as connectivityModule from "@nativescript/core/connectivity";
+import { Observable } from "@nativescript/core/data/observable";
 
 export default class NetworkService extends Observable {
 

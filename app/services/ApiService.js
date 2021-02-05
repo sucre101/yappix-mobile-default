@@ -1,9 +1,9 @@
-import * as http from 'tns-core-modules/http';
+import * as http from '@nativescript/core/http';
 
 export default class ApiService {
 
   constructor(network, appId, headers) {
-    this.baseUrl = 'http://2d42b86e2e67.ngrok.io/api/' + appId + '/'
+    this.baseUrl = 'https://e41561ae3092.ngrok.io/api/' + appId + '/'
     this.network = network;
     this.headers = headers;
   }

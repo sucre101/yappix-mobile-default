@@ -1,5 +1,5 @@
 <template>
-  <Page id="selfProfile">
+  <Page id="selfProfile" class="selfProfile">
 
     <ActionBar flat="true">
       <GridLayout columns="auto,*, auto" orientation="horizontal" ios:padding="0" class="topBar">
@@ -88,6 +88,8 @@ import {GendersList, CountriesList} from "~/store/ListGetters";
 import SelfProfileModal from "~/components/templates/profile/modals/SelfProfileModal";
 import {mapActions, mapGetters} from 'vuex';
 import Auth from "~/components/templates/auth/Auth";
+import { countries } from 'countries-list';
+import { getCountryList } from '~/services/helpers';
 
 export default {
 
@@ -128,14 +130,19 @@ export default {
   },
 
   computed: {
+
     ...mapGetters({
       'userData': 'User/getUserData'
     }),
 
     gender() {
-      let gender = this.gendersList[0].name;
+      let gendersList = this.$app.cfg.genders;
 
-      this.gendersList.find((data) => {
+      gendersList.unshift({id: 0, name: 'Not selected'});
+
+      let gender = gendersList[0].name;
+
+      gendersList.find((data) => {
         if (data.id === this.user.gender_id) {
           gender = data.name;
         }
@@ -145,10 +152,10 @@ export default {
     },
 
     country() {
-      let country = this.countriesList[0].name;
+      let country = getCountryList()[0].name;
 
-      this.countriesList.find((data) => {
-        if (data.id === this.user.country_id) {
+      getCountryList().find((data) => {
+        if (data.key === this.user.country_code) {
           country = data.name;
         }
       })
@@ -159,9 +166,12 @@ export default {
   },
 
   created() {
-    this.user = this.userData ? this.userData : {};
 
+    if ( !this.userData ) {
+      this.$navigateTo(this.authPage);
+    }
 
+    this.user = this.userData;
   },
 
   methods: {
@@ -183,11 +193,15 @@ export default {
         name: '',
         email: '',
         gender_id: 0,
-        country_id: 0
+        country_code: null
       }
     },
 
     selectGender() {
+
+      let genders = this.$app.cfg.genders;
+
+      genders.unshift({ id: 0, name: 'Not selected'})
 
       this.$showModal(SelfProfileModal, {
         fullscreen: true,
@@ -197,7 +211,7 @@ export default {
       }).then(result => this.user.gender_id = result);
 
       this.$root.$emit('profile::modal', {
-        items: this.gendersList,
+        items: genders,
         selected: this.user.gender_id,
         modalTitle: 'Select your gender'
       });
@@ -213,8 +227,8 @@ export default {
       }).then(result => this.user.country_id = result);
 
       this.$root.$emit('profile::modal', {
-        items: this.countriesList,
-        selected: this.user.country_id,
+        items: getCountryList(),
+        selected: this.user.country_code,
         modalTitle: 'Select your country'
       });
     },

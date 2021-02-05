@@ -1,0 +1,29 @@
+.page-notification {
+
+  background-color: #f1f9ff;
+
+  .content__list {
+
+    .profile-photo {
+
+      width: 50;
+      height: 50;
+      background-color: #4d4d4d;
+      tint-color: white;
+      color: white;
+      border-radius: 50%;
+      font-size: 20;
+      text-align: center;
+      horizontal-align: left;
+
+    }
+
+    .notify-item {
+      padding: 0;
+    }
+
+  }
+
+
+
+}

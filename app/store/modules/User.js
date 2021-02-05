@@ -1,4 +1,4 @@
-import * as applicationSettings from "tns-core-modules/application-settings";
+import * as applicationSettings from "@nativescript/core/application-settings";
 
 export default {
 
