@@ -17,9 +17,7 @@ Vue.config.silent = (TNS_ENV === 'production');
 Vue.registerElement('Carousel', () => require('nativescript-carousel').Carousel);
 Vue.registerElement('CarouselItem', () => require('nativescript-carousel').CarouselItem);
 Vue.registerElement("Mapbox", () => require("@nativescript-community/ui-mapbox").MapboxView);
-if (isIOS) {
-  GMSServices.provideAPIKey("API_KEY");
-}
+
 // comment for commit: intro -> create develop branch
 
 import ApiService from './services/ApiService';
