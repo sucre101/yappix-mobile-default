@@ -68,6 +68,13 @@
         </GridLayout>
 
         <GridLayout columns="auto, *"
+                    :class="'nt-drawer__list-item' + (selectedPage === 'Ecommerce' ? ' -selected': '')"
+                    @tap="onNavigationItemTap(Ecommerce)">
+          <Label col="0" text.decode="&#xf005;" class="nt-icon fas"/>
+          <Label col="1" text="Ecommerce" class="p-r-10"/>
+        </GridLayout>
+
+        <GridLayout columns="auto, *"
                     :class="'nt-drawer__list-item' + (selectedPage === 'Settings' ? ' -selected': '')"
                     @tap="onNavigationItemTap(Settings)">
           <Label col="0" text.decode="&#xf013;" class="nt-icon fas"/>
@@ -97,6 +104,7 @@ import Auth from "~/components/templates/auth/Auth";
 import SelfProfile from "~/components/templates/profile/SelfProfile";
 import Profile from "~/components/templates/profile/Profile";
 import NewsFeedsModule from "~/components/NewsFeedsModule";
+import ECModule from "~/components/templates/modules/ecommerce/ECModule";
 import { mapGetters } from 'vuex';
 
 import * as utils from "~/shared/utils";
@@ -114,7 +122,8 @@ export default {
     SelfProfile,
     Profile,
     NewsFeedsModule,
-    Auth
+    Auth,
+    ECModule
   },
 
   data() {
@@ -129,6 +138,7 @@ export default {
       SelfProfile: SelfProfile,
       Profile: Profile,
       NewsFeedsModule: NewsFeedsModule,
+      Ecommerce: ECModule,
       selectedPage: "",
       authUser: false,
     };

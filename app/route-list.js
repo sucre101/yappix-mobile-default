@@ -14,7 +14,16 @@ const auth = {
 
 }
 
+const ECModule = {
+
+  getCategories: (moduleId) => {
+    return `ecommerce/${moduleId}/category`
+  }
+
+}
+
 module.exports = {
   newsFeed,
-  auth
+  auth,
+  ECModule
 }

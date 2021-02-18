@@ -7,6 +7,7 @@ import RadSideDrawer from "nativescript-ui-sidedrawer/vue";
 import {isIOS} from '@nativescript/core/platform';
 import {init} from '~/services/Auth'
 
+
 const cfg = require('~/config.json');
 
 Vue.use(RadSideDrawer);

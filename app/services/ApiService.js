@@ -3,7 +3,7 @@ import * as http from '@nativescript/core/http';
 export default class ApiService {
 
   constructor(network, appId, headers) {
-    this.baseUrl = 'https://e41561ae3092.ngrok.io/api/' + appId + '/'
+    this.baseUrl = 'https://46ace30b0fed.ngrok.io/api/' + appId + '/'
     this.network = network;
     this.headers = headers;
   }
