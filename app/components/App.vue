@@ -11,13 +11,41 @@
 
 <script>
 import {SlideInOnTopTransition} from 'nativescript-ui-sidedrawer';
+import { mapActions, mapGetters } from 'vuex'
+
+const plugin = require('@nativescript/core/platform')
+
 
 export default {
   data() {
     return {
       transition: new SlideInOnTopTransition(),
     }
+  },
+
+  computed: {
+    ...mapGetters({
+      'getUuid': 'User/getUuid'
+    })
+  },
+
+  created() {
+
+    this.$app.api.setDevice(plugin.Device.uuid)
+
+    if (!this.getUuid) {
+      this.init()
+    }
+  },
+
+  methods: {
+
+    ...mapActions({
+      'init': 'User/init'
+    })
+
   }
+
 }
 </script>
 

@@ -18,7 +18,13 @@ const ECModule = {
 
   getCategories: (moduleId) => {
     return `ecommerce/${moduleId}/category`
-  }
+  },
+
+  getProductData: (moduleId, productId) => {
+    return `ecommerce/${moduleId}/product/${productId}`
+  },
+
+  checkout: `ecommerce/checkout`
 
 }
 

@@ -77,6 +77,7 @@ export default {
   },
 
   methods: {
+
     completeModal() {
       this.$modal.close(this.selected);
     },

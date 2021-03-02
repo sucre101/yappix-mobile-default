@@ -42,10 +42,13 @@
                       class="cat-item"
                       :text="item.name"
                       height="150"
-                      alignSelf="center"
+                      alignSelf="bottom"
                       textAlignment="center"
-                      backgroundColor="red"
+                      verticalAlignment="center"
+                      backgroundColor="#cecece"
                       @tap="showItem(item)"
+                      backgroundImage="https://lh3.googleusercontent.com/proxy/kFJ73ukqD7G1zWqKV0ayOy-BobZGjX8AY2K1peP23Z_lsD5eWOx4L0-kyyU8bUK2JvYMXZxUOPD7HLPh7u5iZ1SwMYh2u6N0JC24q2QzTWAkbmY1WXfyJ2qk80U"
+                      style="background-repeat: no-repeat; background-position: center"
                   />
                 </StackLayout>
               </WrapLayout>
@@ -73,8 +76,10 @@
                       height="150"
                       alignSelf="center"
                       textAlignment="center"
-                      backgroundColor="red"
+                      backgroundColor="#cecece"
                       @tap="showProduct(item)"
+                      backgroundImage="https://lh3.googleusercontent.com/proxy/kFJ73ukqD7G1zWqKV0ayOy-BobZGjX8AY2K1peP23Z_lsD5eWOx4L0-kyyU8bUK2JvYMXZxUOPD7HLPh7u5iZ1SwMYh2u6N0JC24q2QzTWAkbmY1WXfyJ2qk80U"
+                      style="background-repeat: no-repeat; background-position: center"
                   />
                 </StackLayout>
               </WrapLayout>
@@ -122,11 +127,14 @@ export default {
   },
 
   mounted() {
-    if (!this.category.children.length) {
+
+    if (this.category.children.length === 0 && this.category.products.length !== 0) {
+      console.log(321)
       this.currentView = 1
     }
 
-    if (!this.category.children.length && !this.category.products.length) {
+    if (this.category.children.length === 0 && this.category.products.length === 0) {
+      console.log(123)
       this.currentView = 2
     }
   },

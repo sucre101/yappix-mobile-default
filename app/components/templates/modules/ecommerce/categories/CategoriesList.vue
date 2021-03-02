@@ -11,8 +11,10 @@
               height="150"
               alignSelf="center"
               textAlignment="center"
-              backgroundColor="red"
+              backgroundColor="#cecece"
               @tap="showItem(item)"
+              backgroundImage="https://lh3.googleusercontent.com/proxy/kFJ73ukqD7G1zWqKV0ayOy-BobZGjX8AY2K1peP23Z_lsD5eWOx4L0-kyyU8bUK2JvYMXZxUOPD7HLPh7u5iZ1SwMYh2u6N0JC24q2QzTWAkbmY1WXfyJ2qk80U"
+              style="background-repeat: no-repeat; background-position: center"
           />
         </StackLayout>
       </WrapLayout>

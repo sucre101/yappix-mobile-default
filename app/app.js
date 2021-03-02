@@ -3,14 +3,16 @@ import store from './store/index';
 import App from "./components/App";
 import Home from "./components/Home";
 import DrawerContent from "./components/templates/sidebar/DrawerContent";
-import RadSideDrawer from "nativescript-ui-sidedrawer/vue";
 import {isIOS} from '@nativescript/core/platform';
 import {init} from '~/services/Auth'
 
-
 const cfg = require('~/config.json');
 
+import RadSideDrawer from "nativescript-ui-sidedrawer/vue";
 Vue.use(RadSideDrawer);
+
+import RadDataForm from "nativescript-ui-dataform/vue";
+Vue.use(RadDataForm)
 
 Vue.config.silent = (TNS_ENV === 'production');
 
@@ -29,7 +31,7 @@ Vue.prototype.$app = Object.freeze({
   appId: cfg.appId,
   api: new ApiService(network, cfg.appId, store.getters['User/getApiHeaders']),
   isIOS: (isIOS),
-  cfg: cfg
+  cfg: cfg,
 });
 
 init(store);

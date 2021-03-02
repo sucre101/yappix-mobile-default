@@ -1,4 +1,6 @@
 import * as applicationSettings from "@nativescript/core/application-settings";
+const Sqlite = require("nativescript-sqlite")
+import { uuid } from "~/services/helpers"
 
 export default {
 
@@ -7,6 +9,8 @@ export default {
   state: {
     apiToken: applicationSettings.getString('apiToken'),
     userData: applicationSettings.getString('userData'),
+    database: null,
+    uuid: applicationSettings.getString('uuid') ? applicationSettings.getString('uuid') : null,
   },
 
   mutations: {
@@ -17,11 +21,20 @@ export default {
 
     updateUserData(state) {
       state.userData = applicationSettings.getString('userData');
+    },
+
+    init(state) {
+      state.uuid = applicationSettings.getString('uuid');
     }
 
   },
 
   actions: {
+
+    init(context) {
+      applicationSettings.setString('uuid', uuid())
+      context.commit('init')
+    },
 
     saveToken(context, apiToken) {
       applicationSettings.setString('apiToken', apiToken);
@@ -52,6 +65,10 @@ export default {
       }
 
       return JSON.parse(rawData);
+    },
+
+    getUuid(state) {
+      return state.uuid
     },
 
     isLoggedIn(state) {

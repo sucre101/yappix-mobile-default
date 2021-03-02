@@ -11,6 +11,8 @@
     "countries-list": "^2.5.6",
     "nativescript-carousel": "^7.0.1",
     "nativescript-drop-down": "^5.0.6",
+    "nativescript-sqlite": "^2.6.6",
+    "nativescript-ui-dataform": "^7.0.4",
     "nativescript-ui-sidedrawer": "~9.0.0",
     "nativescript-vue": "~2.8.0",
     "rxjs": "^6.6.0",

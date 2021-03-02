@@ -89,8 +89,6 @@ export default {
   },
   mounted() {
     SelectedPageService.getInstance().updateSelectedPage("Home");
-
-
   },
   computed: {
     message() {

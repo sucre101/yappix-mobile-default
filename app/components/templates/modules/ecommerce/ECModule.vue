@@ -38,7 +38,7 @@
         <FlexboxLayout col="2" verticalAlignment="center" flexDirection="row" width="80" justifyContent="space-between">
           <Image src="~/images/white/Search@3x.png" width="20" height="20" />
           <Image src="~/images/white/Bookmark-fill@3x.png" width="20" height="20" />
-          <Image src.decode="font://&#xf142;" class="fas" width="20" height="20" tintColor="#ffffff" />
+          <Image src.decode="font://&#xf406;" class="fas" width="20" height="20" tintColor="white" @tap="openAccount"/>
         </FlexboxLayout>
 
       </GridLayout>
@@ -58,15 +58,15 @@
         </TabStripItem>
 
         <TabStripItem>
-          <Image src.decode="font://&#xf14e;" class="fas t-14" android:style="font-size: 4"/>
-        </TabStripItem>
-
-        <TabStripItem>
           <Image src.decode="font://&#xf406;" class="fas t-14" android:style="font-size: 4"/>
         </TabStripItem>
 
         <TabStripItem>
-          <Image src.decode="font://&#xf067;" class="fas t-14" android:style="font-size: 4"/>
+          <Image src.decode="font://&#xf0f3;" class="fas t-14" android:style="font-size: 4"/>
+        </TabStripItem>
+
+        <TabStripItem>
+          <Image src.decode="font://&#xf07a;" class="fas t-14" android:style="font-size: 4"/>
         </TabStripItem>
 
       </TabStrip>
@@ -97,9 +97,9 @@
       </TabContentItem>
 
       <TabContentItem>
-        <GridLayout>
-          <Label text="Search Page" class="h2 text-center"></Label>
-        </GridLayout>
+        <Frame id="cart-page">
+          <Cart />
+        </Frame>
       </TabContentItem>
 
     </BottomNavigation>
@@ -111,13 +111,19 @@
 import * as utils from "~/shared/utils";
 import CategoriesList from "~/components/templates/modules/ecommerce/categories/CategoriesList";
 import HomePage from "~/components/templates/modules/ecommerce/home/HomePage";
+import CartView from "~/components/templates/modules/ecommerce/cart/CartView";
+import AccountView from "~/components/templates/modules/ecommerce/modals/AccountView";
+import {mapActions} from 'vuex'
+import StoreModal from "~/components/templates/modules/ecommerce/modals/StoreModal";
 
 export default {
   name: "ECModule",
 
   components: {
     CategoryList: CategoriesList,
-    Home: HomePage
+    Home: HomePage,
+    Cart: CartView,
+    AccountView: AccountView
   },
 
   data() {
@@ -141,14 +147,42 @@ export default {
 
   },
 
+  created() {
+
+    this.init()
+
+    setTimeout(() => {
+      this.query()
+      this.getOrders()
+    }, 3000)
+
+  },
+
   methods: {
+
+    ...mapActions({
+      init: 'ECCart/init',
+      query: 'ECCart/query',
+      getOrders: 'ECCart/getOrders'
+    }),
 
     changeView(arg) {
       this.currentIndex = arg.newIndex;
     },
 
     onDrawerButtonTap() {
-      utils.showDrawer();
+      utils.showDrawer()
+    },
+
+    openAccount() {
+      this.$showModal(AccountView, {
+        fullscreen: true,
+        animated: true,
+        stretched: true,
+        dimAmount: 0.5
+      }).then( (res) => {
+
+      });
     }
 
   }
