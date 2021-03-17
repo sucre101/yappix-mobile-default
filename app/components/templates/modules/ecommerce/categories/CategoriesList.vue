@@ -13,7 +13,7 @@
               textAlignment="center"
               backgroundColor="#cecece"
               @tap="showItem(item)"
-              backgroundImage="https://lh3.googleusercontent.com/proxy/kFJ73ukqD7G1zWqKV0ayOy-BobZGjX8AY2K1peP23Z_lsD5eWOx4L0-kyyU8bUK2JvYMXZxUOPD7HLPh7u5iZ1SwMYh2u6N0JC24q2QzTWAkbmY1WXfyJ2qk80U"
+              backgroundImage="https://art-news.com.ua/wp-content/uploads/2021/02/iphone-12-pro-family-hero.jpeg"
               style="background-repeat: no-repeat; background-position: center"
           />
         </StackLayout>

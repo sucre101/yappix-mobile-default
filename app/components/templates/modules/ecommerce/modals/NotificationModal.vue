@@ -1,8 +1,6 @@
 <template>
   <Page>
-
     <StackLayout>
-
       <GridLayout
           columns="auto,*"
           orientation="horizontal"
@@ -18,14 +16,14 @@
             horizontalAlignment="left"
             verticalAlignment="center"
             col="0"
-            @tap="goBack"
             width="15"
             marginLeft="20"
             android:marginTop="20"
+            @tap="closeModal"
         />
 
         <Label
-            text="Account"
+            :text="title"
             fontSize="20"
             horizontalAlignment="center"
             verticalAlignment="center"
@@ -35,49 +33,43 @@
             color="white"
         />
       </GridLayout>
-
-      <GridLayout v-if="isLoggedIn">
-
-        <Label text="some"/>
-
-      </GridLayout>
-
-      <StackLayout v-else orientation="horizontal" width="100%" height="100%" horizontalAlignment="center" verticalAlignment="center">
-        <Label fontSize="20" text="Auth"/>
-      </StackLayout>
-
     </StackLayout>
-
   </Page>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { ECModule } from '~/route-list'
 
 export default {
 
+  props: ['notification'],
+
   computed: {
-    ...mapGetters({
-      'isLoggedIn': 'User/isLoggedIn'
-    })
+    title() {
+      let text = JSON.parse(this.notification.data)
+      return text.title
+    }
   },
 
   created() {
 
-  },
+    if (this.notification.status_id === 1001) {
 
-  mounted() {
-    console.log(this.isLoggedIn)
+      this.$app.api.get(ECModule.notifyRead(this.$app.cfg.modules.ecommerce.id, this.notification.id))
+        .then((res) => {
+          this.notification.status_id = 1002
+        })
+
+    }
+
   },
 
   methods: {
 
-    goBack() {
-      this.$modal.close()
-    },
+    closeModal() {
 
-    onPaymentCardTextFieldDidChange($event) {
-      console.log($event)
+      this.$modal.close(1002)
+
     }
 
   }

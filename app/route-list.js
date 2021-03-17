@@ -24,7 +24,15 @@ const ECModule = {
     return `ecommerce/${moduleId}/product/${productId}`
   },
 
-  checkout: `ecommerce/checkout`
+  checkout: `ecommerce/checkout`,
+
+  getNotifications: (moduleId, user_id) => {
+    return `ecommerce/${moduleId}/notifications/${user_id}`
+  },
+
+  notifyRead: (moduleId, notifyId) => {
+    return `ecommerce/${moduleId}/notifications/${notifyId}/read`
+  }
 
 }
 

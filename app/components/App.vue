@@ -12,6 +12,8 @@
 <script>
 import {SlideInOnTopTransition} from 'nativescript-ui-sidedrawer';
 import { mapActions, mapGetters } from 'vuex'
+import Auth from '~/components/templates/auth/Auth'
+import CheckoutModal from "~/components/templates/modules/ecommerce/modals/CheckoutModal";
 
 const plugin = require('@nativescript/core/platform')
 
@@ -36,6 +38,17 @@ export default {
     if (!this.getUuid) {
       this.init()
     }
+
+    this.$root.$on('show::auth', () => {
+
+      this.$showModal(Auth, {
+        fullscreen: true,
+        animated: true,
+        stretched: true,
+        dimAmount: 0.5
+      })
+
+    })
   },
 
   methods: {

@@ -124,7 +124,8 @@ export default {
         name: data.data.product_name,
         product_id: data.data.product_id,
         price: data.data.price,
-        quantity: data.data.quantity
+        quantity: data.data.quantity,
+        store_id: data.data.store_id
       });
     },
 

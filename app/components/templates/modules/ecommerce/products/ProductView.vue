@@ -176,7 +176,7 @@ export default {
     _getProductPriceData() {
 
       return new Promise((res, rej) => {
-        this.$app.api.get(ECModule.getProductData(11, this.product.id))
+        this.$app.api.get(ECModule.getProductData(this.$app.cfg.modules.ecommerce.id, this.product.id))
             .then((res) => {
               if (res.success) {
                 let price = [...res.data.prices]

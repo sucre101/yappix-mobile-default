@@ -62,7 +62,7 @@
         </TabStripItem>
 
         <TabStripItem>
-          <Image src.decode="font://&#xf0f3;" class="fas t-14" android:style="font-size: 4"/>
+          <Image id="label" src.decode="font://&#xf0f3;" class="fas t-14" android:style="font-size: 4" :class="{ alert : notify }"/>
         </TabStripItem>
 
         <TabStripItem>
@@ -91,9 +91,9 @@
       </TabContentItem>
 
       <TabContentItem>
-        <GridLayout>
-          <Label text="Search Page" class="h2 text-center"></Label>
-        </GridLayout>
+        <Frame id="notification-list">
+          <NotificationView />
+        </Frame>
       </TabContentItem>
 
       <TabContentItem>
@@ -113,8 +113,8 @@ import CategoriesList from "~/components/templates/modules/ecommerce/categories/
 import HomePage from "~/components/templates/modules/ecommerce/home/HomePage";
 import CartView from "~/components/templates/modules/ecommerce/cart/CartView";
 import AccountView from "~/components/templates/modules/ecommerce/modals/AccountView";
-import {mapActions} from 'vuex'
-import StoreModal from "~/components/templates/modules/ecommerce/modals/StoreModal";
+import NotificationView from "~/components/templates/modules/ecommerce/notifications/NotificationView";
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   name: "ECModule",
@@ -123,7 +123,8 @@ export default {
     CategoryList: CategoriesList,
     Home: HomePage,
     Cart: CartView,
-    AccountView: AccountView
+    AccountView: AccountView,
+    NotificationView: NotificationView
   },
 
   data() {
@@ -133,13 +134,20 @@ export default {
         { name: 'Home page' },
         { name: 'Categories' },
         { name: 'Profile' },
-        { name: 'Notification' },
+        { name: 'Notifications' },
         { name: 'Cart' },
-      ]
+      ],
+      notify: false
     }
   },
 
   computed: {
+
+    ...mapGetters({
+      'isLoggedIn': 'User/isLoggedIn',
+      'getCart': 'ECCart/getCart',
+      'getOrders': 'ECCart/getOrders'
+    }),
 
     setTitlePage() {
       return this.pageList[this.currentIndex].name.toUpperCase()
@@ -149,13 +157,28 @@ export default {
 
   created() {
 
+    this.$root.$on('notification::update', (data) => {
+      this.notify = true
+    })
+
     this.init()
 
     setTimeout(() => {
-      this.query()
-      this.getOrders()
+
+      if (!this.getCart.length) {
+        this.query()
+      }
+
+      if (!this.getOrders.length) {
+        this.getOrdersData()
+      }
+
     }, 3000)
 
+  },
+
+  destroyed() {
+    this.$root.$off('notification::update')
   },
 
   methods: {
@@ -163,11 +186,15 @@ export default {
     ...mapActions({
       init: 'ECCart/init',
       query: 'ECCart/query',
-      getOrders: 'ECCart/getOrders'
+      getOrdersData: 'ECCart/getOrders'
     }),
 
     changeView(arg) {
       this.currentIndex = arg.newIndex;
+
+      if (arg.newIndex === 3) {
+        this.notify = false
+      }
     },
 
     onDrawerButtonTap() {
@@ -175,14 +202,18 @@ export default {
     },
 
     openAccount() {
-      this.$showModal(AccountView, {
-        fullscreen: true,
-        animated: true,
-        stretched: true,
-        dimAmount: 0.5
-      }).then( (res) => {
 
-      });
+      if (this.isLoggedIn) {
+        this.$root.$emit('show::auth')
+      } else {
+        this.$showModal(AccountView, {
+          fullscreen: true,
+          animated: true,
+          stretched: true,
+          dimAmount: 0.5
+        })
+      }
+
     }
 
   }
@@ -190,6 +221,8 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style scoped lang="scss">
+.alert {
+  color: #923a3a;
+}
 </style>

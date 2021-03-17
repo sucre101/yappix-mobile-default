@@ -29,7 +29,7 @@
       <FlexboxLayout flexDirection="row" class="buttons" justifyContent="flex-start">
 
         <Button class="sign-up" text="SIGN UP" @tap="onNavigationItemTap(Register)" />
-        <Button class="sign-in" text="SIGN IN" @tap="onNavigationItemTap(Auth)" />
+        <Button class="sign-in" text="SIGN IN" @tap="showAuthModal" />
 
       </FlexboxLayout>
 
@@ -88,6 +88,13 @@
           <Label col="1" text="Profile" class="p-r-10"/>
         </GridLayout>
 
+        <GridLayout columns="auto, *"
+                    :class="'nt-drawer__list-item' + (selectedPage === 'WebView' ? ' -selected': '')"
+                    @tap="onNavigationItemTap(webview)">
+          <Label col="0" text.decode="&#xf1ea;" class="nt-icon far"/>
+          <Label col="1" text="Profile" class="p-r-10"/>
+        </GridLayout>
+
       </StackLayout>
     </ScrollView>
   </GridLayout>
@@ -105,6 +112,7 @@ import SelfProfile from "~/components/templates/profile/SelfProfile";
 import Profile from "~/components/templates/profile/Profile";
 import NewsFeedsModule from "~/components/NewsFeedsModule";
 import ECModule from "~/components/templates/modules/ecommerce/ECModule";
+import ClientWebView from "~/components/templates/modules/webview/ClientWebView";
 import { mapGetters } from 'vuex';
 
 import * as utils from "~/shared/utils";
@@ -123,7 +131,8 @@ export default {
     Profile,
     NewsFeedsModule,
     Auth,
-    ECModule
+    ECModule,
+    ClientWebView
   },
 
   data() {
@@ -139,6 +148,7 @@ export default {
       Profile: Profile,
       NewsFeedsModule: NewsFeedsModule,
       Ecommerce: ECModule,
+      webview: ClientWebView,
       selectedPage: "",
       authUser: false,
     };
@@ -183,6 +193,10 @@ export default {
       });
       utils.closeDrawer();
     },
+
+    showAuthModal() {
+      this.$root.$emit('show::auth')
+    }
 
   }
 };

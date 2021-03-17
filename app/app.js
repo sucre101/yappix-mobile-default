@@ -16,8 +16,8 @@ Vue.use(RadDataForm)
 
 Vue.config.silent = (TNS_ENV === 'production');
 
-Vue.registerElement('Carousel', () => require('nativescript-carousel').Carousel);
-Vue.registerElement('CarouselItem', () => require('nativescript-carousel').CarouselItem);
+Vue.registerElement('Carousel', () => require('nativescript-carousel').Carousel)
+Vue.registerElement('CarouselItem', () => require('nativescript-carousel').CarouselItem)
 
 // comment for commit: intro -> create develop branch
 
@@ -25,6 +25,7 @@ import ApiService from './services/ApiService';
 import NetworkService from './services/NetworkService';
 
 const network = new NetworkService();
+
 
 Vue.prototype.$app = Object.freeze({
   network,

@@ -43,6 +43,15 @@
 
             <RadDataForm :source="user" />
 
+            <StackLayout>
+              <TextField v-model="payment.number" hint="Card number"/>
+              <TextField v-model="payment.exp_month" hint="Month"/>
+              <TextField v-model="payment.exp_year" hint="Year"/>
+              <TextField v-model="payment.cvc" hint="CVV/CVC code"/>
+            </StackLayout>
+
+            <Label text="Payment variant"/>
+
           </FlexboxLayout>
 
         </ScrollView>
@@ -74,6 +83,12 @@ export default {
         phone: '',
         delivery_address: '',
         comment: '',
+      },
+      payment: {
+        number: '',
+        exp_month: '',
+        exp_year: '',
+        cvc: ''
       }
     }
   },
@@ -107,6 +122,8 @@ export default {
       data.user_data = this.user
       data.module_id = this.$app.cfg.modules.ecommerce.id
       data.uuid = this.getUuid
+      data.payment_data = this.payment
+
 
       this.$app.api.post(ECModule.checkout, data)
           .then((res) => {
@@ -114,10 +131,12 @@ export default {
             if (res.success) {
               this.insertOrder(res.order_id)
               this.clear()
+              this.$root.$emit('notification::update')
             }
 
           })
         .then(res => this.$modal.close())
+        .catch(err => console.log(err))
     }
   }
 }

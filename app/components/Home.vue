@@ -46,6 +46,7 @@
 import * as utils from "~/shared/utils";
 import SelectedPageService from "../shared/selected-page-service";
 import ExampleBlock from "~/components/ExampleBlock";
+import { mapGetters } from 'vuex'
 
 export default {
 
@@ -88,12 +89,28 @@ export default {
     }
   },
   mounted() {
+
     SelectedPageService.getInstance().updateSelectedPage("Home");
+
+    if (!this.maybeShow) {
+      setTimeout(() => {
+        if (!this.isLoggedIn) {
+          this.$root.$emit('show::auth')
+        }
+      }, 5000)
+    }
   },
   computed: {
+
+    ...mapGetters({
+      'isLoggedIn': 'User/isLoggedIn',
+      'maybeShow': 'User/maybeShow'
+    }),
+
     message() {
       return "<!-- Page content goes here -->";
     }
+
   },
 
   methods: {

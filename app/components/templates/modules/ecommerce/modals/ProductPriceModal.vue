@@ -76,9 +76,6 @@ export default {
 
   props: ['prices', 'product'],
 
-  mounted() {
-    // console.log(this.prices)
-  },
 
   methods: {
 
@@ -109,6 +106,7 @@ export default {
       data.price = price.pivot.old_price > 0 ? price.pivot.old_price : price.pivot.price
 
       this.insert(data)
+      this.$root.$emit('refresh::cart')
     },
 
     closeModal() {
