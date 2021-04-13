@@ -93,6 +93,9 @@
 </template>
 
 <script>
+import ECModule from "~/components/templates/modules/ecommerce/ECModule"
+import ClientWebView from "~/components/templates/modules/webview/ClientWebView"
+import {mapGetters} from 'vuex'
 import Home from "~/components/Home"
 import Browse from "~/components/Browse"
 import Featured from "~/components/Featured"
@@ -103,21 +106,7 @@ import Auth from "~/components/templates/auth/Auth"
 import SelfProfile from "~/components/templates/profile/SelfProfile"
 import Profile from "~/components/templates/profile/Profile"
 import NewsFeedsModule from "~/components/NewsFeedsModule"
-import ECModule from "~/components/templates/modules/ecommerce/ECModule"
-import ClientWebView from "~/components/templates/modules/webview/ClientWebView"
-import {mapGetters} from 'vuex'
-import Home from "~/components/Home";
-import Browse from "~/components/Browse";
-import Featured from "~/components/Featured";
-import Search from "~/components/Search";
-import Settings from "~/components/Settings";
-import Register from "~/components/templates/register/Register";
-import Auth from "~/components/templates/auth/Auth";
-import SelfProfile from "~/components/templates/profile/SelfProfile";
-import Profile from "~/components/templates/profile/Profile";
-import NewsFeedsModule from "~/components/NewsFeedsModule";
-import PageBuilderModule from "~/components/PageBuilderModule";
-import { mapGetters } from 'vuex';
+import PageBuilderModule from "~/components/PageBuilderModule"
 
 import * as utils from "~/shared/utils"
 import SelectedPageService from "~/shared/selected-page-service"
@@ -135,7 +124,6 @@ export default {
     Profile,
     NewsFeedsModule,
     PageBuilderModule,
-    Auth
     Auth,
     ECModule,
     ClientWebView
