@@ -1,7 +1,7 @@
 <template>
-  <Page>
+  <Page @loaded="moduleLoaded">
 
-    <ActionBar class="action-bar">
+    <ActionBar class="action-bar" :backgroundColor="actionBarColor">
 
       <NavigationButton visibility="hidden" />
 
@@ -36,8 +36,6 @@
         />
 
         <FlexboxLayout col="2" verticalAlignment="center" flexDirection="row" width="80" justifyContent="space-between">
-          <Image src="~/images/white/Search@3x.png" width="20" height="20" />
-          <Image src="~/images/white/Bookmark-fill@3x.png" width="20" height="20" />
           <Image src.decode="font://&#xf406;" class="fas" width="20" height="20" tintColor="white" @tap="openAccount"/>
         </FlexboxLayout>
 
@@ -46,8 +44,7 @@
 
     <BottomNavigation @selectedIndexChanged="changeView">
 
-      <!-- The bottom tab UI is created via TabStrip (the containier) and TabStripItem (for each tab)-->
-      <TabStrip style="background-color: #0989cc" isIconSizeFixed="false">
+      <TabStrip :backgroundColor="navigationBottomColor" isIconSizeFixed="false">
 
         <TabStripItem>
           <Image src.decode="font://&#xf015;" class="fas t-14" android:style="font-size: 4"/>
@@ -137,7 +134,7 @@ export default {
         { name: 'Notifications' },
         { name: 'Cart' },
       ],
-      notify: false
+      notify: false,
     }
   },
 
@@ -151,6 +148,14 @@ export default {
 
     setTitlePage() {
       return this.pageList[this.currentIndex].name.toUpperCase()
+    },
+
+    actionBarColor() {
+      return this.$root.$app.cfg.modules.ecommerce.settings.styles.topBarColor
+    },
+
+    navigationBottomColor() {
+      return this.$root.$app.cfg.modules.ecommerce.settings.styles.bottomNavigationColor
     }
 
   },
@@ -188,6 +193,10 @@ export default {
       query: 'ECCart/query',
       getOrdersData: 'ECCart/getOrders'
     }),
+
+    moduleLoaded(arg) {
+      console.log(arg)
+    },
 
     changeView(arg) {
       this.currentIndex = arg.newIndex;

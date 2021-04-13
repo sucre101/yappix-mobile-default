@@ -28,8 +28,8 @@
 
       <FlexboxLayout flexDirection="row" class="buttons" justifyContent="flex-start">
 
-        <Button class="sign-up" text="SIGN UP" @tap="onNavigationItemTap(Register)" />
-        <Button class="sign-in" text="SIGN IN" @tap="showAuthModal" />
+        <Button class="sign-up" text="SIGN UP" @tap="onNavigationItemTap(Register)"/>
+        <Button class="sign-in" text="SIGN IN" @tap="showAuthModal"/>
 
       </FlexboxLayout>
 
@@ -38,61 +38,42 @@
     <ScrollView row="1" class="nt-drawer__body">
       <StackLayout backgroundColor="#239ddd" style="color: white">
 
-        <GridLayout columns="auto, *"
-                    :class="'nt-drawer__list-item' + (selectedPage === 'News' ? ' -selected': '')"
-                    style="margin-left: 50px"
-                    @tap="onNavigationItemTap(NewsFeedsModule)">
+        <GridLayout
+            columns="auto, *"
+            :class="'nt-drawer__list-item' + (selectedPage === 'News' ? ' -selected': '')"
+            @tap="onNavigationItemTap(NewsFeedsModule)"
+        >
           <Label col="0" text.decode="&#xf015;" class="nt-icon fas"/>
           <Label col="1" text="News Feeds"/>
         </GridLayout>
 
-        <GridLayout columns="auto, *"
-                    :class="'nt-drawer__list-item' + (selectedPage === 'Browse' ? ' -selected': '')"
-                    @tap="onNavigationItemTap(Browse)">
+        <GridLayout
+            columns="auto, *"
+            :class="'nt-drawer__list-item' + (selectedPage === 'Browse' ? ' -selected': '')"
+            @tap="onNavigationItemTap(Browse)"
+        >
           <Label col="0" text.decode="&#xf1ea;" class="nt-icon far"/>
           <Label col="1" text="Browse" class="p-r-10"/>
         </GridLayout>
 
-        <GridLayout columns="auto, *"
-                    :class="'nt-drawer__list-item' + (selectedPage === 'Search' ? ' -selected': '')"
-                    @tap="onNavigationItemTap(Search)">
-          <Label col="0" text.decode="&#xf002;" class="nt-icon fas"/>
-          <Label col="1" text="Search" class="p-r-10"/>
-        </GridLayout>
-
-        <GridLayout columns="auto, *"
-                    :class="'nt-drawer__list-item' + (selectedPage === 'Featured' ? ' -selected': '')"
-                    @tap="onNavigationItemTap(Featured)">
+        <GridLayout
+            v-if="checkModule('ecommerce')"
+            columns="auto, *"
+            :class="'nt-drawer__list-item' + (selectedPage === 'Ecommerce' ? ' -selected': '')"
+            @tap="onNavigationItemTap(Ecommerce)"
+        >
           <Label col="0" text.decode="&#xf005;" class="nt-icon fas"/>
-          <Label col="1" text="Featured" class="p-r-10"/>
+          <Label col="1" :text="checkModuleAlias('ecommerce')" class="p-r-10"/>
         </GridLayout>
 
-        <GridLayout columns="auto, *"
-                    :class="'nt-drawer__list-item' + (selectedPage === 'Ecommerce' ? ' -selected': '')"
-                    @tap="onNavigationItemTap(Ecommerce)">
-          <Label col="0" text.decode="&#xf005;" class="nt-icon fas"/>
-          <Label col="1" text="Ecommerce" class="p-r-10"/>
-        </GridLayout>
-
-        <GridLayout columns="auto, *"
-                    :class="'nt-drawer__list-item' + (selectedPage === 'Settings' ? ' -selected': '')"
-                    @tap="onNavigationItemTap(Settings)">
-          <Label col="0" text.decode="&#xf013;" class="nt-icon fas"/>
-          <Label col="1" text="Settings" class="p-r-10"/>
-        </GridLayout>
-
-        <GridLayout columns="auto, *"
-                    :class="'nt-drawer__list-item' + (selectedPage === 'Profile' ? ' -selected': '')"
-                    @tap="onNavigationItemTap(Profile)">
-          <Label col="0" text.decode="&#xf1ea;" class="nt-icon far"/>
-          <Label col="1" text="Profile" class="p-r-10"/>
-        </GridLayout>
-
-        <GridLayout columns="auto, *"
-                    :class="'nt-drawer__list-item' + (selectedPage === 'WebView' ? ' -selected': '')"
-                    @tap="onNavigationItemTap(webview)">
-          <Label col="0" text.decode="&#xf1ea;" class="nt-icon far"/>
-          <Label col="1" text="Profile" class="p-r-10"/>
+        <GridLayout
+            v-if="checkModule('webview')"
+            columns="auto, *"
+            :class="'nt-drawer__list-item' + (selectedPage === 'WebView' ? ' -selected': '')"
+            @tap="onNavigationItemTap(webview)"
+        >
+          <Label col="0" text.decode="&#xf0c1;" class="nt-icon fas"/>
+          <Label col="1" :text="checkModuleAlias('webview')" class="p-r-10"/>
         </GridLayout>
 
       </StackLayout>
@@ -101,22 +82,22 @@
 </template>
 
 <script>
-import Home from "~/components/Home";
-import Browse from "~/components/Browse";
-import Featured from "~/components/Featured";
-import Search from "~/components/Search";
-import Settings from "~/components/Settings";
-import Register from "~/components/templates/register/Register";
-import Auth from "~/components/templates/auth/Auth";
-import SelfProfile from "~/components/templates/profile/SelfProfile";
-import Profile from "~/components/templates/profile/Profile";
-import NewsFeedsModule from "~/components/NewsFeedsModule";
-import ECModule from "~/components/templates/modules/ecommerce/ECModule";
-import ClientWebView from "~/components/templates/modules/webview/ClientWebView";
-import { mapGetters } from 'vuex';
+import Home from "~/components/Home"
+import Browse from "~/components/Browse"
+import Featured from "~/components/Featured"
+import Search from "~/components/Search"
+import Settings from "~/components/Settings"
+import Register from "~/components/templates/register/Register"
+import Auth from "~/components/templates/auth/Auth"
+import SelfProfile from "~/components/templates/profile/SelfProfile"
+import Profile from "~/components/templates/profile/Profile"
+import NewsFeedsModule from "~/components/NewsFeedsModule"
+import ECModule from "~/components/templates/modules/ecommerce/ECModule"
+import ClientWebView from "~/components/templates/modules/webview/ClientWebView"
+import {mapGetters} from 'vuex'
 
-import * as utils from "~/shared/utils";
-import SelectedPageService from "~/shared/selected-page-service";
+import * as utils from "~/shared/utils"
+import SelectedPageService from "~/shared/selected-page-service"
 
 export default {
 
@@ -187,6 +168,14 @@ export default {
       console.log("Button was pressed");
     },
 
+    checkModule(moduleName) {
+      return this.$root.$app.cfg.modules.hasOwnProperty(moduleName);
+    },
+
+    checkModuleAlias(moduleName) {
+      return this.$root.$app.cfg.modules[moduleName].alias ? this.$root.$app.cfg.modules[moduleName].alias : moduleName
+    },
+
     onNavigationItemTap(component) {
       this.$navigateTo(component, {
         clearHistory: false
@@ -196,7 +185,7 @@ export default {
 
     showAuthModal() {
       this.$root.$emit('show::auth')
-    }
+    },
 
   }
 };

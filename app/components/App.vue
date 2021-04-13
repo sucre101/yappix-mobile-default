@@ -17,7 +17,6 @@ import CheckoutModal from "~/components/templates/modules/ecommerce/modals/Check
 
 const plugin = require('@nativescript/core/platform')
 
-
 export default {
   data() {
     return {

@@ -1,7 +1,7 @@
 <template>
   <Page actionBarHidden="true">
-    <StackLayout backgroundColor="white">
-      <Label text="Home Page"/>
+    <StackLayout backgroundColor="white" orientation="vertical" verticalAlignment="center" horizontalAlignment="center">
+      <Label text="This page is coming soon" fontSize="20"/>
     </StackLayout>
   </Page>
 </template>
