@@ -1,15 +1,6 @@
 <template>
   <Page id="authorization" class="authorization">
 
-    <ActionBar flat="true">
-      <GridLayout columns="auto,*" orientation="horizontal" ios:padding="0" class="topBar">
-
-        <Image src="res://menu" col="0" @tap="onDrawerButtonTap" />
-        <Label text="SIGN IN PAGE" class="topBar-title" col="1"/>
-
-      </GridLayout>
-    </ActionBar>
-
     <StackLayout class="main-block" orientation="vertical">
       <GridLayout
           rows="auto, auto, auto, auto, auto"
@@ -51,7 +42,7 @@
 
         <StackLayout row="4" marginTop="30">
 
-          <GridLayout columns="50, *" rows="auto, auto, auto">
+          <GridLayout columns="50, *, 50" rows="auto, auto, auto">
 
             <StackLayout @tap="changeValue" verticalAlignment="top" horizontalAlignment="left" col="0" row="0" class="checkbox">
               <Image src.decode="font://&#xf00c;" class="fas" v-show="agree === true"/>
@@ -69,10 +60,16 @@
                     fontSize="16"
                 />
                 <Span text=" Sign In" fontSize="16" color="#0989cc" style="font-weight: bold"/>
+                <Span text=" OR " color="#909090" fontSize="16"/>
               </FormattedString>
 
             </Label>
 
+            <Label col="1" row="2" @tap="stayAnonymous" textAlignment="center" marginTop="15">
+              <FormattedString>
+                <Span text="stay anonymous" fontSize="20" color="#0989cc" style="font-weight: bold" />
+              </FormattedString>
+            </Label>
 
           </GridLayout>
 
@@ -124,11 +121,13 @@ export default {
 
     ...mapActions({
       saveToken: 'User/saveToken',
-      saveUserData: 'User/saveUserData'
+      saveUserData: 'User/saveUserData',
+      setAnonymous: 'User/setAuthModal'
     }),
 
     goToRegister() {
-      this.$navigateTo(Register);
+      this.$navigateTo(Register, { clearHistory: false });
+      this.$modal.close()
     },
 
     changeValue() {
@@ -155,6 +154,11 @@ export default {
         }
         this.$refs.passwordField.nativeView.focus();
       });
+    },
+
+    stayAnonymous() {
+      this.setAnonymous()
+      this.$modal.close()
     },
 
     sendForm() {
@@ -188,5 +192,10 @@ export default {
 <style scoped lang="scss">
 
 @import "auth";
+
+.exan {
+  border-width: 1;
+  border-color: #000;
+}
 
 </style>

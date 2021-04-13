@@ -14,6 +14,10 @@
     "nativescript-drop-down": "^5.0.6",
     "nativescript-ui-sidedrawer": "^9.0.3",
     "nativescript-vue": "^2.8.3",
+    "nativescript-sqlite": "^2.6.6",
+    "nativescript-ui-dataform": "^7.0.4",
+    "nativescript-ui-sidedrawer": "~9.0.0",
+    "nativescript-vue": "~2.8.0",
     "rxjs": "^6.6.0",
     "vuex": "^3.5.1"
   },
