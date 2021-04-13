@@ -1,0 +1,113 @@
+<template>
+    <StackLayout
+        height="100%"
+        width="100%"
+    >
+        <WrapLayout
+            v-for="element in elements"
+            :key="element.id"
+            :height="element.template?element.template.height:'100%'"
+            :width="element.template?element.template.width:'100%'"
+        >
+            <HtmlView
+                v-if="element.type === 'html'"
+                :html="element.content"
+                height="100%"
+                width="100%"
+                :color="element.template?element.template.color:'transparent'"
+                :backgroundColor="element.template?element.template.bg_color:'transparent'"
+                :borderRadius="element.template?element.template.border_radius:'0'"
+                :textAlign="element.template?element.template.text_align:'left'"
+                :overflow="element.template?element.template.overflow:'none'"
+            />
+            <Image
+                v-else-if="element.type === 'image'"
+                :src="element.images.length > 0?ngrok+element.images[0].url_original:
+                'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/480px-No_image_available.svg.png'"
+                width="100%"
+                :color="element.template?element.template.color:'transparent'"
+                :backgroundColor="element.template?element.template.bg_color:'transparent'"
+                :borderRadius="element.template?element.template.border_radius:'0'"
+                :textAlign="element.template?element.template.text_align:'left'"
+                :overflow="element.template?element.template.overflow:'none'"
+            />
+            <Button
+                v-else-if="element.type === 'button'"
+                :text="JSON.parse(element.content).button_title"
+                height="100%"
+                width="100%"
+                :color="element.template?element.template.color:'transparent'"
+                :backgroundColor="element.template?element.template.bg_color:'transparent'"
+                :borderRadius="element.template?element.template.border_radius:'0'"
+                :textAlign="element.template?element.template.text_align:'left'"
+                :overflow="element.template?element.template.overflow:'none'"
+            />
+            <ElementView
+                v-else-if="element.type === 'iframe' || element.type === 'video'"
+                :content="element.type === 'iframe'?element.content:'https://www.youtube.com/embed/'+element.content"
+                :template="element.template"
+            ></ElementView>
+            <Carousel
+                v-else-if="element.type === 'slider'"
+                height="100%"
+                width="100%"
+                pageChanged="myChangeEvent" pageTapped="mySelectedEvent"
+                indicatorColor="#fff000" finite="true" bounce="false" showIndicator="true" verticalAlignment="top"
+                android:indicatorAnimation="swap" color="white">
+                <CarouselItem v-for="item in element.images" :key="item.id" :backgroundColor="item.color"
+                              height="100%"
+                              width="100%"
+                              verticalAlignment="middle" >
+                    <GridLayout
+                        columns="auto,*"
+                        orientation="horizontal"
+                        height="100%"
+                        width="100%">
+                        <Image
+                            height="100%"
+                            width="100%"
+                            :src="ngrok+item.url_original" stretch="aspectFill" />
+                    </GridLayout>
+                </CarouselItem>
+            </Carousel>
+            <ElementMap
+                v-if="element.type === 'map'"
+                :latitude="JSON.parse(element.content).lat"
+                :longitude="JSON.parse(element.content).lng"
+                :address="JSON.parse(element.content).address"
+                :template="element.template"
+            ></ElementMap>
+        </WrapLayout >
+    </StackLayout >
+</template>
+
+<script>
+  import ElementMap from "./ElementMap";
+  import ElementView from "./ElementView";
+
+  export default {
+    components: {ElementMap, ElementView},
+    data() {
+      return {
+        ngrok: 'http://f21e8b618993.ngrok.io/'
+      }
+    },
+    props:{
+      elements: Array
+    },
+    computed: {
+
+    },
+
+    mounted() {
+
+    },
+
+    methods: {
+
+    }
+
+  }
+
+</script>
+

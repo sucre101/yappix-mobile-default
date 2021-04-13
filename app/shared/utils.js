@@ -1,5 +1,4 @@
-
-import { getRootView } from "tns-core-modules/application"
+import { getRootView } from "@nativescript/core/application"
 
 export const showDrawer = () => {
     let drawerNativeView = getRootView();
