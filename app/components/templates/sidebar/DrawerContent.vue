@@ -36,6 +36,7 @@
     </AbsoluteLayout>
 
     <ScrollView row="1" class="nt-drawer__body">
+
       <StackLayout backgroundColor="#239ddd" style="color: white">
 
         <GridLayout
@@ -47,11 +48,6 @@
           <Label col="1" text="News Feeds"/>
         </GridLayout>
 
-        <GridLayout
-            columns="auto, *"
-            :class="'nt-drawer__list-item' + (selectedPage === 'Browse' ? ' -selected': '')"
-            @tap="onNavigationItemTap(Browse)"
-        >
         <GridLayout columns="auto, *"
                     :class="'nt-drawer__list-item' + (selectedPage === 'Pages' ? ' -selected': '')"
                     style="margin-left: 50px"
@@ -88,6 +84,7 @@
         </GridLayout>
 
       </StackLayout>
+
     </ScrollView>
   </GridLayout>
 </template>
