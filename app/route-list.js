@@ -47,6 +47,9 @@ const socialFeed = {
   getPosts: (moduleId,userId) => {
     return `social-feed/${moduleId}/posts/${userId}`
   },
+  getPost: (postId) => {
+    return `social-feed/${postId}/post`
+  },
   setRelation: (moduleId) => {
     return `social-feed/${moduleId}/relation`
   },
@@ -64,7 +67,10 @@ const socialFeed = {
   },
   setLike: () => {
     return `social-feed/post/like`
-  }
+  },
+  getNews: (moduleId) => {
+    return `social-feed/${moduleId}/news`
+  },
 }
 
 const pageBuilder = {

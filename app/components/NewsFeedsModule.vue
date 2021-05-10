@@ -53,15 +53,14 @@
 </template>
 
 <script>
-import NewsList from "~/components/templates/modules/newsfeeds/NewsList";
-import Notification from "~/components/templates/modules/notifications/Notification";
+import NewsList from "~/components/templates/modules/newsfeeds/feed/NewsList";
 import * as utils from "~/shared/utils";
 import SelectedPageService from "../shared/selected-page-service";
 
 export default {
 
   components: {
-    NewsList, Notification
+    NewsList
   },
 
   data() {
