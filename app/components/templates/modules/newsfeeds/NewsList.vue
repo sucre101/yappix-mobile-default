@@ -105,7 +105,7 @@
 </template>
 
 <script>
-import NewsItem from "~/components/templates/modules/news/NewsItem";
+import NewsItem from "~/components/templates/modules/newsfeeds/NewsItem";
 import { cNumToStr } from '~/services/helpers'
 
 export default {
