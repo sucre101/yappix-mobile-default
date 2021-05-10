@@ -87,8 +87,6 @@
     },
 
     created() {
-
-
     },
 
     methods: {
@@ -104,12 +102,13 @@
         this.$app.api.post(socialFeed.setPost(), this.post)
         .then((res) => {
           if (res.success) {
-
+            this.$root.$emit('posts::update');
           }
 
         })
-        .then(res => this.$modal.close())
-        .catch(err => console.log(err))
+        .then(res => {
+          this.$modal.close()
+        })
       },
 
     }

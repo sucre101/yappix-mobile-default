@@ -4,8 +4,6 @@
 
     <StackLayout height="100%">
 
-      <Label text="Add Post" class="post-list-title" textWrap="true" @tap="addPost()" />
-
       <ListView   for="post in posts"   separatorColor="red" height="100%">
 
         <v-template>
@@ -24,14 +22,13 @@
 </template>
 
 <script>
-import NewsItem from "~/components/templates/modules/socialfeed/feed/NewsItem";
-import AddPost from "~/components/templates/modules/socialfeed/feed/AddPost";
+import NewsItem from "~/components/templates/modules/newsfeeds/feed/NewsItem";
 import { socialFeed } from '~/route-list';
 
 export default {
 
   components: {
-    NewsItem, AddPost
+    NewsItem
   },
 
   data() {
@@ -42,9 +39,6 @@ export default {
   },
 
   created() {
-    this.$root.$on('posts::update', res => {
-      this.getData();
-    })
     this.getData();
   },
 
@@ -61,20 +55,10 @@ export default {
 
       this.$root.$emit('post::read', post);
     },
-    addPost() {
-
-      this.$showModal(AddPost, {
-        fullscreen: true,
-        animated: true,
-        stretched: true,
-        dimAmount: 0.5
-      });
-
-    },
 
     getData() {
 
-      this.$app.api.get(socialFeed.getPosts(this.$app.cfg.modules.socialfeed.id))
+      this.$app.api.get(socialFeed.getNews(this.$app.cfg.modules.socialfeed.id))
       .then((res) => {
         if(res.success){
           this.posts = [ ...res.posts]
