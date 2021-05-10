@@ -21,10 +21,11 @@ Vue.config.silent = (TNS_ENV === 'production')
 Vue.registerElement('Carousel', () => require('nativescript-carousel').Carousel);
 Vue.registerElement('CarouselItem', () => require('nativescript-carousel').CarouselItem);
 Vue.registerElement("Mapbox", () => require("@nativescript-community/ui-mapbox").MapboxView);
+Vue.registerElement("BottomNavigation", () => require("@nativescript/core/ui").BottomNavigation);
+Vue.registerElement("TabStrip", () => require("@nativescript/core/ui").TabStrip);
+Vue.registerElement("TabStripItem", () => require("@nativescript/core/ui").TabStripItem);
+Vue.registerElement("TabContentItem", () => require("@nativescript/core/ui").TabContentItem);
 
-if (isIOS) {
-  GMSServices.provideAPIKey("API_KEY");
-}
 // comment for commit: intro -> create develop branch
 
 const network = new NetworkService()

@@ -44,74 +44,19 @@
       </GridLayout>
     </ActionBar>
 
-    <BottomNavigation @selectedIndexChanged="changeView">
-
-      <!-- The bottom tab UI is created via TabStrip (the containier) and TabStripItem (for each tab)-->
-      <TabStrip style="background-color: #0989cc" isIconSizeFixed="false">
-
-        <TabStripItem>
-          <Image src.decode="font://&#xf03b;" class="fas t-14" android:style="font-size: 4"/>
-        </TabStripItem>
-
-        <TabStripItem>
-          <Image src.decode="font://&#xf0f3;" class="fas t-14" android:style="font-size: 4"/>
-        </TabStripItem>
-
-        <TabStripItem>
-          <Image src.decode="font://&#xf14e;" class="fas t-14" android:style="font-size: 4"/>
-        </TabStripItem>
-
-        <TabStripItem>
-          <Image src.decode="font://&#xf406;" class="fas t-14" android:style="font-size: 4"/>
-        </TabStripItem>
-
-        <TabStripItem>
-          <Image src.decode="font://&#xf067;" class="fas t-14" android:style="font-size: 4"/>
-        </TabStripItem>
-
-      </TabStrip>
-
-      <!-- The number of TabContentItem components should corespond to the number of TabStripItem components -->
-      <TabContentItem>
-        <Frame id="news-list">
-          <NewsList />
-        </Frame>
-      </TabContentItem>
-
-      <TabContentItem>
-        <Frame id="notification">
-          <Notification />
-        </Frame>
-      </TabContentItem>
-
-      <TabContentItem>
-        <GridLayout>
-          <Label text="Search Page" class="h2 text-center"></Label>
-        </GridLayout>
-      </TabContentItem>
-
-      <TabContentItem>
-        <GridLayout>
-          <Label text="Search Page" class="h2 text-center"></Label>
-        </GridLayout>
-      </TabContentItem>
-
-      <TabContentItem>
-        <GridLayout>
-          <Label text="Search Page" class="h2 text-center"></Label>
-        </GridLayout>
-      </TabContentItem>
-
-    </BottomNavigation>
+    <Frame id="news-list">
+      <NewsList />
+    </Frame>
 
   </Page>
 
 </template>
 
 <script>
-import NewsList from "~/components/templates/modules/news/NewsList";
+import NewsList from "~/components/templates/modules/newsfeeds/NewsList";
 import Notification from "~/components/templates/modules/notifications/Notification";
 import * as utils from "~/shared/utils";
+import SelectedPageService from "../shared/selected-page-service";
 
 export default {
 
@@ -138,6 +83,10 @@ export default {
       return this.pageList[this.currentIndex].name.toUpperCase()
     }
 
+  },
+
+  mounted() {
+    SelectedPageService.getInstance().updateSelectedPage("Browse");
   },
 
   created() {

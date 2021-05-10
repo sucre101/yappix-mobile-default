@@ -22,7 +22,7 @@
 
 <script>
 
-import PagesBlocks from "~/components/templates/modules/pageBuilder/PagesBlocks";
+import PagesBlocks from "~/components/templates/modules/pagebuilder/PagesBlocks";
 
 export default {
 

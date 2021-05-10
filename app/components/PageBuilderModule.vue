@@ -36,78 +36,23 @@
       </GridLayout>
     </ActionBar>
 
-    <BottomNavigation @selectedIndexChanged="changeView">
-
-      <!-- The bottom tab UI is created via TabStrip (the containier) and TabStripItem (for each tab)-->
-      <TabStrip style="background-color: #0989cc" isIconSizeFixed="false">
-
-        <TabStripItem>
-          <Image src.decode="font://&#xf03b;" class="fas t-14" android:style="font-size: 4"/>
-        </TabStripItem>
-
-        <TabStripItem>
-          <Image src.decode="font://&#xf0f3;" class="fas t-14" android:style="font-size: 4"/>
-        </TabStripItem>
-
-        <TabStripItem>
-          <Image src.decode="font://&#xf14e;" class="fas t-14" android:style="font-size: 4"/>
-        </TabStripItem>
-
-        <TabStripItem>
-          <Image src.decode="font://&#xf406;" class="fas t-14" android:style="font-size: 4"/>
-        </TabStripItem>
-
-        <TabStripItem>
-          <Image src.decode="font://&#xf067;" class="fas t-14" android:style="font-size: 4"/>
-        </TabStripItem>
-
-      </TabStrip>
-
-      <!-- The number of TabContentItem components should correspond to the number of TabStripItem components -->
-      <TabContentItem>
-        <Frame id="pages-list">
-          <PagesList />
-        </Frame>
-      </TabContentItem>
-
-      <TabContentItem>
-        <GridLayout>
-          <Label text="Account Page" class="h2 text-center"></Label>
-        </GridLayout>
-      </TabContentItem>
-
-      <TabContentItem>
-        <GridLayout>
-          <Label text="Search Page" class="h2 text-center"></Label>
-        </GridLayout>
-      </TabContentItem>
-
-      <TabContentItem>
-        <GridLayout>
-          <Label text="Search Page" class="h2 text-center"></Label>
-        </GridLayout>
-      </TabContentItem>
-
-      <TabContentItem>
-        <GridLayout>
-          <Label text="Search Page" class="h2 text-center"></Label>
-        </GridLayout>
-      </TabContentItem>
-
-    </BottomNavigation>
+    <Frame id="pages-blocks">
+      <PagesBlocks />
+    </Frame>
 
   </Page>
 
 </template>
 
 <script>
-import PagesList from "~/components/templates/modules/pageBuilder/PagesList";
+import PagesBlocks from "~/components/templates/modules/pagebuilder/PagesBlocks";
 import * as utils from "~/shared/utils";
+import SelectedPageService from "../shared/selected-page-service";
 
 export default {
 
   components: {
-    PagesList
+    PagesBlocks
   },
 
   data() {
@@ -120,6 +65,9 @@ export default {
     }
   },
 
+  mounted() {
+    SelectedPageService.getInstance().updateSelectedPage("Browse");
+  },
   computed: {
 
     setTitlePage() {
