@@ -22,7 +22,7 @@
             />
             <Image
                 v-else-if="element.type === 'image'"
-                :src="element.images.length > 0?ngrok+element.images[0].url_original:
+                :src="element.images[0]?element.images[0].image_url:
                 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/480px-No_image_available.svg.png'"
                 width="100%"
                 :color="element.template?element.template.color:'transparent'"
@@ -42,34 +42,35 @@
                 :textAlign="element.template?element.template.text_align:'left'"
                 :overflow="element.template?element.template.overflow:'none'"
             />
-            <ElementView
-                v-else-if="element.type === 'iframe' || element.type === 'video'"
-                :content="element.type === 'iframe'?element.content:'https://www.youtube.com/embed/'+element.content"
-                :template="element.template"
-            ></ElementView>
-            <Carousel
-                v-else-if="element.type === 'slider'"
+<!--            <WebView id="player"-->
+<!--                     v-else-if="element.type === 'video'"-->
+<!--                     :src="'https://www.youtube.com/embed/' + element.content + '?enablejsapi=1&playsinline=1&autoplay=1&fs=0&controls=1'"-->
+<!--                     frameborder="0"/>-->
+
+            <WebView
+                v-else-if="element.type === 'iframe'"
+                :src="element.content"
                 height="100%"
                 width="100%"
-                pageChanged="myChangeEvent" pageTapped="mySelectedEvent"
-                indicatorColor="#fff000" finite="true" bounce="false" showIndicator="true" verticalAlignment="top"
-                android:indicatorAnimation="swap" color="white">
-                <CarouselItem v-for="item in element.images" :key="item.id" :backgroundColor="item.color"
-                              height="100%"
-                              width="100%"
-                              verticalAlignment="middle" >
-                    <GridLayout
-                        columns="auto,*"
-                        orientation="horizontal"
-                        height="100%"
-                        width="100%">
-                        <Image
-                            height="100%"
-                            width="100%"
-                            :src="ngrok+item.url_original" stretch="aspectFill" />
-                    </GridLayout>
-                </CarouselItem>
-            </Carousel>
+                :color="element.template?element.template.color:'transparent'"
+                :backgroundColor="element.template?element.template.bg_color:'transparent'"
+                :borderWidth="element.template?element.template.border_width:'0'"
+                :borderStyle="element.template?element.template.border_type:'none'"
+                :borderColor="element.template?element.template.border_color:'black'"
+                :borderRadius="element.template?element.template.border_radius:'0'"
+                :textAlign="element.template?element.template.text_align:'left'"
+                :overflow="element.template?element.template.overflow:'auto'"
+            />
+            <GridLayout height="350"
+                        v-else-if="element.type === 'slider'">
+                <Carousel ref="myCarousel"   height="100%" width="100%" color="white"  android:indicatorAnimation="slide" indicatorColor="#fff" indicatorOffset="0, -10" showIndicator="true">
+                    <CarouselItem v-for="(item, i) in element.images" :key="i" verticalAlignment="middle">
+                        <GridLayout>
+                            <Image :src="item.image_url" stretch="aspectFill" />
+                        </GridLayout>
+                    </CarouselItem>
+                </Carousel>
+            </GridLayout>
             <ElementMap
                 v-if="element.type === 'map'"
                 :latitude="JSON.parse(element.content).lat"
@@ -89,7 +90,7 @@
     components: {ElementMap, ElementView},
     data() {
       return {
-        ngrok: 'http://f21e8b618993.ngrok.io/'
+
       }
     },
     props:{

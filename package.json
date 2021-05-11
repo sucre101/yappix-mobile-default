@@ -34,7 +34,8 @@
     "nativescript-vue-template-compiler": "~2.8.0",
     "node-sass": "^4.12.0",
     "typescript": "3.9.7",
-    "vue-loader": "~15.9.3"
+    "vue-loader": "~15.9.3",
+    "vue-template-compiler": "^2.6.11"
   },
   "gitHead": "20a65d338ae8f8911087ab6615b89363f864b07b",
   "readme": "NativeScript Application",

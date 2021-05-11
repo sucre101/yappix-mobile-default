@@ -249,5 +249,29 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "news-item";
+  .single-post-page {
+
+    .action-buttons {
+
+      background-color: #747474;
+      flex-direction: row;
+      justify-content: space-around;
+      height: 50;
+      vertical-align: center;
+      padding-left: 15;
+
+      StackLayout {
+
+        Label {
+          font-size: 14;
+          vertical-align: center;
+          font-weight: bold;
+          margin-left: 5;
+          color: white;
+        }
+
+      }
+    }
+  }
+
 </style>

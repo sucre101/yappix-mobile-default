@@ -1,42 +1,9 @@
 <template>
-  <Page class="single-post-page">
+  <Page actionBarHidden="true">
 
-    <StackLayout orientation="vertical" class="content">
+    <StackLayout height="100%">
 
-      <GridLayout
-          columns="auto,*"
-          orientation="horizontal"
-          ios:padding="0"
-          ios:style="height: 60"
-          android:style="height: 80"
-          width="100%"
-          backgroundColor="#0989cc"
-      >
-
-        <Image
-            src="~/images/b-arrow.png"
-            horizontalAlignment="left"
-            verticalAlignment="center"
-            col="0"
-            @tap="closeCurrentPost"
-            width="15"
-            marginLeft="20"
-            android:marginTop="20"
-        />
-
-        <Label
-            :text="currentPostTitle"
-            fontSize="20"
-            horizontalAlignment="center"
-            verticalAlignment="center"
-            marginRight="15"
-            android:marginTop="20"
-            col="1"
-            color="white"
-        />
-
-      </GridLayout>
-      <ScrollView orientation="vertical"  width="100%">
+      <ScrollView orientation="vertical"  height="100%"  width="100%">
         <WrapLayout  width="100%">
           <WrapLayout
               :width="block.layout === '4'?'25%':
@@ -56,20 +23,22 @@
               :textAlign="block.template?block.template.text_align:'left'"
               :overflow="block.template?block.template.overflow:'none'"
               :padding="block.template?block.template.padding:'0'"
-              v-for="block in page.active_blocks"
+              v-for="block in blocks"
               :key="block.id"
           >
             <PagesElements :elements="block.elements" />
           </WrapLayout>
         </WrapLayout>
       </ScrollView>
+
     </StackLayout>
   </Page>
 </template>
 
 <script>
 
-  import PagesElements from "~/components/templates/modules/pageBuilder/PagesElements";
+  import { pageBuilder } from '~/route-list';
+  import PagesElements from "~/components/templates/modules/pagebuilder/PagesElements";
   export default {
 
     components: {
@@ -78,30 +47,33 @@
 
     data() {
       return {
-        page: {}
+        blocks: [],
       }
     },
 
     computed: {
       currentPostTitle() {
-        return this.page ? this.page.title : 'Page'
+        return  'Page'
       }
     },
 
-    mounted() {
-      this.$root.$on('page::open', (data) => {
-        this.page = data;
-      });
+    created() {
+      this.getData();
     },
 
-    methods: {
-      closeCurrentPost() {
-        this.$root.$off('page::open', this.clearPage);
-        this.$modal.close();
-      },
 
-      clearPage() {
-        this.page = {};
+    methods: {
+      getData() {
+
+        this.$app.api.get(pageBuilder.getBlocks(this.$app.cfg.modules.pagebuilder.id))
+        .then((res) => {
+          if(res.success){
+            this.blocks = [ ...res.blocks]
+          }
+        }, error => {
+          // this.err = error
+        })
+
       }
 
     }
