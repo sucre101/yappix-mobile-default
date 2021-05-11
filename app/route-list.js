@@ -36,8 +36,17 @@ const ECModule = {
 
 }
 
+const Folder = {
+
+  getFolderData: (moduleId) => {
+    return `folder/${moduleId}`
+  }
+
+}
+
 module.exports = {
   newsFeed,
   auth,
-  ECModule
+  ECModule,
+  Folder
 }

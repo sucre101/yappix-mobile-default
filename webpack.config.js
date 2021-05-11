@@ -303,7 +303,7 @@ module.exports = env => {
             // Copy assets
             new CopyWebpackPlugin({
               patterns: [
-                { from: 'assets/**', noErrorOnMissing: true, globOptions: { dot: false, ...copyIgnore } },
+                { from: 'sounds/**', noErrorOnMissing: true, globOptions: { dot: false, ...copyIgnore } },
                 { from: 'fonts/**', noErrorOnMissing: true, globOptions: { dot: false, ...copyIgnore } },
                 { from: '**/*.+(jpg|png)', noErrorOnMissing: true, globOptions: { dot: false, ...copyIgnore } },
                 { from: '**/*.sqlite', noErrorOnMissing: true, globOptions: { dot: false, ...copyIgnore } }

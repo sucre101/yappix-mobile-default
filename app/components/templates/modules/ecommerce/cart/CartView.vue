@@ -1,5 +1,5 @@
 <template>
-  <Page actionBarHidden="true">
+  <Page actionBarHidden="true" @loaded="pageLoaded">
 
     <GridLayout rows="40,*">
 
@@ -29,13 +29,20 @@
                   </FlexboxLayout>
                 </v-template>
               </ListView>
+              <AbsoluteLayout>
+                <Label text="Clear" class="clear_cart" @tap="_clear"/>
+              </AbsoluteLayout>
             </ScrollView>
             <StackLayout row="1" horizontalAlignment="center" width="100%" alignSelf="center" v-if="cart.length">
               <Label class="checkout" color="Black" :text="`Total price ${total}`" textAlignment="center"/>
             </StackLayout>
             <FlexboxLayout row="2" width="100%" v-if="cart.length" flexDirection="row">
-              <Label class="action" text="Checkout" backgroundColor="#53a7ff" textAlignment="center" @tap="_checkout"/>
-              <Label class="action" text="Clear" backgroundColor="#ff675d" textAlignment="center" @tap="_clear"/>
+              <FlexboxLayout
+                  class="action checkout_btn"
+                  @tap="_checkout"
+              >
+                <Label text="Checkout"/>
+              </FlexboxLayout>
             </FlexboxLayout>
           </GridLayout>
           <StackLayout v-else row="2" orientation="horizontal" horizontalAlignment="center" verticalAlignment="center">
@@ -95,6 +102,10 @@ export default {
       })
 
       return price
+    },
+
+    checkoutBtnStyle() {
+      return this.$app.cfg.modules.ecommerce.settings.styles.checkout_btn.css
     }
 
   },
@@ -147,6 +158,26 @@ export default {
       });
     },
 
+    pageLoaded($arg) {
+      const page = $arg.object
+
+      let curr = ''
+      for (let inst in this.$app.cfg.modules.ecommerce.settings.styles.checkout_btn.css) {
+        curr += `${inst}:${this.$app.cfg.modules.ecommerce.settings.styles.checkout_btn.css[inst]};`
+      }
+
+      page.addCss(`.checkout_btn{${curr}}`)
+
+      curr = ''
+
+      for (let inst in this.$app.cfg.modules.ecommerce.settings.styles.clear_cart.css) {
+        curr += `${inst}:${this.$app.cfg.modules.ecommerce.settings.styles.clear_cart.css[inst]};`
+      }
+
+      page.addCss(`.clear_cart{${curr}}`)
+
+    },
+
     _clear() {
       this.clear()
       this.cart = []
@@ -162,13 +193,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.action {
-  width: 50%;
-  height: 100%;
-  padding-top: 11;
-  font-size: 18;
-  color: #ffffff;
-}
 .checkout {
   padding-top: 13;
   padding-bottom: 10;

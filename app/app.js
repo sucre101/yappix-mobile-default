@@ -4,7 +4,10 @@ import Vue from "nativescript-vue"
 import store from './store/index'
 import App from "./components/App"
 import Home from "./components/Home"
+import ECModule from "~/components/templates/modules/ecommerce/ECModule"
+import HomePage from "~/components/templates/modules/ecommerce/home/HomePage"
 import DrawerContent from "./components/templates/sidebar/DrawerContent"
+import ClientWebView from "~/components/templates/modules/webview/ClientWebView"
 import {isIOS} from '@nativescript/core/platform'
 import {init} from '~/services/Auth'
 import ApiService from './services/ApiService'
@@ -35,10 +38,47 @@ Vue.prototype.$app = Object.freeze({
   api: new ApiService(network, cfg.appId, store.getters['User/getApiHeaders']),
   isIOS: (isIOS),
   cfg: cfg,
-});
+})
+
+const count = Object.keys(cfg.modules).length
+
+const localModule = (modules) => {
+
+  for (const [key, value] of Object.entries(modules)) {
+    return { value: modules[key], index: key}
+  }
+
+}
+
+let startScreen = Home
+
+switch (localModule(cfg.modules).index) {
+
+  case 'ecommerce':
+    startScreen = ECModule
+    break
+  case 'webview':
+    startScreen = ClientWebView
+    break
+  default:
+    startScreen = HomePage
+}
+
+// console.log(localModule(cfg.modules))
+
+// if (count >= 1) {
+//   for (const [key, value] of Object.entries(modules)) {
+//     console.log(key)
+//   }
+// }
+
+
+
+// localModule(cfg.modules)
+
+// const modules = Vue.$app.cfg.modules
 
 init(store);
-
 
 new Vue({
   store,
@@ -47,7 +87,7 @@ new Vue({
       App,
       [
         h(DrawerContent, {slot: 'drawerContent'}),
-        h(Home, {slot: 'mainContent'})
+        h(startScreen, {slot: 'mainContent'})
       ]
     )
   }

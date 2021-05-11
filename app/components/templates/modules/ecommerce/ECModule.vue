@@ -1,9 +1,9 @@
 <template>
   <Page @loaded="moduleLoaded">
 
-    <ActionBar class="action-bar" :backgroundColor="actionBarColor">
+    <ActionBar class="action-bar" :backgroundColor="actionBarColor.background" :color="actionBarColor.fontColor">
 
-      <NavigationButton visibility="hidden" />
+      <NavigationButton visibility="hidden"/>
 
       <GridLayout
           columns="auto,*, auto"
@@ -21,13 +21,14 @@
             col="0"
             @tap="onDrawerButtonTap"
             width="15"
+            v-if="Object.keys($root.$app.cfg.modules).length > 1"
         />
 
         <Label
             :text="setTitlePage"
             style="text-transform: uppercase"
             fontSize="18"
-            color="white"
+            :color="actionBarColor.fontColor"
             horizontalAlignment="center"
             verticalAlignment="center"
             marginLeft="50"
@@ -35,8 +36,22 @@
             ref="pageTitle"
         />
 
-        <FlexboxLayout col="2" verticalAlignment="center" flexDirection="row" width="80" justifyContent="space-between">
-          <Image src.decode="font://&#xf406;" class="fas" width="20" height="20" tintColor="white" @tap="openAccount"/>
+        <FlexboxLayout col="2" verticalAlignment="center" flexDirection="row" width="80" justifyContent="space-around"
+                       ref="editedTopBar">
+          <Image
+              src.decode="font://&#xf009;"
+              class="fas" width="20" height="20" tintColor="white"
+              @tap="changeViewType"
+          />
+
+          <Image
+              src.decode="font://&#xf406;"
+              class="fas"
+              width="20"
+              height="20"
+              tintColor="white"
+              @tap="openAccount"
+          />
         </FlexboxLayout>
 
       </GridLayout>
@@ -44,7 +59,7 @@
 
     <BottomNavigation @selectedIndexChanged="changeView">
 
-      <TabStrip :backgroundColor="navigationBottomColor" isIconSizeFixed="false">
+      <TabStrip :backgroundColor="navigationBottomColor.background" :color="navigationBottomColor.fontColor" isIconSizeFixed="false">
 
         <TabStripItem>
           <Image src.decode="font://&#xf015;" class="fas t-14" android:style="font-size: 4"/>
@@ -55,11 +70,12 @@
         </TabStripItem>
 
         <TabStripItem>
-          <Image src.decode="font://&#xf406;" class="fas t-14" android:style="font-size: 4"/>
+          <Image src.decode="font://&#xf541;" class="fas t-14" android:style="font-size: 4"/>
         </TabStripItem>
 
         <TabStripItem>
-          <Image id="label" src.decode="font://&#xf0f3;" class="fas t-14" android:style="font-size: 4" :class="{ alert : notify }"/>
+          <Image id="label" src.decode="font://&#xf0f3;" class="fas t-14" android:style="font-size: 4"
+                 :class="{ alert : notify }"/>
         </TabStripItem>
 
         <TabStripItem>
@@ -71,31 +87,31 @@
       <!-- The number of TabContentItem components should corespond to the number of TabStripItem components -->
       <TabContentItem>
         <Frame id="home-page">
-          <Home />
+          <Home/>
         </Frame>
       </TabContentItem>
 
       <TabContentItem>
         <Frame id="category-list">
-          <CategoryList />
+          <CategoryList :view-type="viewType"/>
         </Frame>
       </TabContentItem>
 
       <TabContentItem>
-        <GridLayout>
-          <Label text="Search Page" class="h2 text-center"></Label>
-        </GridLayout>
+        <Frame id="sales-list">
+          <Sales/>
+        </Frame>
       </TabContentItem>
 
       <TabContentItem>
         <Frame id="notification-list">
-          <NotificationView />
+          <NotificationView/>
         </Frame>
       </TabContentItem>
 
       <TabContentItem>
         <Frame id="cart-page">
-          <Cart />
+          <Cart/>
         </Frame>
       </TabContentItem>
 
@@ -111,7 +127,8 @@ import HomePage from "~/components/templates/modules/ecommerce/home/HomePage";
 import CartView from "~/components/templates/modules/ecommerce/cart/CartView";
 import AccountView from "~/components/templates/modules/ecommerce/modals/AccountView";
 import NotificationView from "~/components/templates/modules/ecommerce/notifications/NotificationView";
-import { mapActions, mapGetters } from 'vuex'
+import Sales from "~/components/templates/modules/ecommerce/sales/Sales";
+import {mapActions, mapGetters} from 'vuex'
 
 export default {
   name: "ECModule",
@@ -121,20 +138,22 @@ export default {
     Home: HomePage,
     Cart: CartView,
     AccountView: AccountView,
-    NotificationView: NotificationView
+    NotificationView: NotificationView,
+    Sales: Sales
   },
 
   data() {
     return {
       currentIndex: 0,
       pageList: [
-        { name: 'Home page' },
-        { name: 'Categories' },
-        { name: 'Profile' },
-        { name: 'Notifications' },
-        { name: 'Cart' },
+        {name: 'Home page'},
+        {name: 'Categories'},
+        {name: 'Sales'},
+        {name: 'Notifications'},
+        {name: 'Cart'},
       ],
       notify: false,
+      viewType: false
     }
   },
 
@@ -151,11 +170,21 @@ export default {
     },
 
     actionBarColor() {
-      return this.$root.$app.cfg.modules.ecommerce.settings.styles.topBarColor
+      return {
+        background: this.$root.$app.cfg.modules.ecommerce.settings.styles.top_bar.css["background-color"],
+        fontColor: this.$root.$app.cfg.modules.ecommerce.settings.styles.top_bar.css.color
+      }
     },
 
     navigationBottomColor() {
-      return this.$root.$app.cfg.modules.ecommerce.settings.styles.bottomNavigationColor
+      return {
+        background: this.$root.$app.cfg.modules.ecommerce.settings.styles.bottom_nav.css["background-color"],
+        fontColor: this.$root.$app.cfg.modules.ecommerce.settings.styles.bottom_nav.css.color
+      }
+    },
+
+    stylesForTopBar() {
+      return this.$root.$app.cfg.modules.ecommerce.settings.styles.top_bar.css
     }
 
   },
@@ -194,8 +223,18 @@ export default {
       getOrdersData: 'ECCart/getOrders'
     }),
 
-    moduleLoaded(arg) {
-      console.log(arg)
+    moduleLoaded($arg) {
+      // let label = $arg.object
+      // let str = ''
+
+      // for (let vlas in this.$app.cfg.modules.ecommerce.settings.styles) {
+      //   // console.log(this.$app.cfg.modules.ecommerce.settings.styles[vlas].css)
+      //   str += `.${vlas}${JSON.stringify(this.$app.cfg.modules.ecommerce.settings.styles[vlas].css)}`
+      // }
+      //
+      // console.log(str)
+
+      // label.addCss(".checkout_btn { color: #000000, background : #000000 }")
     },
 
     changeView(arg) {
@@ -204,6 +243,14 @@ export default {
       if (arg.newIndex === 3) {
         this.notify = false
       }
+    },
+
+    actionBarFn($arg) {
+      console.log($arg.object)
+    },
+
+    changeViewType() {
+      this.viewType = !this.viewType
     },
 
     onDrawerButtonTap() {
