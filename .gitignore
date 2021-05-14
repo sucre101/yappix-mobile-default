@@ -27,6 +27,7 @@ tmp/
 typings/
 app/config.json
 .editorconfig
+.env.development.local
 
 # Visual Studio Code
 .vscode/*

@@ -1,7 +1,7 @@
 <template>
   <Page>
 
-    <ActionBar :title="category.name">
+    <ActionBar :title="category.name" :backgroundColor="actionBarColor.background" :color="actionBarColor.fontColor">
       <NavigationButton text="Go back" android.systemIcon="ic_menu_back" @tap="goBack"/>
     </ActionBar>
 
@@ -28,15 +28,12 @@
         <TabContentItem>
           <StackLayout>
             <ScrollView height="100%">
-              <WrapLayout padding="5 5" v-if="category.children.length">
+              <WrapLayout class="category" padding="5 5" v-if="category.children.length">
                 <StackLayout
                     v-for="(item, index) in category.children"
                     :key="index"
-                    padding="0"
-                    marginRight="5"
-                    marginBottom="5"
-                    width="47%"
-                    height="150"
+                    :class="{ 'grid': !viewType, 'list': viewType }"
+                    class="item"
                 >
                   <Label
                       class="cat-item"
@@ -47,8 +44,8 @@
                       verticalAlignment="center"
                       backgroundColor="#cecece"
                       @tap="showItem(item)"
-                      backgroundImage="https://art-news.com.ua/wp-content/uploads/2021/02/iphone-12-pro-family-hero.jpeg"
-                      style="background-repeat: no-repeat; background-position: center"
+                      backgroundImage="~/images/no-image.png"
+                      style="background-repeat: no-repeat; background-position: center; background-size: contain"
                   />
                 </StackLayout>
               </WrapLayout>
@@ -78,8 +75,8 @@
                       textAlignment="center"
                       backgroundColor="#cecece"
                       @tap="showProduct(item)"
-                      backgroundImage="https://art-news.com.ua/wp-content/uploads/2021/02/iphone-12-pro-family-hero.jpeg"
-                      style="background-repeat: no-repeat; background-position: center"
+                      backgroundImage="~/images/no-image.png"
+                      style="background-repeat: no-repeat; background-position: center; background-size: contain"
                   />
                 </StackLayout>
               </WrapLayout>
@@ -110,7 +107,7 @@ export default {
     ProductView
   },
 
-  props: ['category'],
+  props: ['category', 'viewType'],
 
   data() {
     return {
@@ -124,6 +121,24 @@ export default {
         return `<div><h1 style="text-align: center">${val}</h1></div>`
       }
     }
+  },
+
+  computed: {
+
+    actionBarColor() {
+      return {
+        background: this.$root.$app.cfg.modules.ecommerce.settings.styles.top_bar.css["background-color"],
+        fontColor: this.$root.$app.cfg.modules.ecommerce.settings.styles.top_bar.css.color
+      }
+    },
+
+    navigationBottomColor() {
+      return {
+        background: this.$root.$app.cfg.modules.ecommerce.settings.styles.bottom_nav.css["background-color"],
+        fontColor: this.$root.$app.cfg.modules.ecommerce.settings.styles.bottom_nav.css.color
+      }
+    },
+
   },
 
   mounted() {
@@ -181,6 +196,20 @@ export default {
 
       &.active {
         background-color: #b8e5fd;
+      }
+    }
+  }
+  .category {
+    .item {
+      padding: 0;
+      margin-right: 5;
+      margin-bottom: 5;
+      height: 150;
+      &.list {
+        width: 100%;
+      }
+      &.grid {
+        width: 47%;
       }
     }
   }

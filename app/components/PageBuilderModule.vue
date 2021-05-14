@@ -3,7 +3,9 @@
   <Page>
 
     <ActionBar class="action-bar">
+
       <NavigationButton visibility="hidden" />
+
       <GridLayout
           columns="auto,*, auto"
           orientation="horizontal"
@@ -20,6 +22,7 @@
             col="0"
             @tap="onDrawerButtonTap"
             width="15"
+            v-if="Object.keys($root.$app.cfg.modules).length > 1"
         />
 
         <Label

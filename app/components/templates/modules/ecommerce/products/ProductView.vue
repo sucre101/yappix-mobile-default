@@ -35,9 +35,9 @@
 
             <StackLayout orientation="vertical" row="1" width="100%" height="600">
 
-              <Tabs>
+              <Tabs id="tabs">
 
-                <TabStrip>
+                <TabStrip highlightColor="Aqua">
 
                   <TabStripItem>
                     <Label text="Description"></Label>
@@ -67,14 +67,14 @@
 
                 <TabContentItem>
                   <GridLayout>
-                    <Label text="Specs Page" class="h2 text-center">
+                    <Label text="Specs tab is coming soon" class="h2 text-center">
                     </Label>
                   </GridLayout>
                 </TabContentItem>
 
                 <TabContentItem>
                   <GridLayout>
-                    <Label text="Options Page" class="h2 text-center">
+                    <Label text="Options tab is coming soon" class="h2 text-center">
                     </Label>
                   </GridLayout>
                 </TabContentItem>
@@ -209,5 +209,10 @@ export default {
     text-transform: uppercase;
   }
 }
-
+#tabs {
+  TabStripItem {
+    background-color: #cb6464;
+    border-radius: 4;
+  }
+}
 </style>
